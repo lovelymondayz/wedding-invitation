@@ -1,0 +1,84 @@
+version: '3.9'
+
+services:
+  # ============================================
+  # PostgreSQL Database
+  # ============================================
+  db:
+    image: postgres:16-alpine
+    container_name: wedding-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-wedding}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-wedding123}
+      POSTGRES_DB: ${DB_NAME:-wedding}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-wedding} -d ${DB_NAME:-wedding}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - wedding-net
+
+  # ============================================
+  # Go Backend API
+  # ============================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: wedding-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://${DB_USER:-wedding}:${DB_PASSWORD:-wedding123}@db:5432/${DB_NAME:-wedding}?sslmode=disable
+      JWT_SECRET: ${JWT_SECRET:-change-this-to-a-random-64-char-secret-key-in-production}
+      PORT: 8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    networks:
+      - wedding-net
+
+  # ============================================
+  # React Frontend (Nginx)
+  # ============================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: wedding-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - wedding-net
+
+# ============================================
+# Volumes & Networks
+# ============================================
+volumes:
+  pgdata:
+    driver: local
+  uploads:
+    driver: local
+
+networks:
+  wedding-net:
+    driver: bridge
