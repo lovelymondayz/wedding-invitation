@@ -2,9 +2,10 @@ package handlers
 
 import (
 	"context"
+	"fmt"
+	"time"
 
 	"wedding-api/internal/database"
-	"wedding-api/internal/models"
 	"wedding-api/internal/utils"
 
 	"github.com/gin-gonic/gin"
@@ -31,22 +32,22 @@ func AdminListCouplesHandler(c *gin.Context) {
 		ORDER BY c.created_at DESC
 	`)
 	if err != nil {
-		utils.Error(c, 500, "Failed to fetch couples")
+		utils.Error(c, 500, "Failed to fetch couples: "+err.Error())
 		return
 	}
 	defer rows.Close()
 
 	type CoupleListItem struct {
-		ID             string `json:"id"`
-		Slug           string `json:"slug"`
-		GroomName      string `json:"groom_name"`
-		BrideName      string `json:"bride_name"`
-		WeddingDate    string `json:"wedding_date"`
-		VenueName      string `json:"venue_name"`
-		IsPublished    bool   `json:"is_published"`
-		GuestCount     int    `json:"guest_count"`
-		AttendingCount int    `json:"attending_count"`
-		CreatedAt      string `json:"created_at"`
+		ID             string    `json:"id"`
+		Slug           string    `json:"slug"`
+		GroomName      string    `json:"groom_name"`
+		BrideName      string    `json:"bride_name"`
+		WeddingDate    string    `json:"wedding_date"`
+		VenueName      string    `json:"venue_name"`
+		IsPublished    bool      `json:"is_published"`
+		GuestCount     int       `json:"guest_count"`
+		AttendingCount int       `json:"attending_count"`
+		CreatedAt      time.Time `json:"created_at"`
 	}
 
 	couples := []CoupleListItem{}
@@ -54,6 +55,7 @@ func AdminListCouplesHandler(c *gin.Context) {
 		var item CoupleListItem
 		var weddingDate *string
 		if err := rows.Scan(&item.ID, &item.Slug, &item.GroomName, &item.BrideName, &weddingDate, &item.VenueName, &item.IsPublished, &item.CreatedAt, &item.GuestCount, &item.AttendingCount); err != nil {
+			fmt.Printf("Scan error: %v\n", err)
 			continue
 		}
 		if weddingDate != nil {
@@ -64,6 +66,3 @@ func AdminListCouplesHandler(c *gin.Context) {
 
 	utils.JSON(c, 200, couples)
 }
-
-// ensure models import used
-var _ = models.Couple{}
