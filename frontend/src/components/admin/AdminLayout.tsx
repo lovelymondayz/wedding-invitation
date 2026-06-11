@@ -23,6 +23,7 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
   const location = useLocation();
   const currentSection = location.pathname.split('/').pop() || '';
   const [couple, setCouple] = useState<Couple | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (coupleSlug) {
@@ -44,10 +45,16 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
 
   const names = couple ? `${couple.groom_name} & ${couple.bride_name}` : 'Wedding';
 
+  const navItems = sidebarItems.map((item) => ({
+    ...item,
+    href: `/admin/${coupleSlug}/${item.id}`,
+    active: currentSection === item.id || (item.id === '' && currentSection === coupleSlug),
+  }));
+
   return (
-    <div className="min-h-screen bg-cream flex">
-      {/* Sidebar */}
-      <aside className="w-64 bg-dark text-cream/80 flex flex-col shrink-0">
+    <div className="min-h-screen bg-cream flex flex-col md:flex-row">
+      {/* Desktop Sidebar */}
+      <aside className="hidden md:flex w-64 bg-dark text-cream/80 flex-col shrink-0 min-h-screen sticky top-0">
         <div className="p-6 border-b border-cream/10">
           <a href="/" className="font-display text-lg text-cream hover:text-gold transition-colors">
             Wedding<span className="text-gold">Inv</span>
@@ -55,7 +62,7 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
           {isSuper && <span className="text-gold text-xs ml-1">⚡</span>}
           <p className="text-cream/50 text-xs mt-1 truncate">{names}</p>
         </div>
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           {isSuper && (
             <a
               href="/admin/dashboard"
@@ -65,12 +72,12 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
               <span>All Couples</span>
             </a>
           )}
-          {sidebarItems.map((item) => (
+          {navItems.map((item) => (
             <a
               key={item.id}
-              href={`/admin/${coupleSlug}/${item.id}`}
+              href={item.href}
               className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-colors ${
-                (currentSection === item.id || (item.id === '' && currentSection === coupleSlug))
+                item.active
                   ? 'bg-gold/20 text-gold'
                   : 'hover:bg-cream/5'
               }`}
@@ -94,12 +101,102 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
         </div>
       </aside>
 
+      {/* Mobile Header */}
+      <div className="md:hidden sticky top-0 z-50 bg-dark text-cream">
+        <div className="flex items-center justify-between px-4 py-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <a href="/" className="font-display text-base text-cream">
+              Wedding<span className="text-gold">Inv</span>
+            </a>
+            {isSuper && <span className="text-gold text-xs">⚡</span>}
+          </div>
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="text-cream/80 p-1"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+            ) : (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+            )}
+          </button>
+        </div>
+
+        {/* Mobile dropdown menu */}
+        {mobileMenuOpen && (
+          <div className="border-t border-cream/10 max-h-[60vh] overflow-y-auto">
+            <nav className="p-2 space-y-0.5">
+              {isSuper && (
+                <a
+                  href="/admin/dashboard"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gold/70 hover:bg-gold/10"
+                >
+                  <span>⚡</span><span>All Couples</span>
+                </a>
+              )}
+              {navItems.map((item) => (
+                <a
+                  key={item.id}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm ${
+                    item.active ? 'bg-gold/20 text-gold' : 'text-cream/70 hover:bg-cream/5'
+                  }`}
+                >
+                  <span>{item.icon}</span><span>{item.label}</span>
+                </a>
+              ))}
+            </nav>
+            <div className="border-t border-cream/10 p-2 space-y-0.5">
+              <a
+                href={`/${coupleSlug}`}
+                target="_blank"
+                className="flex items-center gap-3 px-4 py-2 text-sm text-cream/40"
+              >
+                👁 View Site
+              </a>
+              <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-cream/40">
+                ← Logout
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* Main content */}
-      <main className="flex-1 overflow-auto">
-        <div className="p-8">
+      <main className="flex-1 overflow-auto pb-20 md:pb-0">
+        <div className="p-4 md:p-8 max-w-5xl mx-auto">
           {children}
         </div>
       </main>
+
+      {/* Mobile Bottom Nav */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-dark border-t border-cream/10 z-50">
+        <div className="flex items-center justify-around px-1 py-1">
+          {navItems.slice(0, 5).map((item) => (
+            <a
+              key={item.id}
+              href={item.href}
+              className={`flex flex-col items-center gap-0.5 py-2 px-2 rounded-lg min-w-0 ${
+                item.active ? 'text-gold' : 'text-cream/50'
+              }`}
+            >
+              <span className="text-lg leading-none">{item.icon}</span>
+              <span className="text-[10px] truncate max-w-[60px]">{item.label}</span>
+            </a>
+          ))}
+          {/* More button for remaining items */}
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="flex flex-col items-center gap-0.5 py-2 px-2 rounded-lg text-cream/50"
+          >
+            <span className="text-lg leading-none">⋯</span>
+            <span className="text-[10px]">More</span>
+          </button>
+        </div>
+      </nav>
     </div>
   );
 };

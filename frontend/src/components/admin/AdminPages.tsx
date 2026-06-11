@@ -32,14 +32,14 @@ export const Overview: FC = () => {
 
   return (
     <div>
-      <h1 className="font-serif text-3xl text-dark mb-2">Dashboard Overview</h1>
-      {couple && <p className="text-dark/40 mb-8">{couple.groom_name} & {couple.bride_name}</p>}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <h1 className="font-serif text-2xl md:text-3xl text-dark mb-2">Dashboard Overview</h1>
+      {couple && <p className="text-dark/40 mb-6 md:mb-8 text-sm md:text-base">{couple.groom_name} & {couple.bride_name}</p>}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
         {cards.map((card) => (
-          <div key={card.label} className="glass rounded-xl p-4">
-            <div className="text-2xl mb-2">{card.icon}</div>
-            <div className="text-3xl font-serif text-dark">{card.value}</div>
-            <div className="text-dark/50 text-sm">{card.label}</div>
+          <div key={card.label} className="glass rounded-xl p-3 md:p-4">
+            <div className="text-xl md:text-2xl mb-1 md:mb-2">{card.icon}</div>
+            <div className="text-2xl md:text-3xl font-serif text-dark">{card.value}</div>
+            <div className="text-dark/50 text-xs md:text-sm">{card.label}</div>
           </div>
         ))}
       </div>
@@ -103,35 +103,35 @@ export const GuestManagement: FC = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="font-serif text-3xl text-dark">Guest Management</h1>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4 md:mb-6">
+        <h1 className="font-serif text-2xl md:text-3xl text-dark">Guest Management</h1>
         <button onClick={() => setShowAdd(true)} className="btn-gold text-sm">+ Add Guest</button>
       </div>
 
       <input type="text" placeholder="Search guests..." value={search} onChange={(e) => setSearch(e.target.value)}
-        className="w-full md:w-64 px-4 py-2 rounded-xl border border-gold/20 bg-cream/50 mb-4 focus:outline-none focus:border-gold" />
+        className="w-full md:w-64 px-4 py-2 rounded-xl border border-gold/20 bg-cream/50 mb-4 focus:outline-none focus:border-gold text-sm md:text-base" />
 
-      <div className="glass rounded-xl overflow-hidden">
-        <table className="w-full">
+      <div className="glass rounded-xl overflow-x-auto">
+        <table className="w-full min-w-[500px]">
           <thead><tr className="border-b border-gold/10">
-            <th className="text-left p-4 text-dark/50 text-sm">Name</th>
-            <th className="text-left p-4 text-dark/50 text-sm hidden md:table-cell">Phone</th>
-            <th className="text-left p-4 text-dark/50 text-sm">Status</th>
-            <th className="text-left p-4 text-dark/50 text-sm">Link</th>
-            <th className="text-left p-4 text-dark/50 text-sm">Actions</th>
+            <th className="text-left p-3 md:p-4 text-dark/50 text-xs md:text-sm">Name</th>
+            <th className="text-left p-3 md:p-4 text-dark/50 text-xs md:text-sm hidden md:table-cell">Phone</th>
+            <th className="text-left p-3 md:p-4 text-dark/50 text-xs md:text-sm">Status</th>
+            <th className="text-left p-3 md:p-4 text-dark/50 text-xs md:text-sm">Link</th>
+            <th className="text-left p-3 md:p-4 text-dark/50 text-xs md:text-sm">Actions</th>
           </tr></thead>
           <tbody>
             {guests.map((g) => (
               <tr key={g.id} className="border-b border-gold/5 hover:bg-gold/5">
-                <td className="p-4 font-medium text-dark">{g.full_name}</td>
-                <td className="p-4 text-dark/60 text-sm hidden md:table-cell">{g.phone}</td>
-                <td className="p-4">{getStatusBadge(g.attendance_status)}</td>
-                <td className="p-4">
+                <td className="p-3 md:p-4 font-medium text-dark text-sm md:text-base">{g.full_name}</td>
+                <td className="p-3 md:p-4 text-dark/60 text-xs md:text-sm hidden md:table-cell">{g.phone}</td>
+                <td className="p-3 md:p-4">{getStatusBadge(g.attendance_status)}</td>
+                <td className="p-3 md:p-4">
                   <button onClick={() => { navigator.clipboard.writeText(`${window.location.origin}/${coupleSlug}/invite/${g.slug}`); toast.success('Copied!'); }}
                     className="text-gold text-xs hover:underline">Copy Link</button>
                 </td>
-                <td className="p-4">
-                  <button onClick={() => handleDelete(g.id)} className="text-red-400 text-sm hover:underline">Delete</button>
+                <td className="p-3 md:p-4">
+                  <button onClick={() => handleDelete(g.id)} className="text-red-400 text-xs md:text-sm hover:underline">Delete</button>
                 </td>
               </tr>
             ))}
@@ -147,8 +147,8 @@ export const GuestManagement: FC = () => {
       </div>
 
       {showAdd && (
-        <div className="fixed inset-0 bg-dark/50 flex items-center justify-center z-50" onClick={() => setShowAdd(false)}>
-          <div className="glass rounded-2xl p-6 max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-dark/50 flex items-end sm:items-center justify-center z-50" onClick={() => setShowAdd(false)}>
+          <div className="glass rounded-t-2xl sm:rounded-2xl p-6 max-w-md w-full mx-0 sm:mx-4" onClick={(e) => e.stopPropagation()}>
             <h2 className="font-serif text-xl text-dark mb-4">Add Guest</h2>
             <form onSubmit={handleAdd}>
               <input type="text" placeholder="Full Name *" required value={newGuest.full_name}
@@ -187,7 +187,7 @@ export const WishesManagement: FC = () => {
 
   return (
     <div>
-      <h1 className="font-serif text-3xl text-dark mb-6">Wishes Management</h1>
+      <h1 className="font-serif text-2xl md:text-3xl text-dark mb-6">Wishes Management</h1>
       {wishes.map((w) => (
         <div key={w.id} className="glass rounded-xl p-4 mb-3 flex justify-between items-start">
           <div>
@@ -228,7 +228,7 @@ export const GalleryManagement: FC = () => {
 
   return (
     <div>
-      <h1 className="font-serif text-3xl text-dark mb-6">Gallery Management</h1>
+      <h1 className="font-serif text-2xl md:text-3xl text-dark mb-6">Gallery Management</h1>
       <form onSubmit={handleAdd} className="glass rounded-xl p-4 mb-6 flex gap-3 flex-wrap">
         <input type="url" placeholder="Image URL *" required value={url} onChange={(e) => setUrl(e.target.value)}
           className="flex-1 min-w-[200px] px-4 py-2 rounded-xl border border-gold/20 focus:outline-none focus:border-gold" />
@@ -293,7 +293,7 @@ export const MusicManagement: FC = () => {
 
   return (
     <div>
-      <h1 className="font-serif text-3xl text-dark mb-6">Music Management</h1>
+      <h1 className="font-serif text-2xl md:text-3xl text-dark mb-6">Music Management</h1>
       <form onSubmit={handleAdd} className="glass rounded-xl p-4 mb-6 flex gap-3 flex-wrap">
         <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}
           className="flex-1 min-w-[150px] px-4 py-2 rounded-xl border border-gold/20 focus:outline-none focus:border-gold" />
@@ -357,8 +357,8 @@ export function SimpleCrud({ title, fields, loadFn, createFn, deleteFn }: {
         </div>
       ))}
       {showAdd && (
-        <div className="fixed inset-0 bg-dark/50 flex items-center justify-center z-50" onClick={() => setShowAdd(false)}>
-          <div className="glass rounded-2xl p-6 max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-dark/50 flex items-end sm:items-center justify-center z-50" onClick={() => setShowAdd(false)}>
+          <div className="glass rounded-t-2xl sm:rounded-2xl p-6 max-w-md w-full mx-0 sm:mx-4" onClick={(e) => e.stopPropagation()}>
             <h2 className="font-serif text-xl text-dark mb-4">Add {title}</h2>
             <form onSubmit={handleSubmit}>
               {fields.map((f) => (
@@ -424,8 +424,8 @@ export const RSVPPage: FC = () => {
   if (!data) return <div>Loading...</div>;
   return (
     <div>
-      <h1 className="font-serif text-3xl text-dark mb-6">RSVP Dashboard</h1>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <h1 className="font-serif text-2xl md:text-3xl text-dark mb-6">RSVP Dashboard</h1>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
         <div className="glass rounded-xl p-4 text-center"><div className="text-3xl font-serif text-dark">{data.total}</div><div className="text-dark/50 text-sm">Total</div></div>
         <div className="glass rounded-xl p-4 text-center"><div className="text-3xl font-serif text-green-600">{data.attending}</div><div className="text-dark/50 text-sm">Attending</div></div>
         <div className="glass rounded-xl p-4 text-center"><div className="text-3xl font-serif text-red-500">{data.not_attending}</div><div className="text-dark/50 text-sm">Not Attending</div></div>
@@ -474,8 +474,8 @@ export const SettingsPage: FC = () => {
 
   return (
     <div>
-      <h1 className="font-serif text-3xl text-dark mb-6">Wedding Settings</h1>
-      <div className="glass rounded-2xl p-6 max-w-2xl">
+      <h1 className="font-serif text-2xl md:text-3xl text-dark mb-6">Wedding Settings</h1>
+      <div className="glass rounded-2xl p-4 md:p-6 max-w-2xl">
         {fields.map((f) => (
           <div key={f.key} className="mb-4">
             <label className="block text-dark/70 text-sm mb-1">{f.label}</label>

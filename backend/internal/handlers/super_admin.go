@@ -66,3 +66,35 @@ func AdminListCouplesHandler(c *gin.Context) {
 
 	utils.JSON(c, 200, couples)
 }
+
+// DELETE /api/admin/couples/:coupleSlug — Delete a couple and all cascaded data (super admin only)
+func AdminDeleteCoupleHandler(c *gin.Context) {
+	role, _ := c.Get("role")
+	if role != "super" {
+		utils.Error(c, 403, "Super admin access required")
+		return
+	}
+
+	coupleSlug := c.Param("coupleSlug")
+	ctx := context.Background()
+	db := database.GetDB()
+
+	// Get couple ID for logging
+	var coupleID string
+	var groomName, brideName string
+	err := db.QueryRow(ctx, "SELECT id, groom_name, bride_name FROM couples WHERE slug = $1", coupleSlug).Scan(&coupleID, &groomName, &brideName)
+	if err != nil {
+		utils.Error(c, 404, "Couple not found")
+		return
+	}
+
+	// Delete couple — CASCADE removes guests, rsvps, wishes, gallery, music, gifts, schedule, love story
+	_, err = db.Exec(ctx, "DELETE FROM couples WHERE id = $1", coupleID)
+	if err != nil {
+		utils.Error(c, 500, "Failed to delete couple: "+err.Error())
+		return
+	}
+
+	fmt.Printf("Super admin deleted couple: %s & %s (slug: %s)\n", groomName, brideName, coupleSlug)
+	utils.JSON(c, 200, gin.H{"message": "Couple deleted successfully"})
+}

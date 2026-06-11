@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
@@ -32,6 +33,9 @@ func main() {
 		c.Set("jwtSecret", cfg.JWTSecret)
 		c.Next()
 	})
+
+	// Start background cleanup: delete couples 60 days after wedding
+	go startCleanupJob()
 
 	// Static file serving for uploads
 	r.Static("/uploads", "./uploads")
@@ -80,6 +84,8 @@ func main() {
 
 		// Super admin: list all couples
 		admin.GET("/couples", handlers.AdminListCouplesHandler)
+		// Super admin: delete a couple
+		admin.DELETE("/couples/:coupleSlug", handlers.AdminDeleteCoupleHandler)
 
 		// Couple-scoped admin routes
 		ca := admin.Group("/couples/:coupleSlug")
@@ -162,4 +168,56 @@ func main() {
 	if err := r.Run(":" + cfg.Port); err != nil {
 		log.Fatal("Failed to start server:", err)
 	}
+}
+
+// startCleanupJob runs daily and deletes couples whose wedding was 60+ days ago
+func startCleanupJob() {
+	const cleanupInterval = 24 * time.Hour
+
+	for {
+		if err := cleanupExpiredCouples(); err != nil {
+			log.Printf("Cleanup job error: %v", err)
+		}
+		time.Sleep(cleanupInterval)
+	}
+}
+
+func cleanupExpiredCouples() error {
+	ctx := context.Background()
+	db := database.GetDB()
+
+	// Find couples with wedding_date < NOW() - 60 days
+	rows, err := db.Query(ctx, `
+		SELECT id, slug, groom_name, bride_name, wedding_date::text
+		FROM couples
+		WHERE wedding_date IS NOT NULL
+		  AND wedding_date < (CURRENT_DATE - INTERVAL '60 days')
+	`)
+	if err != nil {
+		return fmt.Errorf("query expired couples: %w", err)
+	}
+	defer rows.Close()
+
+	var deleted int
+	for rows.Next() {
+		var id, slug, groomName, brideName, weddingDate string
+		if err := rows.Scan(&id, &slug, &groomName, &brideName, &weddingDate); err != nil {
+			continue
+		}
+
+		// Delete cascades to all child tables (guests, rsvps, wishes, gallery, etc.)
+		_, err := db.Exec(ctx, "DELETE FROM couples WHERE id = $1", id)
+		if err != nil {
+			log.Printf("Failed to delete couple %s (%s): %v", slug, id, err)
+			continue
+		}
+
+		deleted++
+		log.Printf("Auto-deleted couple: %s & %s (wedding: %s, slug: %s)", groomName, brideName, weddingDate, slug)
+	}
+
+	if deleted > 0 {
+		log.Printf("Cleanup complete: %d expired couple(s) deleted", deleted)
+	}
+	return nil
 }

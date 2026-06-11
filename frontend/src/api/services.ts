@@ -113,6 +113,8 @@ export const adminGetAnalytics = (coupleSlug: string) =>
 // Super admin
 export const adminGetAllCouples = () =>
   apiClient.get<Couple[]>('/admin/couples').then(r => r.data);
+export const adminDeleteCouple = (coupleSlug: string) =>
+  apiClient.delete(`/admin/couples/${coupleSlug}`).then(r => r.data);
 
 export const adminUploadFile = (coupleSlug: string, file: File) => {
   const formData = new FormData();
