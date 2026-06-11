@@ -78,6 +78,9 @@ func main() {
 	{
 		admin.GET("/auth/me", handlers.MeHandler)
 
+		// Super admin: list all couples
+		admin.GET("/couples", handlers.AdminListCouplesHandler)
+
 		// Couple-scoped admin routes
 		ca := admin.Group("/couples/:coupleSlug")
 		{

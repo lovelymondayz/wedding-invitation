@@ -39,6 +39,9 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
     window.location.href = '/admin/login';
   };
 
+  const role = localStorage.getItem('admin_role');
+  const isSuper = role === 'super';
+
   const names = couple ? `${couple.groom_name} & ${couple.bride_name}` : 'Wedding';
 
   return (
@@ -49,9 +52,19 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
           <a href="/" className="font-display text-lg text-cream hover:text-gold transition-colors">
             Wedding<span className="text-gold">Inv</span>
           </a>
+          {isSuper && <span className="text-gold text-xs ml-1">⚡</span>}
           <p className="text-cream/50 text-xs mt-1 truncate">{names}</p>
         </div>
         <nav className="flex-1 p-4 space-y-1">
+          {isSuper && (
+            <a
+              href="/admin/dashboard"
+              className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gold/70 hover:bg-gold/10 hover:text-gold transition-colors"
+            >
+              <span>⚡</span>
+              <span>All Couples</span>
+            </a>
+          )}
           {sidebarItems.map((item) => (
             <a
               key={item.id}

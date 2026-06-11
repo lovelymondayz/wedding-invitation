@@ -4,6 +4,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { HomePage } from './pages/HomePage';
 import { LandingPage, InvitePage } from './pages/LandingPage';
 import { LoginPage } from './pages/admin/LoginPage';
+import { SuperAdminDashboard } from './pages/admin/SuperAdminDashboard';
 import { AdminLayout } from './components/admin/AdminLayout';
 import { Overview, GuestManagement, RSVPPage, WishesManagement, GalleryManagement, MusicManagement, SchedulePage, LoveStoryPage, GiftPage, SettingsPage } from './components/admin/AdminPages';
 
@@ -33,6 +34,7 @@ const App: FC = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/admin/login" element={<LoginPage />} />
+        <Route path="/admin/dashboard" element={<SuperAdminDashboard />} />
         <Route path="/admin/:coupleSlug/*" element={<AdminRoutes />} />
         <Route path="/:coupleSlug/invite/:guestSlug" element={<InvitePage />} />
         <Route path="/:coupleSlug" element={<LandingPage />} />

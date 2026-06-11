@@ -20,9 +20,7 @@ export const LoginPage: FC = () => {
       toast.success('Logged in successfully');
 
       if (res.role === 'super') {
-        // Super admin — redirect to first couple or a dashboard list
-        // For now, redirect to the first known couple
-        navigate('/admin/john-jane-a0eebc99');
+        navigate('/admin/dashboard');
       } else {
         // Couple admin — need to get their couple slug from the couple_id
         // We'll fetch /api/auth/me to get couple info, but for now use stored slug

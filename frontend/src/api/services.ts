@@ -110,6 +110,10 @@ export const adminDeleteGiftInfo = (coupleSlug: string, id: number) =>
 export const adminGetAnalytics = (coupleSlug: string) =>
   apiClient.get<AnalyticsStats>(`/admin/couples/${coupleSlug}/analytics`).then(r => r.data);
 
+// Super admin
+export const adminGetAllCouples = () =>
+  apiClient.get<Couple[]>('/admin/couples').then(r => r.data);
+
 export const adminUploadFile = (coupleSlug: string, file: File) => {
   const formData = new FormData();
   formData.append('file', file);
