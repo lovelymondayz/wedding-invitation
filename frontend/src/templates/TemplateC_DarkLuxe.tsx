@@ -2,6 +2,8 @@ import { FC, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import toast, { Toaster } from 'react-hot-toast';
 import { GallerySection, RSVPSection, WishesSection } from '../components/sections';
+import { MusicPlayer } from '../components/ui/MusicPlayer';
+import { MusicEmbed } from '../components/ui/MusicEmbed';
 import { useMusic } from '../hooks/useMusic';
 import type { TemplateProps } from './types';
 
@@ -12,23 +14,22 @@ import type { TemplateProps } from './types';
  * - Elegant and moody
  */
 export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
-  const { isPlaying, toggle, setMusicUrl } = useMusic();
+  const { isPlaying, volume, toggle, changeVolume, setMusicUrl, source } = useMusic();
 
   useEffect(() => {
-    if (data.music?.url) setMusicUrl(data.music.url);
+    if (data.music?.url) setMusicUrl(data.music.url, data.music.source);
   }, [data.music]);
 
   return (
     <div className="min-h-screen bg-[#111] text-white">
       <Toaster position="top-center" toastOptions={{ style: { background: '#222', color: '#fff', border: '1px solid #333' } }} />
 
-      {data.music && (
-        <button
-          onClick={toggle}
-          className="fixed top-4 right-4 z-40 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-amber-400"
-        >
-          {isPlaying ? '⏸' : '▶'}
-        </button>
+      {data.music && source === 'direct' && (
+        <MusicPlayer isPlaying={isPlaying} volume={volume} onToggle={toggle} onVolumeChange={changeVolume} />
+      )}
+
+      {data.music && source !== 'direct' && (
+        <MusicEmbed url={data.music.url} source={source || 'direct'} title={data.music.title} />
       )}
 
       {/* Hero - Cinematic */}

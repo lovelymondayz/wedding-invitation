@@ -257,6 +257,7 @@ export const MusicManagement: FC = () => {
   const [tracks, setTracks] = useState<MusicTrack[]>([]);
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
+  const [source, setSource] = useState('');
 
   const loadTracks = async () => {
     try {
@@ -269,9 +270,9 @@ export const MusicManagement: FC = () => {
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const newTrack = await api.adminAddMusicTrack(coupleSlug, { title, url });
+      const newTrack = await api.adminAddMusicTrack(coupleSlug, { title, url, source: source || undefined });
       setTracks([...tracks, newTrack]);
-      setTitle(''); setUrl('');
+      setTitle(''); setUrl(''); setSource('');
       toast.success('Track added');
     } catch { toast.error('Failed'); }
   };
@@ -288,20 +289,39 @@ export const MusicManagement: FC = () => {
     try { await api.adminDeleteMusic(coupleSlug, id); setTracks(tracks.filter((t) => t.id !== id)); } catch {}
   };
 
+  const getSourceLabel = (s: string) => {
+    switch (s) {
+      case 'spotify': return '🎵 Spotify';
+      case 'youtube': return '📺 YouTube';
+      case 'soundcloud': return '☁️ SoundCloud';
+      case 'vimeo': return '🎬 Vimeo';
+      default: return '🔗 Direct';
+    }
+  };
+
   return (
     <div>
       <h1 className="font-serif text-2xl md:text-3xl text-dark mb-6">Music Management</h1>
       <form onSubmit={handleAdd} className="glass rounded-xl p-4 mb-6 flex gap-3 flex-wrap">
         <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}
           className="flex-1 min-w-[150px] px-4 py-2 rounded-xl border border-gold/20 focus:outline-none focus:border-gold" />
-        <input type="url" placeholder="MP3 URL *" required value={url} onChange={(e) => setUrl(e.target.value)}
+        <input type="url" placeholder="Spotify/YouTube/MP3 URL *" required value={url} onChange={(e) => setUrl(e.target.value)}
           className="flex-1 min-w-[200px] px-4 py-2 rounded-xl border border-gold/20 focus:outline-none focus:border-gold" />
+        <select value={source} onChange={(e) => setSource(e.target.value)}
+          className="px-4 py-2 rounded-xl border border-gold/20 focus:outline-none focus:border-gold bg-cream/50">
+          <option value="">Auto-detect</option>
+          <option value="spotify">Spotify</option>
+          <option value="youtube">YouTube</option>
+          <option value="soundcloud">SoundCloud</option>
+          <option value="direct">Direct MP3</option>
+        </select>
         <button type="submit" className="btn-gold text-sm !py-2">Add Track</button>
       </form>
       {tracks.map((t) => (
         <div key={t.id} className="glass rounded-xl p-4 mb-3 flex justify-between items-center">
           <div>
             <span className="text-dark font-medium">{t.title || 'Untitled'}</span>
+            <span className="ml-2 text-dark/40 text-xs">{getSourceLabel(t.source)}</span>
             {t.is_active && <span className="ml-2 px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full">Active</span>}
           </div>
           <div className="flex gap-2">

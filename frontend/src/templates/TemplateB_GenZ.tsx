@@ -2,6 +2,8 @@ import { FC, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import toast, { Toaster } from 'react-hot-toast';
 import { HeroSection, CountdownSection, WeddingInfoSection, LoveStorySection, ScheduleSection, GallerySection, RSVPSection, WishesSection, GiftSection, Footer } from '../components/sections';
+import { MusicPlayer } from '../components/ui/MusicPlayer';
+import { MusicEmbed } from '../components/ui/MusicEmbed';
 import { useMusic } from '../hooks/useMusic';
 import type { TemplateProps } from './types';
 
@@ -13,23 +15,22 @@ import type { TemplateProps } from './types';
  * - No glassmorphism, clean spacing
  */
 export const TemplateB_GenZ: FC<TemplateProps> = ({ data }) => {
-  const { isPlaying, toggle, setMusicUrl } = useMusic();
+  const { isPlaying, volume, toggle, changeVolume, setMusicUrl, source } = useMusic();
 
   useEffect(() => {
-    if (data.music?.url) setMusicUrl(data.music.url);
+    if (data.music?.url) setMusicUrl(data.music.url, data.music.source);
   }, [data.music]);
 
   return (
     <div className="min-h-screen bg-white font-sans">
       <Toaster position="top-center" />
 
-      {data.music && (
-        <button
-          onClick={toggle}
-          className="fixed top-4 right-4 z-40 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700"
-        >
-          {isPlaying ? '⏸' : '▶'}
-        </button>
+      {data.music && source === 'direct' && (
+        <MusicPlayer isPlaying={isPlaying} volume={volume} onToggle={toggle} onVolumeChange={changeVolume} />
+      )}
+
+      {data.music && source !== 'direct' && (
+        <MusicEmbed url={data.music.url} source={source || 'direct'} title={data.music.title} />
       )}
 
       {/* Hero - Full screen with big photo */}

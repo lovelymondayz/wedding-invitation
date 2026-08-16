@@ -86,6 +86,7 @@ export interface MusicTrack {
   couple_id: string;
   title: string;
   url: string;
+  source: string; // spotify, youtube, soundcloud, direct
   is_active: boolean;
   sort_order: number;
   created_at: string;

@@ -91,6 +91,7 @@ type MusicTrack struct {
 	CoupleID  string    `json:"couple_id"`
 	Title     string    `json:"title"`
 	URL       string    `json:"url"`
+	Source    string    `json:"source"` // spotify, youtube, direct
 	IsActive  bool      `json:"is_active"`
 	SortOrder int       `json:"sort_order"`
 	CreatedAt time.Time `json:"created_at"`

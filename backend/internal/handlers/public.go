@@ -318,8 +318,8 @@ func GetActiveMusicHandler(c *gin.Context) {
 	}
 
 	var track models.MusicTrack
-	err = db.QueryRow(ctx, "SELECT id, couple_id, title, url, is_active, sort_order, created_at FROM music_tracks WHERE couple_id = $1 AND is_active = true LIMIT 1", coupleID).Scan(
-		&track.ID, &track.CoupleID, &track.Title, &track.URL, &track.IsActive, &track.SortOrder, &track.CreatedAt,
+	err = db.QueryRow(ctx, "SELECT id, couple_id, title, url, source, is_active, sort_order, created_at FROM music_tracks WHERE couple_id = $1 AND is_active = true LIMIT 1", coupleID).Scan(
+		&track.ID, &track.CoupleID, &track.Title, &track.URL, &track.Source, &track.IsActive, &track.SortOrder, &track.CreatedAt,
 	)
 	if err != nil {
 		utils.Error(c, 404, "No active music track found")

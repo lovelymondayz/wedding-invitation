@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"strings"
 
 	"wedding-api/internal/database"
 	"wedding-api/internal/models"
@@ -30,6 +31,7 @@ func AdminCreateMusicHandler(c *gin.Context) {
 	var req struct {
 		Title     string `json:"title"`
 		URL       string `json:"url" binding:"required"`
+		Source    string `json:"source"` // spotify, youtube, direct
 		SortOrder int    `json:"sort_order"`
 	}
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -37,10 +39,15 @@ func AdminCreateMusicHandler(c *gin.Context) {
 		return
 	}
 
+	// Auto-detect source from URL if not provided
+	if req.Source == "" {
+		req.Source = detectMusicSource(req.URL)
+	}
+
 	var track models.MusicTrack
-	err := db.QueryRow(ctx, `INSERT INTO music_tracks (couple_id, title, url, sort_order) VALUES ($1, $2, $3, $4) RETURNING id, couple_id, title, url, is_active, sort_order, created_at`,
-		coupleID, req.Title, req.URL, req.SortOrder,
-	).Scan(&track.ID, &track.CoupleID, &track.Title, &track.URL, &track.IsActive, &track.SortOrder, &track.CreatedAt)
+	err := db.QueryRow(ctx, `INSERT INTO music_tracks (couple_id, title, url, source, sort_order) VALUES ($1, $2, $3, $4, $5) RETURNING id, couple_id, title, url, source, is_active, sort_order, created_at`,
+		coupleID, req.Title, req.URL, req.Source, req.SortOrder,
+	).Scan(&track.ID, &track.CoupleID, &track.Title, &track.URL, &track.Source, &track.IsActive, &track.SortOrder, &track.CreatedAt)
 	if err != nil {
 		utils.Error(c, 500, "Failed to add music track")
 		return
@@ -102,4 +109,21 @@ func AdminDeleteMusicHandler(c *gin.Context) {
 	}
 
 	utils.JSON(c, 200, gin.H{"message": "Music track deleted"})
+}
+
+// detectMusicSource auto-detects the music source from a URL
+func detectMusicSource(url string) string {
+	if strings.Contains(url, "spotify.com") || strings.Contains(url, "open.spotify.com") {
+		return "spotify"
+	}
+	if strings.Contains(url, "youtube.com") || strings.Contains(url, "youtu.be") {
+		return "youtube"
+	}
+	if strings.Contains(url, "soundcloud.com") {
+		return "soundcloud"
+	}
+	if strings.Contains(url, "vimeo.com") {
+		return "vimeo"
+	}
+	return "direct"
 }

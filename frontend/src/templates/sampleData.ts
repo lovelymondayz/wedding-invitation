@@ -61,5 +61,5 @@ export const SAMPLE_DATA = {
     { id: 2, couple_id: 'sample', guest_name: 'Mom', message: 'My babies, forever happiness!', is_approved: true, created_at: '2026-08-16' },
   ],
   gifts: [],
-  music: { id: 1, couple_id: 'sample', title: 'Perfect', url: '', is_active: true, sort_order: 0, created_at: '2026-08-16' },
+  music: { id: 1, couple_id: 'sample', title: 'Perfect', url: '', source: 'direct', is_active: true, sort_order: 0, created_at: '2026-08-16' },
 };
