@@ -17,20 +17,16 @@ export const LoginPage: FC = () => {
       const res = await api.loginAdmin(username, password);
       localStorage.setItem('admin_token', res.token);
       localStorage.setItem('admin_role', res.role);
+      if (res.couple_id) localStorage.setItem('couple_id', res.couple_id);
       toast.success('Logged in successfully');
 
       if (res.role === 'super') {
         navigate('/admin/dashboard');
+      } else if (res.couple_slug) {
+        navigate(`/admin/${res.couple_slug}`);
       } else {
-        // Couple admin — need to get their couple slug from the couple_id
-        // We'll fetch /api/auth/me to get couple info, but for now use stored slug
-        const slug = localStorage.getItem('couple_slug');
-        if (slug) {
-          navigate(`/admin/${slug}`);
-        } else {
-          // Fallback: redirect to home, they can figure it out
-          navigate('/');
-        }
+        toast.success('Logged in! Use your wedding admin link to access the dashboard.');
+        navigate('/');
       }
     } catch {
       toast.error('Invalid credentials');

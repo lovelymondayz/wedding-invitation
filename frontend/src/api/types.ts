@@ -133,6 +133,7 @@ export interface LoginResponse {
   token: string;
   role: string;
   couple_id: string;
+  couple_slug: string;
 }
 
 export interface CreateCoupleResponse {

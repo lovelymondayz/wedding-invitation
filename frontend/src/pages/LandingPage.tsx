@@ -31,9 +31,15 @@ export const LandingPage: FC = () => {
     music: null,
   });
   const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    const slug = coupleSlug || 'john-jane-a0eebc99';
+    const slug = coupleSlug || '';
+    if (!slug) {
+      setNotFound(true);
+      setLoading(false);
+      return;
+    }
     const fetchAll = async () => {
       try {
         const [c, cd, ls, sc, g, w, gi, m] = await Promise.all([
@@ -46,9 +52,14 @@ export const LandingPage: FC = () => {
           api.getGift(slug).catch(() => []),
           api.getMusic(slug).catch(() => null),
         ]);
-        setData({ couple: c, countdown: cd, loveStory: ls, schedule: sc, gallery: g, wishes: w, gifts: gi, music: m });
+        if (!c) {
+          setNotFound(true);
+        } else {
+          setData({ couple: c, countdown: cd, loveStory: ls, schedule: sc, gallery: g, wishes: w, gifts: gi, music: m });
+        }
       } catch (e) {
         console.error('Failed to load data', e);
+        setNotFound(true);
       }
       setLoading(false);
     };
@@ -63,6 +74,19 @@ export const LandingPage: FC = () => {
           transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
           className="w-12 h-12 border-4 border-gold/20 border-t-gold rounded-full"
         />
+      </div>
+    );
+  }
+
+  if (notFound) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-cream px-4">
+        <div className="text-center max-w-md">
+          <div className="text-6xl mb-6">🔍</div>
+          <h1 className="font-display text-3xl text-dark mb-4">Page Not Found</h1>
+          <p className="text-dark/50 mb-8">The wedding page you're looking for doesn't exist. The link may be incorrect or the invitation may have been removed.</p>
+          <a href="/" className="btn-gold">← Back to Home</a>
+        </div>
       </div>
     );
   }

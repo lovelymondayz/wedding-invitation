@@ -18,9 +18,10 @@ type LoginRequest struct {
 }
 
 type LoginResponse struct {
-	Token    string `json:"token"`
-	Role     string `json:"role"`
-	CoupleID string `json:"couple_id"`
+	Token      string `json:"token"`
+	Role       string `json:"role"`
+	CoupleID   string `json:"couple_id"`
+	CoupleSlug string `json:"couple_slug"`
 }
 
 func LoginHandler(c *gin.Context) {
@@ -63,10 +64,17 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 
+	// Get couple slug if couple ID exists
+	var coupleSlug string
+	if coupleIDStr != "" {
+		_ = db.QueryRow(ctx, "SELECT slug FROM couples WHERE id = $1", coupleIDStr).Scan(&coupleSlug)
+	}
+
 	utils.JSON(c, 200, LoginResponse{
-		Token:    token,
-		Role:     role,
-		CoupleID: coupleIDStr,
+		Token:      token,
+		Role:       role,
+		CoupleID:   coupleIDStr,
+		CoupleSlug: coupleSlug,
 	})
 }
 
