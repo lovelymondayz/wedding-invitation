@@ -126,7 +126,7 @@ func CreateCoupleHandler(c *gin.Context) {
 	}
 
 	var coupleID string
-	err = db.QueryRow(ctx, `INSERT INTO couples (slug, groom_name, bride_name, wedding_date, wedding_time, venue_name, venue_address, template_id, is_published) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, true) RETURNING id`,
+	err = db.QueryRow(ctx, `INSERT INTO couples (slug, groom_name, bride_name, wedding_date, wedding_time, venue_name, venue_address, template_id, is_published) VALUES ($1, $2, $3, $4, NULLIF($5, '')::time, $6, $7, $8, true) RETURNING id`,
 		slug, req.GroomName, req.BrideName, req.WeddingDate, req.WeddingTime, req.VenueName, req.VenueAddress, req.TemplateID,
 	).Scan(&coupleID)
 	if err != nil {
