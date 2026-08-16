@@ -33,13 +33,13 @@ func GetCoupleHandler(c *gin.Context) {
 	db := database.GetDB()
 
 	var couple models.Couple
-	err := db.QueryRow(ctx, `SELECT id, slug, groom_name, bride_name, groom_photo_url, bride_photo_url, couple_photo_url, story, quote, wedding_date::text, wedding_time::text, ceremony_time::text, reception_time::text, venue_name, venue_address, maps_url, maps_embed_url, dress_code, music_url, primary_color, secondary_color, bg_image_url, video_url, video_type, is_published, updated_at, created_at FROM couples WHERE slug = $1`, coupleSlug).Scan(
+	err := db.QueryRow(ctx, `SELECT id, slug, groom_name, bride_name, groom_photo_url, bride_photo_url, couple_photo_url, story, quote, wedding_date::text, wedding_time::text, ceremony_time::text, reception_time::text, venue_name, venue_address, maps_url, maps_embed_url, dress_code, music_url, primary_color, secondary_color, bg_image_url, video_url, video_type, is_published, template_id, updated_at, created_at FROM couples WHERE slug = $1`, coupleSlug).Scan(
 		&couple.ID, &couple.Slug, &couple.GroomName, &couple.BrideName, &couple.GroomPhotoURL,
 		&couple.BridePhotoURL, &couple.CouplePhotoURL, &couple.Story, &couple.Quote,
 		&couple.WeddingDate, &couple.WeddingTime, &couple.CeremonyTime, &couple.ReceptionTime,
 		&couple.VenueName, &couple.VenueAddress, &couple.MapsURL, &couple.MapsEmbedURL,
 		&couple.DressCode, &couple.MusicURL, &couple.PrimaryColor, &couple.SecondaryColor,
-		&couple.BgImageURL, &couple.VideoURL, &couple.VideoType, &couple.IsPublished,
+		&couple.BgImageURL, &couple.VideoURL, &couple.VideoType, &couple.IsPublished, &couple.TemplateID,
 		&couple.UpdatedAt, &couple.CreatedAt,
 	)
 	if err != nil {

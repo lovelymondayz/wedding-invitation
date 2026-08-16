@@ -27,8 +27,9 @@ type Couple struct {
 	BgImageURL      string    `json:"bg_image_url"`
 	VideoURL        string    `json:"video_url"`
 	VideoType       string    `json:"video_type"`
-	IsPublished     bool      `json:"is_published"`
-	UpdatedAt       time.Time `json:"updated_at"`
+	IsPublished    bool      `json:"is_published"`
+	TemplateID     int       `json:"template_id"`
+	UpdatedAt      time.Time `json:"updated_at"`
 	CreatedAt       time.Time `json:"created_at"`
 }
 

@@ -257,27 +257,52 @@ export const ScheduleSection: FC<{ events?: Array<{ event_time: string; title: s
 // ── Map Section ──
 export const MapSection: FC<{ couple?: Couple }> = ({ couple }) => {
   const address = couple?.venue_address || '';
-  const mapsUrl = couple?.maps_url || `https://maps.google.com/?q=${encodeURIComponent(address)}`;
+  const mapsUrl = couple?.maps_url || (address ? `https://maps.google.com/?q=${encodeURIComponent(address)}` : '');
+  
+  // Determine what to show
+  const hasEmbed = couple?.maps_embed_url;
+  const hasLink = mapsUrl || address;
+  
+  if (!hasEmbed && !hasLink) {
+    return null;
+  }
+
   return (
     <PageSection id="map" alternate>
       <SectionTitle subtitle="Find your way to our celebration">Location</SectionTitle>
       <div className="max-w-4xl mx-auto">
-        {couple?.maps_embed_url ? (
+        {hasEmbed ? (
           <div className="rounded-2xl overflow-hidden shadow-xl mb-8 ring-1 ring-gold/10">
             <iframe src={couple.maps_embed_url} width="100%" height="400" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Wedding Venue Map" />
           </div>
         ) : (
-          <GlassCard className="h-80 flex items-center justify-center mb-8">
-            <div className="text-center">
-              <p className="text-5xl mb-4">📍</p>
-              <p className="text-dark/30 font-light">Map will be available soon</p>
+          <a 
+            href={mapsUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="block rounded-2xl overflow-hidden shadow-xl mb-8 ring-1 ring-gold/10 hover:ring-gold/30 transition-all bg-gradient-to-br from-blue-50 to-cream group"
+          >
+            <div className="h-80 flex items-center justify-center relative">
+              <img 
+                src={`https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(address)}&zoom=15&size=800x400&maptype=roadmap&markers=color:red%7C${encodeURIComponent(address)}&key=`} 
+                alt="Map preview" 
+                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end justify-center pb-6">
+                <span className="text-white font-medium text-lg flex items-center gap-2">
+                  📍 Open in Google Maps
+                </span>
+              </div>
             </div>
-          </GlassCard>
+          </a>
         )}
         <div className="flex flex-wrap justify-center gap-3">
-          <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="btn-gold text-sm">
-            Open in Google Maps
-          </a>
+          {mapsUrl && (
+            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="btn-gold text-sm">
+              Open in Google Maps
+            </a>
+          )}
           <a href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`} target="_blank" rel="noopener noreferrer" className="btn-outline text-sm">
             Navigate
           </a>
@@ -310,7 +335,7 @@ export const GallerySection: FC<{ photos?: Array<{ url: string; caption: string 
             onClick={() => { setCurrentIndex(i); setLightboxOpen(true); }}
           >
             <div className="rounded-xl overflow-hidden bg-gradient-to-br from-gold/10 to-soft-pink/50 aspect-[4/3] flex items-center justify-center ring-1 ring-gold/10 group-hover:ring-gold/30 transition-all">
-              {photo.url.startsWith('http') ? (
+              {photo.url.startsWith('http') || photo.url.startsWith('/') ? (
                 <img src={photo.url} alt={photo.caption} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
               ) : (
                 <span className="text-5xl opacity-30">📷</span>
