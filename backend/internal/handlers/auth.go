@@ -40,12 +40,12 @@ func LoginHandler(c *gin.Context) {
 		&admin.ID, &admin.Username, &admin.PasswordHash, &coupleID,
 	)
 	if err != nil {
-		utils.Error(c, 401, "Invalid username or password")
+		utils.JSON(c, 401, gin.H{"error": "invalid_credentials", "message": "Invalid username or password"})
 		return
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(admin.PasswordHash), []byte(req.Password)); err != nil {
-		utils.Error(c, 401, "Invalid username or password")
+		utils.JSON(c, 401, gin.H{"error": "wrong_password", "message": "Incorrect password. Please try again."})
 		return
 	}
 

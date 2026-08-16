@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { PageSection, SectionTitle, GlassCard } from '../ui/PageSection';
 import type { Couple, CountdownInfo } from '../../api/types';
 import { submitRSVP, submitWish } from '../../api/services';
+import { useCountdown } from '../../hooks/useCountdown';
 
 // ── Hero Section ──
 export const HeroSection: FC<{ couple?: Couple }> = ({ couple }) => {
@@ -103,50 +104,48 @@ export const HeroSection: FC<{ couple?: Couple }> = ({ couple }) => {
 export const CountdownSection: FC<{ countdown?: CountdownInfo }> = ({ countdown }) => {
   const targetDate = countdown?.wedding_date;
   const targetTime = countdown?.wedding_time;
-  const [time, setTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-
-  useEffect(() => {
-    if (!targetDate) return;
-    const calc = () => {
-      const d = targetTime ? `${targetDate}T${targetTime}` : targetDate;
-      const diff = new Date(d).getTime() - Date.now();
-      if (diff <= 0) return;
-      setTime({
-        days: Math.floor(diff / 86400000),
-        hours: Math.floor((diff / 3600000) % 24),
-        minutes: Math.floor((diff / 60000) % 60),
-        seconds: Math.floor((diff / 1000) % 60),
-      });
-    };
-    calc();
-    const i = setInterval(calc, 1000);
-    return () => clearInterval(i);
-  }, [targetDate, targetTime]);
+  const timeLeft = useCountdown(targetDate, targetTime);
 
   const units = [
-    { label: 'Days', value: time.days },
-    { label: 'Hours', value: time.hours },
-    { label: 'Minutes', value: time.minutes },
-    { label: 'Seconds', value: time.seconds },
+    { label: 'Days', value: timeLeft.days },
+    { label: 'Hours', value: timeLeft.hours },
+    { label: 'Minutes', value: timeLeft.minutes },
+    { label: 'Seconds', value: timeLeft.seconds },
   ];
+
+  const isWeddingDay = timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0;
+
+  if (!targetDate) return null;
 
   return (
     <PageSection id="countdown" alternate>
       <SectionTitle subtitle="Counting down to our special day">Save The Date</SectionTitle>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-3xl mx-auto">
-        {units.map(({ label, value }) => (
-          <motion.div
-            key={label}
-            whileHover={{ y: -3 }}
-            className="glass rounded-2xl text-center py-8 px-4 transition-shadow hover:shadow-lg"
-          >
-            <div className="font-display text-5xl md:text-6xl lg:text-7xl text-gold mb-3 tabular-nums tracking-tight">
-              {String(value).padStart(2, '0')}
-            </div>
-            <div className="text-dark/40 text-xs md:text-sm uppercase tracking-[0.2em] font-light">{label}</div>
-          </motion.div>
-        ))}
-      </div>
+      {isWeddingDay ? (
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="text-center py-12"
+        >
+          <div className="text-6xl mb-4">💒</div>
+          <h3 className="font-serif text-3xl text-dark">Today's the Day!</h3>
+          <p className="text-dark/60 mt-2">We're getting married today!</p>
+        </motion.div>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-3xl mx-auto">
+          {units.map(({ label, value }) => (
+            <motion.div
+              key={label}
+              whileHover={{ y: -3 }}
+              className="glass rounded-2xl text-center py-8 px-4 transition-shadow hover:shadow-lg"
+            >
+              <div className="font-display text-5xl md:text-6xl lg:text-7xl text-gold mb-3 tabular-nums tracking-tight">
+                {String(value).padStart(2, '0')}
+              </div>
+              <div className="text-dark/40 text-xs md:text-sm uppercase tracking-[0.2em] font-light">{label}</div>
+            </motion.div>
+          ))}
+        </div>
+      )}
     </PageSection>
   );
 };
