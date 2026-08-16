@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import toast, { Toaster } from 'react-hot-toast';
-import { GallerySection, RSVPSection, WishesSection } from '../components/sections';
+import { GallerySection, RSVPSection, WishesSection, CountdownSection } from '../components/sections';
 import { MusicPlayer } from '../components/ui/MusicPlayer';
 import { MusicEmbed } from '../components/ui/MusicEmbed';
 import { useMusic } from '../hooks/useMusic';
@@ -89,19 +89,7 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
       <section className="py-20 px-6 border-t border-white/5">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-serif text-white mb-10">Counting Down</h2>
-          <div className="grid grid-cols-4 gap-4 md:gap-8">
-            {[
-              { label: 'Days', value: '...' },
-              { label: 'Hours', value: '...' },
-              { label: 'Min', value: '...' },
-              { label: 'Sec', value: '...' },
-            ].map((item, i) => (
-              <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                <div className="text-3xl md:text-5xl font-serif text-amber-400">{item.value}</div>
-                <div className="text-xs uppercase tracking-wider text-white/30 mt-2">{item.label}</div>
-              </div>
-            ))}
-          </div>
+          <CountdownSection countdown={data.countdown ?? undefined} />
         </div>
       </section>
 
