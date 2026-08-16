@@ -1,6 +1,7 @@
 #!/bin/bash
 # Manual update script — pull latest, rebuild, restart
 # Usage: ./scripts/update.sh [--force]
+# Prerequisite: git push origin main (run this AFTER pushing)
 
 set -e
 

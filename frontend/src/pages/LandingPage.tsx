@@ -1,14 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import toast, { Toaster } from 'react-hot-toast';
 import { InvitePopup } from '../components/ui/InvitePopup';
-import { FloatingNav } from '../components/ui/FloatingNav';
-import { HeroSection, CountdownSection, WeddingInfoSection, LoveStorySection, ScheduleSection, MapSection, GallerySection, VideoSection, RSVPSection, WishesSection, GiftSection, Footer } from '../components/sections';
-import { useCountdown } from '../hooks/useCountdown';
-import { useMusic } from '../hooks/useMusic';
 import * as api from '../api/services';
 import type { Couple, CountdownInfo, LoveStoryEvent, ScheduleEvent, GalleryPhoto, Wish, GiftInfo, MusicTrack, Guest } from '../api/types';
+import { getTemplate } from '../templates/registry';
+import type { TemplateProps } from '../templates/types';
 
 interface LandingPageData {
   couple: Couple | null;
@@ -35,8 +32,6 @@ export const LandingPage: FC = () => {
   });
   const [loading, setLoading] = useState(true);
 
-  const { isPlaying, volume, toggle, changeVolume, setMusicUrl } = useMusic();
-
   useEffect(() => {
     const slug = coupleSlug || 'john-jane-a0eebc99';
     const fetchAll = async () => {
@@ -52,7 +47,6 @@ export const LandingPage: FC = () => {
           api.getMusic(slug).catch(() => null),
         ]);
         setData({ couple: c, countdown: cd, loveStory: ls, schedule: sc, gallery: g, wishes: w, gifts: gi, music: m });
-        if (m?.url) { setMusicUrl(m.url); }
       } catch (e) {
         console.error('Failed to load data', e);
       }
@@ -73,35 +67,11 @@ export const LandingPage: FC = () => {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-cream">
-      <Toaster position="top-center" toastOptions={{ style: { background: '#FFF8F0', color: '#2C1810' } }} />
+  // Dynamic template dispatch
+  const templateId = data.couple?.template_id || 1;
+  const Template = getTemplate(templateId).component;
 
-      {data.music && (
-        <button
-          onClick={toggle}
-          className="fixed top-4 right-4 z-40 glass rounded-full w-10 h-10 flex items-center justify-center text-gold hover:bg-gold/10"
-          title={isPlaying ? 'Pause' : 'Play'}
-        >
-          {isPlaying ? '⏸' : '▶'}
-        </button>
-      )}
-
-      <HeroSection couple={data.couple ?? undefined} />
-      <CountdownSection countdown={data.countdown ?? undefined} />
-      <WeddingInfoSection couple={data.couple ?? undefined} />
-      <LoveStorySection events={data.loveStory} />
-      <ScheduleSection events={data.schedule} />
-      <GallerySection photos={data.gallery} />
-      {(data.couple?.video_url) && <VideoSection videoUrl={data.couple.video_url} videoType={data.couple.video_type} />}
-      <MapSection couple={data.couple ?? undefined} />
-      <RSVPSection coupleSlug={coupleSlug || ''} />
-      <WishesSection wishes={data.wishes} coupleSlug={coupleSlug || ''} />
-      <GiftSection gifts={data.gifts} />
-      <Footer couple={data.couple ?? undefined} />
-      <FloatingNav />
-    </div>
-  );
+  return <Template data={data} />;
 };
 
 export const InvitePage: FC = () => {

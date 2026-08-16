@@ -3,10 +3,12 @@ import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import * as api from '../api/services';
 import type { CreateCoupleResponse } from '../api/types';
+import { getAllTemplates } from '../templates/registry';
 
 export const HomePage: FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState(1);
   const [form, setForm] = useState({
     groom_name: '',
     bride_name: '',
@@ -16,7 +18,10 @@ export const HomePage: FC = () => {
     venue_address: '',
     username: '',
     password: '',
+    template_id: 1,
   });
+
+  const templates = getAllTemplates();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +32,6 @@ export const HomePage: FC = () => {
       localStorage.setItem('couple_slug', res.slug);
       localStorage.setItem('admin_role', res.role);
       toast.success('Wedding invitation created!');
-      // Redirect to their new site
       window.location.href = `/${res.slug}`;
     } catch (err: any) {
       toast.error(err.response?.data?.error || 'Failed to create invitation');
@@ -133,8 +137,8 @@ export const HomePage: FC = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { step: '01', title: 'Fill in Your Details', desc: 'Enter the bride & groom names, wedding date, and venue. Takes less than 2 minutes.' },
-              { step: '02', title: 'Get Your Unique Link', desc: 'Instantly receive a beautiful wedding page with a unique URL for your celebration.' },
+              { step: '01', title: 'Choose a Template', desc: 'Pick from beautiful designs that match your style. Preview before committing.' },
+              { step: '02', title: 'Fill in Your Details', desc: 'Enter the bride & groom names, wedding date, and venue. Takes less than 2 minutes.' },
               { step: '03', title: 'Share with Guests', desc: 'Share the link with guests. They can view details, RSVP, and leave wishes.' },
             ].map((item, i) => (
               <motion.div
@@ -211,12 +215,43 @@ export const HomePage: FC = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="glass rounded-2xl p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto"
+            className="glass rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-6">
               <h2 className="font-display text-2xl text-dark">Create Your Invitation</h2>
               <button onClick={() => setShowForm(false)} className="text-dark/30 hover:text-dark text-2xl">&times;</button>
+            </div>
+
+            {/* Template Selector */}
+            <div className="mb-6">
+              <label className="block text-dark/70 text-sm mb-3 font-medium">Choose a Template *</label>
+              <div className="grid grid-cols-3 gap-3">
+                {templates.map((t) => (
+                  <button
+                    key={t.id}
+                    type="button"
+                    onClick={() => {
+                      setSelectedTemplate(t.id);
+                      setForm({ ...form, template_id: t.id });
+                    }}
+                    className={`relative rounded-xl border-2 p-3 text-left transition-all ${
+                      selectedTemplate === t.id
+                        ? 'border-gold bg-gold/5'
+                        : 'border-gold/10 hover:border-gold/30'
+                    }`}
+                  >
+                    <div className="aspect-[4/3] rounded-lg bg-gradient-to-br from-gold/10 to-soft-pink mb-2 flex items-center justify-center text-2xl">
+                      {t.id === 1 ? '💎' : t.id === 2 ? '⚡' : '🌙'}
+                    </div>
+                    <p className="text-dark text-sm font-medium">{t.name}</p>
+                    <p className="text-dark/40 text-xs">{t.description}</p>
+                    {selectedTemplate === t.id && (
+                      <div className="absolute top-2 right-2 w-5 h-5 bg-gold rounded-full flex items-center justify-center text-white text-xs">✓</div>
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">

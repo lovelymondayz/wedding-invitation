@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import * as api from '../../api/services';
 import type { Guest, Wish, GalleryPhoto, MusicTrack, ScheduleEvent, LoveStoryEvent, GiftInfo, Couple, AnalyticsStats, PaginatedResponse } from '../../api/types';
+import { BatchUpload } from './BatchUpload';
+import { getAllTemplates } from '../../templates/registry';
+import type { TemplateDefinition } from '../../templates/types';
 
 // Helper to get coupleSlug from URL
 const useCoupleSlug = () => useParams<{ coupleSlug: string }>().coupleSlug || '';
@@ -211,16 +214,9 @@ export const WishesManagement: FC = () => {
 export const GalleryManagement: FC = () => {
   const coupleSlug = useCoupleSlug();
   const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
-  const [url, setUrl] = useState('');
-  const [caption, setCaption] = useState('');
 
   const loadPhotos = async () => { try { setPhotos(await api.getGallery(coupleSlug).catch(() => [])); } catch {} };
   useEffect(() => { loadPhotos(); }, [coupleSlug]);
-
-  const handleAdd = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try { await api.adminAddGalleryPhoto(coupleSlug, { url, caption }); setUrl(''); setCaption(''); loadPhotos(); toast.success('Added'); } catch { toast.error('Failed'); }
-  };
 
   const handleDelete = async (id: number) => {
     try { await api.adminDeleteGalleryPhoto(coupleSlug, id); loadPhotos(); toast.success('Deleted'); } catch { toast.error('Failed'); }
@@ -229,18 +225,18 @@ export const GalleryManagement: FC = () => {
   return (
     <div>
       <h1 className="font-serif text-2xl md:text-3xl text-dark mb-6">Gallery Management</h1>
-      <form onSubmit={handleAdd} className="glass rounded-xl p-4 mb-6 flex gap-3 flex-wrap">
-        <input type="url" placeholder="Image URL *" required value={url} onChange={(e) => setUrl(e.target.value)}
-          className="flex-1 min-w-[200px] px-4 py-2 rounded-xl border border-gold/20 focus:outline-none focus:border-gold" />
-        <input type="text" placeholder="Caption" value={caption} onChange={(e) => setCaption(e.target.value)}
-          className="flex-1 min-w-[150px] px-4 py-2 rounded-xl border border-gold/20 focus:outline-none focus:border-gold" />
-        <button type="submit" className="btn-gold text-sm !py-2">Add Photo</button>
-      </form>
+      
+      {/* Batch uploader */}
+      <div className="mb-6">
+        <BatchUpload coupleSlug={coupleSlug} onUploaded={loadPhotos} />
+      </div>
+
+      {/* Existing photos grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {photos.map((p) => (
           <div key={p.id} className="relative rounded-xl overflow-hidden group">
             <div className="aspect-square bg-gradient-to-br from-gold/20 to-soft-pink flex items-center justify-center">
-              {p.url.startsWith('http') ? <img src={p.url} alt={p.caption} className="w-full h-full object-cover" /> : <span className="text-3xl">📷</span>}
+              {p.url.startsWith('http') || p.url.startsWith('/') ? <img src={p.url} alt={p.caption} className="w-full h-full object-cover" /> : <span className="text-3xl">📷</span>}
             </div>
             {p.caption && <p className="text-dark/50 text-xs mt-1 text-center">{p.caption}</p>}
             <button onClick={() => handleDelete(p.id)}
@@ -450,10 +446,29 @@ export const RSVPPage: FC = () => {
 export const SettingsPage: FC = () => {
   const coupleSlug = useCoupleSlug();
   const [settings, setSettings] = useState<Partial<Couple>>({});
-  useEffect(() => { api.getCouple(coupleSlug).then(setSettings).catch(() => {}); }, [coupleSlug]);
+  const [currentTemplate, setCurrentTemplate] = useState(1);
+  const templates = getAllTemplates();
+  
+  useEffect(() => { 
+    api.getCouple(coupleSlug).then(c => { 
+      setSettings(c); 
+      setCurrentTemplate(c.template_id || 1);
+    }).catch(() => {}); 
+  }, [coupleSlug]);
 
   const handleSave = async () => {
-    try { await api.adminUpdateCouple(coupleSlug, settings); toast.success('Settings saved'); } catch { toast.error('Failed to save'); }
+    try { 
+      await api.adminUpdateCouple(coupleSlug, { ...settings, template_id: currentTemplate }); 
+      toast.success('Settings saved'); 
+    } catch { 
+      toast.error('Failed to save'); 
+    }
+  };
+
+  const handleTemplateChange = async (id: number) => {
+    setCurrentTemplate(id);
+    // Preview toast — save button commits
+    toast.success(`Template: ${templates.find(t => t.id === id)?.name} — click Save to apply`);
   };
 
   const fields = [
@@ -475,6 +490,35 @@ export const SettingsPage: FC = () => {
   return (
     <div>
       <h1 className="font-serif text-2xl md:text-3xl text-dark mb-6">Wedding Settings</h1>
+      
+      {/* Template changer */}
+      <div className="glass rounded-2xl p-4 md:p-6 max-w-2xl mb-6">
+        <h2 className="font-serif text-xl text-dark mb-4">Template</h2>
+        <div className="grid grid-cols-3 gap-3">
+          {templates.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => handleTemplateChange(t.id)}
+              className={`relative rounded-xl border-2 p-3 text-left transition-all ${
+                currentTemplate === t.id
+                  ? 'border-gold bg-gold/5'
+                  : 'border-gold/10 hover:border-gold/30'
+              }`}
+            >
+              <div className="aspect-[4/3] rounded-lg bg-gradient-to-br from-gold/10 to-soft-pink mb-2 flex items-center justify-center text-2xl">
+                {t.id === 1 ? '💎' : t.id === 2 ? '⚡' : '🌙'}
+              </div>
+              <p className="text-dark text-sm font-medium">{t.name}</p>
+              <p className="text-dark/40 text-xs">{t.description}</p>
+              {currentTemplate === t.id && (
+                <div className="absolute top-2 right-2 w-5 h-5 bg-gold rounded-full flex items-center justify-center text-white text-xs">✓</div>
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Regular settings */}
       <div className="glass rounded-2xl p-4 md:p-6 max-w-2xl">
         {fields.map((f) => (
           <div key={f.key} className="mb-4">

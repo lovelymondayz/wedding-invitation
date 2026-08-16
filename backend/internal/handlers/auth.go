@@ -107,6 +107,7 @@ func CreateCoupleHandler(c *gin.Context) {
 		VenueAddress string `json:"venue_address"`
 		Username     string `json:"username" binding:"required"`
 		Password     string `json:"password" binding:"required"`
+		TemplateID   int    `json:"template_id"` // optional, defaults to 1
 	}
 	if err := c.ShouldBindJSON(&req); err != nil {
 		utils.Error(c, 400, "Invalid request body")
@@ -125,8 +126,8 @@ func CreateCoupleHandler(c *gin.Context) {
 	}
 
 	var coupleID string
-	err = db.QueryRow(ctx, `INSERT INTO couples (slug, groom_name, bride_name, wedding_date, wedding_time, venue_name, venue_address, is_published) VALUES ($1, $2, $3, $4, $5, $6, $7, true) RETURNING id`,
-		slug, req.GroomName, req.BrideName, req.WeddingDate, req.WeddingTime, req.VenueName, req.VenueAddress,
+	err = db.QueryRow(ctx, `INSERT INTO couples (slug, groom_name, bride_name, wedding_date, wedding_time, venue_name, venue_address, template_id, is_published) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, true) RETURNING id`,
+		slug, req.GroomName, req.BrideName, req.WeddingDate, req.WeddingTime, req.VenueName, req.VenueAddress, req.TemplateID,
 	).Scan(&coupleID)
 	if err != nil {
 		utils.Error(c, 500, "Failed to create couple: "+err.Error())

@@ -30,6 +30,10 @@ migrate:
 psql:
 	docker compose exec db psql -U wedding -d wedding
 
+# Deploy (push to GitHub first, then run this)
+deploy:
+	bash /root/hermes/scripts/update.sh wedding-invitation
+
 # Utility
 logs:
 	docker compose logs -f

@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"os"
 	"time"
 
 	"wedding-api/internal/config"
@@ -138,29 +137,8 @@ func main() {
 			// Analytics
 			ca.GET("/analytics", handlers.AnalyticsHandler)
 
-			// File upload
-			ca.POST("/upload", func(c *gin.Context) {
-				file, err := c.FormFile("file")
-				if err != nil {
-					c.JSON(400, gin.H{"error": "No file uploaded"})
-					return
-				}
-
-				uploadDir := "./uploads"
-				os.MkdirAll(uploadDir, 0755)
-				filename := fmt.Sprintf("%d_%s", time.Now().Unix(), file.Filename)
-				filepath := fmt.Sprintf("%s/%s", uploadDir, filename)
-
-				if err := c.SaveUploadedFile(file, filepath); err != nil {
-					c.JSON(500, gin.H{"error": "Failed to save file"})
-					return
-				}
-
-				c.JSON(200, gin.H{
-					"url":  "/uploads/" + filename,
-					"name": file.Filename,
-				})
-			})
+			// Batch image upload
+			ca.POST("/upload", handlers.BatchUploadHandler)
 		}
 	}
 

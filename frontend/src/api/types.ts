@@ -24,6 +24,7 @@ export interface Couple {
   video_url: string;
   video_type: string;
   is_published: boolean;
+  template_id?: number;
   updated_at: string;
   created_at: string;
 }
