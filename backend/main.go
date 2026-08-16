@@ -80,6 +80,7 @@ func main() {
 	admin.Use(middleware.AuthMiddleware(cfg.JWTSecret))
 	{
 		admin.GET("/auth/me", handlers.MeHandler)
+		admin.POST("/auth/reset-password", handlers.ResetPasswordHandler)
 
 		// Super admin: list all couples
 		admin.GET("/couples", handlers.AdminListCouplesHandler)

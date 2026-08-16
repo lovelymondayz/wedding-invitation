@@ -141,6 +141,7 @@ export interface CreateCoupleResponse {
   slug: string;
   token: string;
   role: string;
+  password: string;
   created_at: string;
 }
 

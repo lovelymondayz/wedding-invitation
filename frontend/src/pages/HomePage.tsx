@@ -9,6 +9,9 @@ import { SAMPLE_DATA } from '../templates/sampleData';
 export const HomePage: FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [createdSlug, setCreatedSlug] = useState('');
+  const [createdPassword, setCreatedPassword] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState(1);
   const [form, setForm] = useState({
     groom_name: '',
@@ -30,11 +33,9 @@ export const HomePage: FC = () => {
     setLoading(true);
     try {
       const res: CreateCoupleResponse = await api.createCouple(form);
-      localStorage.setItem('admin_token', res.token);
-      localStorage.setItem('couple_slug', res.slug);
-      localStorage.setItem('admin_role', res.role);
-      toast.success('Wedding invitation created!');
-      window.location.href = `/${res.slug}`;
+      setCreatedSlug(res.slug);
+      setCreatedPassword(res.password);
+      setShowSuccess(true);
     } catch (err: any) {
       toast.error(err.response?.data?.error || 'Failed to create invitation');
     }
@@ -335,6 +336,51 @@ export const HomePage: FC = () => {
                 {loading ? 'Creating...' : '✨ Create My Invitation'}
               </button>
             </form>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Success Modal */}
+      {showSuccess && (
+        <div className="fixed inset-0 bg-dark/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            className="glass rounded-2xl p-8 max-w-md w-full text-center"
+          >
+            <div className="text-6xl mb-4">🎉</div>
+            <h2 className="font-display text-2xl text-dark mb-2">You're All Set!</h2>
+            <p className="text-dark/60 text-sm mb-6">Your wedding invitation is live. Save these credentials — you'll need them to login.</p>
+            
+            <div className="bg-cream/80 rounded-xl p-4 mb-4 text-left">
+              <div className="mb-3">
+                <p className="text-dark/40 text-xs mb-1">Your Page</p>
+                <p className="text-dark font-medium text-sm">wedding.arjism.com/{createdSlug}</p>
+              </div>
+              <div className="mb-3">
+                <p className="text-dark/40 text-xs mb-1">Login URL</p>
+                <p className="text-dark font-medium text-sm">wedding.arjism.com/admin/login</p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <p className="text-dark/40 text-xs mb-1">Username</p>
+                  <p className="text-dark font-bold text-sm">{form.username}</p>
+                </div>
+                <div>
+                  <p className="text-dark/40 text-xs mb-1">Password</p>
+                  <p className="text-dark font-bold text-sm">{createdPassword}</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex gap-3">
+              <a href={`/${createdSlug}`} target="_blank" className="btn-outline flex-1 text-sm !py-3">
+                View Page
+              </a>
+              <a href="/admin/login" className="btn-gold flex-1 text-sm !py-3">
+                Go to Login
+              </a>
+            </div>
           </motion.div>
         </div>
       )}

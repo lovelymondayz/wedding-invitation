@@ -95,12 +95,19 @@ func MeHandler(c *gin.Context) {
 		return
 	}
 
+	// Get couple slug if couple admin
+	var coupleSlug string
+	if coupleID != "" {
+		_ = db.QueryRow(ctx, "SELECT slug FROM couples WHERE id = $1", coupleID).Scan(&coupleSlug)
+	}
+
 	utils.JSON(c, 200, gin.H{
-		"id":        admin.ID,
-		"username":  admin.Username,
-		"role":      role,
-		"couple_id": coupleID,
-		"created_at": admin.CreatedAt,
+		"id":          admin.ID,
+		"username":    admin.Username,
+		"role":        role,
+		"couple_id":   coupleID,
+		"couple_slug": coupleSlug,
+		"created_at":  admin.CreatedAt,
 	})
 }
 
@@ -163,8 +170,43 @@ func CreateCoupleHandler(c *gin.Context) {
 		"slug":       slug,
 		"token":      token,
 		"role":       "couple",
+		"password":   req.Password,
 		"created_at": time.Now().UTC(),
 	})
+}
+
+// ResetPasswordHandler — POST /api/admin/auth/reset-password (super admin only)
+func ResetPasswordHandler(c *gin.Context) {
+	var req struct {
+		Username    string `json:"username" binding:"required"`
+		NewPassword string `json:"new_password" binding:"required,min=6"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		utils.Error(c, 400, "Invalid request body")
+		return
+	}
+
+	ctx := context.Background()
+	db := database.GetDB()
+
+	hash, err := bcrypt.GenerateFromPassword([]byte(req.NewPassword), bcrypt.DefaultCost)
+	if err != nil {
+		utils.Error(c, 500, "Failed to hash password")
+		return
+	}
+
+	result, err := db.Exec(ctx, "UPDATE admins SET password_hash = $1 WHERE username = $2", string(hash), req.Username)
+	if err != nil {
+		utils.Error(c, 500, "Failed to reset password")
+		return
+	}
+
+	if result.RowsAffected() == 0 {
+		utils.Error(c, 404, "Admin not found")
+		return
+	}
+
+	utils.JSON(c, 200, gin.H{"message": "Password reset successfully"})
 }
 
 func uuidShort() string {
