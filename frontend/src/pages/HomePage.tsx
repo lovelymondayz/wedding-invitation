@@ -1,9 +1,10 @@
 import { FC, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import * as api from '../api/services';
 import type { CreateCoupleResponse } from '../api/types';
 import { getAllTemplates } from '../templates/registry';
+import { SAMPLE_DATA } from '../templates/sampleData';
 
 export const HomePage: FC = () => {
   const [showForm, setShowForm] = useState(false);
@@ -22,6 +23,7 @@ export const HomePage: FC = () => {
   });
 
   const templates = getAllTemplates();
+  const SelectedTemplateComponent = templates.find(t => t.id === selectedTemplate)?.component || templates[0].component;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -215,7 +217,7 @@ export const HomePage: FC = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="glass rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            className="glass rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-6">
@@ -223,7 +225,7 @@ export const HomePage: FC = () => {
               <button onClick={() => setShowForm(false)} className="text-dark/30 hover:text-dark text-2xl">&times;</button>
             </div>
 
-            {/* Template Selector */}
+            {/* Template Selector with Live Preview */}
             <div className="mb-6">
               <label className="block text-dark/70 text-sm mb-3 font-medium">Choose a Template *</label>
               <div className="grid grid-cols-3 gap-3">
@@ -251,6 +253,16 @@ export const HomePage: FC = () => {
                     )}
                   </button>
                 ))}
+              </div>
+            </div>
+
+            {/* Live Preview */}
+            <div className="mb-6">
+              <label className="block text-dark/70 text-sm mb-3 font-medium">Live Preview</label>
+              <div className="rounded-xl border border-gold/20 overflow-hidden bg-white" style={{ height: '320px' }}>
+                <div className="transform scale-[0.35] origin-top-left" style={{ width: '285%', height: '285%' }}>
+                  <SelectedTemplateComponent data={SAMPLE_DATA} />
+                </div>
               </div>
             </div>
 

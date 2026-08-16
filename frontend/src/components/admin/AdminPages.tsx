@@ -6,6 +6,7 @@ import type { Guest, Wish, GalleryPhoto, MusicTrack, ScheduleEvent, LoveStoryEve
 import { BatchUpload } from './BatchUpload';
 import { getAllTemplates } from '../../templates/registry';
 import type { TemplateDefinition } from '../../templates/types';
+import { SAMPLE_DATA } from '../../templates/sampleData';
 
 // Helper to get coupleSlug from URL
 const useCoupleSlug = () => useParams<{ coupleSlug: string }>().coupleSlug || '';
@@ -448,6 +449,7 @@ export const SettingsPage: FC = () => {
   const [settings, setSettings] = useState<Partial<Couple>>({});
   const [currentTemplate, setCurrentTemplate] = useState(1);
   const templates = getAllTemplates();
+  const CurrentTemplateComponent = templates.find(t => t.id === currentTemplate)?.component || templates[0].component;
   
   useEffect(() => { 
     api.getCouple(coupleSlug).then(c => { 
@@ -467,7 +469,6 @@ export const SettingsPage: FC = () => {
 
   const handleTemplateChange = async (id: number) => {
     setCurrentTemplate(id);
-    // Preview toast — save button commits
     toast.success(`Template: ${templates.find(t => t.id === id)?.name} — click Save to apply`);
   };
 
@@ -494,7 +495,7 @@ export const SettingsPage: FC = () => {
       {/* Template changer */}
       <div className="glass rounded-2xl p-4 md:p-6 max-w-2xl mb-6">
         <h2 className="font-serif text-xl text-dark mb-4">Template</h2>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-3 mb-4">
           {templates.map((t) => (
             <button
               key={t.id}
@@ -515,6 +516,13 @@ export const SettingsPage: FC = () => {
               )}
             </button>
           ))}
+        </div>
+        
+        {/* Live Preview */}
+        <div className="rounded-xl border border-gold/20 overflow-hidden bg-white" style={{ height: '320px' }}>
+          <div className="transform scale-[0.35] origin-top-left" style={{ width: '285%', height: '285%' }}>
+            <CurrentTemplateComponent data={SAMPLE_DATA} />
+          </div>
         </div>
       </div>
 
