@@ -255,12 +255,16 @@ export const ScheduleSection: FC<{ events?: Array<{ event_time: string; title: s
 };
 
 // ── Map Section ──
+function isValidEmbedUrl(url: string): boolean {
+  return url.includes('/embed') || url.includes('maps.google.com/maps') || url.includes('google.com/maps/embed');
+}
+
 export const MapSection: FC<{ couple?: Couple }> = ({ couple }) => {
   const address = couple?.venue_address || '';
   const mapsUrl = couple?.maps_url || (address ? `https://maps.google.com/?q=${encodeURIComponent(address)}` : '');
   
-  // Determine what to show
-  const hasEmbed = couple?.maps_embed_url;
+  // Only use iframe for actual embed URLs, not goo.gl short links
+  const hasEmbed = couple?.maps_embed_url && isValidEmbedUrl(couple.maps_embed_url);
   const hasLink = mapsUrl || address;
   
   if (!hasEmbed && !hasLink) {
