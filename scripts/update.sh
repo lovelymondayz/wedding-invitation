@@ -32,10 +32,10 @@ else
 fi
 
 echo "🔨 Building..."
-$COMPOSE build
+$COMPOSE build --no-cache
 
-echo "🚀 Restarting..."
-$COMPOSE up -d
+echo "🚀 Recreating with latest image..."
+$COMPOSE up -d --force-recreate
 
 echo "⏳ Waiting for services..."
 sleep 5
