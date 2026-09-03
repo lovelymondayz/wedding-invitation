@@ -8,6 +8,8 @@ services:
     image: postgres:16-alpine
     container_name: wedding-db
     restart: unless-stopped
+    env_file:
+      - .env
     logging:
       driver: json-file
       options:
@@ -39,6 +41,9 @@ services:
       dockerfile: Dockerfile
     container_name: wedding-backend
     restart: unless-stopped
+    env_file:
+      - .env
+      - ./backend/.env
     environment:
       DATABASE_URL: postgres://${DB_USER:-wedding}:${DB_PASSWORD:-wedding123}@db:5432/${DB_NAME:-wedding}?sslmode=disable
       JWT_SECRET: ${JWT_SECRET:-change-this-to-a-random-64-char-secret-key-in-production}
@@ -67,6 +72,8 @@ services:
       dockerfile: Dockerfile
     container_name: wedding-frontend
     restart: unless-stopped
+    env_file:
+      - .env
     ports:
       - "3000:3000"
     depends_on:

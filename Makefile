@@ -1,38 +1,24 @@
-.PHONY: dev build up down migrate psql
+.PHONY: dev build up down logs clean deploy
 
 # Start development environment
 dev:
-	docker compose up -d db
-	cd backend && go run . &
+	cd backend && go run ./cmd/server &
 	cd frontend && npm run dev
-	@echo "Backend: http://localhost:8080 | Frontend: http://localhost:5173"
+	@echo "Backend: http://localhost:8080 | Frontend: http://localhost:3000"
 
 # Production build
 build:
 	cd frontend && npm ci && npm run build
-	cd backend && go build -o wedding-api .
+	cd backend && go build -o wedding-api ./cmd/server
 	@echo "Build complete"
 
 # Docker operations
 up:
 	docker compose up -d --build
-	@echo "App running at http://localhost:3000"
+	@echo "Wedding Invitation running — FE: http://localhost:3000, BE: http://localhost:8080"
 
 down:
 	docker compose down
-
-# Database
-migrate:
-	docker compose up -d db
-	@sleep 2
-	docker compose exec db psql -U wedding -d wedding -c "$$(cat backend/migrations/001_init.sql)"
-
-psql:
-	docker compose exec db psql -U wedding -d wedding
-
-# Deploy (push to GitHub first, then run this)
-deploy:
-	bash /root/hermes/scripts/update.sh wedding-invitation
 
 # Utility
 logs:
@@ -41,3 +27,6 @@ logs:
 clean:
 	docker compose down -v
 	rm -rf frontend/dist backend/wedding-api
+
+deploy:
+	./update.sh

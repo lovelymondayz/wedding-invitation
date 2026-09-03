@@ -38,3 +38,6 @@ EXPOSE 8080
 
 # Run
 CMD ["./wedding-api"]
+
+# Run as non-root
+USER 1000:1000
