@@ -1,10 +1,10 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import type { Config } from 'tailwindcss'
+
+const config: Config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        // Primitives — warm cream to dark brown
         neutral: {
           0: '#FFFFFF',
           50: '#FFFBF5',
@@ -18,7 +18,6 @@ module.exports = {
           800: '#2C1810',
           900: '#1a0e08',
         },
-        // Primitives — gold brand
         gold: {
           50: '#FDF8F0',
           100: '#F5E6D0',
@@ -29,11 +28,6 @@ module.exports = {
           700: '#A67B5B',
           800: '#8B6347',
         },
-        // Legacy compatibility tokens (used by existing components)
-        dark: '#2C1810',
-        cream: '#FFF8F0',
-        'soft-pink': '#F5E6E0',
-        // Semantic
         bg: '#FFFBF5',
         surface: '#FFFFFF',
         'surface-alt': '#FFF8F0',
@@ -77,26 +71,9 @@ module.exports = {
         base: '200ms',
         slow: '320ms',
       },
-      transitionTimingFunction: {
-        standard: 'cubic-bezier(0.4, 0, 0.2, 1)',
-        emphasized: 'cubic-bezier(0.2, 0, 0, 1)',
-      },
-      keyframes: {
-        fadeUp: {
-          from: { opacity: '0', transform: 'translateY(30px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
-          '33%': { transform: 'translateY(-6px) rotate(1deg)' },
-          '66%': { transform: 'translateY(3px) rotate(-1deg)' },
-        },
-      },
-      animation: {
-        fadeUp: 'fadeUp 0.8s ease-out',
-        float: 'float 6s ease-in-out infinite',
-      },
     },
   },
   plugins: [require('@tailwindcss/forms')],
-};
+}
+
+export default config

@@ -43,14 +43,14 @@ export const HomePage: FC = () => {
   };
 
   const features = [
-    { icon: '💌', title: 'Digital Invitations', desc: 'Beautiful personalized invitation pages for every guest' },
-    { icon: '✅', title: 'RSVP Management', desc: 'Track attendance, meal preferences, and guest counts' },
-    { icon: '💬', title: 'Guest Wishes', desc: 'Let guests leave heartfelt messages on your wall' },
-    { icon: '📷', title: 'Photo Gallery', desc: 'Share your favorite moments in a stunning gallery' },
-    { icon: '🎵', title: 'Background Music', desc: 'Set the mood with your favorite song' },
-    { icon: '🎁', title: 'Gift Registry', desc: 'Receive gifts via bank transfer or e-wallet' },
-    { icon: '📅', title: 'Event Schedule', desc: 'Keep guests informed with timeline & venue details' },
-    { icon: '❤️', title: 'Love Story', desc: 'Share your journey together with a beautiful timeline' },
+    { title: 'Digital Invitations', desc: 'Beautiful personalized invitation pages for every guest' },
+    { title: 'RSVP Management', desc: 'Track attendance, meal preferences, and guest counts' },
+    { title: 'Guest Wishes', desc: 'Let guests leave heartfelt messages on your wall' },
+    { title: 'Photo Gallery', desc: 'Share your favorite moments in a stunning gallery' },
+    { title: 'Background Music', desc: 'Set the mood with your favorite song' },
+    { title: 'Gift Registry', desc: 'Receive gifts via bank transfer or e-wallet' },
+    { title: 'Event Schedule', desc: 'Keep guests informed with timeline & venue details' },
+    { title: 'Love Story', desc: 'Share your journey together with a beautiful timeline' },
   ];
 
   return (
@@ -74,7 +74,7 @@ export const HomePage: FC = () => {
 
       {/* Hero */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#F5E6E0] via-[#FFF8F0] to-[#F5E6E0]" />
+        <div className="absolute inset-0 bg-surface-alt" />
         <div className="absolute inset-0 opacity-[0.02]"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232C1810'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/svg%3E")`,
@@ -180,7 +180,6 @@ export const HomePage: FC = () => {
                 transition={{ delay: i * 0.05 }}
                 className="bg-surface border border-border rounded-xl p-6 hover:border-border-strong text-center"
               >
-                <div className="text-3xl mb-3">{f.icon}</div>
                 <h3 className="font-display text-text text-lg mb-2">{f.title}</h3>
                 <p className="text-text-muted text-sm leading-relaxed">{f.desc}</p>
               </motion.div>
@@ -214,7 +213,7 @@ export const HomePage: FC = () => {
 
       {/* Create Form Modal */}
       {showForm && (
-        <div className="fixed inset-0 bg-dark/60 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={() => setShowForm(false)}>
+        <div className="fixed inset-0 bg-dark/60 flex items-center justify-center z-50 p-4" onClick={() => setShowForm(false)}>
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -244,7 +243,7 @@ export const HomePage: FC = () => {
                         : 'border-border hover:border-primary/30'
                     }`}
                   >
-                    <div className="aspect-[4/3] rounded-lg bg-gradient-to-br from-primary/10 to-surface-alt mb-2 flex items-center justify-center text-2xl">
+                    <div className="aspect-[4/3] rounded-lg bg-primary/10 to-surface-alt mb-2 flex items-center justify-center text-2xl">
                       {t.id === 1 ? '💎' : t.id === 2 ? '⚡' : '🌙'}
                     </div>
                     <p className="text-text text-sm font-medium">{t.name}</p>
@@ -342,7 +341,7 @@ export const HomePage: FC = () => {
 
       {/* Success Modal */}
       {showSuccess && (
-        <div className="fixed inset-0 bg-dark/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-dark/60 flex items-center justify-center z-50 p-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}

@@ -1,4 +1,4 @@
-.PHONY: dev build up down logs clean deploy
+.PHONY: dev build up down logs clean deploy test
 
 # Start development environment
 dev:
@@ -30,3 +30,8 @@ clean:
 
 deploy:
 	./update.sh
+
+test:
+	cd backend && go test ./...
+	cd frontend && npm run build
+	@echo "Tests passed"

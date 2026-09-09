@@ -12,7 +12,7 @@ func JSON(c *gin.Context, status int, data interface{}) {
 }
 
 func Error(c *gin.Context, status int, message string) {
-	c.JSON(status, gin.H{"error": message})
+	c.JSON(status, gin.H{"error": gin.H{"code": "ERROR", "message": message}})
 }
 
 func Slugify(name string) string {

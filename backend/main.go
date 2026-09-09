@@ -40,14 +40,14 @@ func main() {
 	r.Static("/uploads", "./uploads")
 
 	// Health check
-	r.GET("/api/health", func(c *gin.Context) {
+	r.GET("/api/v1/health", func(c *gin.Context) {
 		c.JSON(200, gin.H{"status": "ok"})
 	})
 
 	// ═══════════════════════════════════════════
 	// PUBLIC API
 	// ═══════════════════════════════════════════
-	public := r.Group("/api")
+	public := r.Group("/api/v1")
 	{
 		// Couple creation (from homepage form)
 		public.POST("/couples", handlers.CreateCoupleHandler)
@@ -76,7 +76,7 @@ func main() {
 	// ═══════════════════════════════════════════
 	// ADMIN API (JWT required)
 	// ═══════════════════════════════════════════
-	admin := r.Group("/api/admin")
+	admin := r.Group("/api/v1/admin")
 	admin.Use(middleware.AuthMiddleware(cfg.JWTSecret))
 	{
 		admin.GET("/auth/me", handlers.MeHandler)

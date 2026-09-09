@@ -53,7 +53,7 @@ export const BatchUpload: FC<BatchUploadProps> = ({ coupleSlug, onUploaded }) =>
       compressed.forEach(f => formData.append('images', f));
 
       // Upload
-      const res = await fetch(`/api/admin/couples/${coupleSlug}/upload`, {
+      const res = await fetch(`/api/v1/admin/couples/${coupleSlug}/upload`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('admin_token') || ''}`,
