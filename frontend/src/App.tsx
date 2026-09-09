@@ -30,7 +30,7 @@ const AdminRoutes: FC = () => {
 const App: FC = () => {
   return (
     <BrowserRouter>
-      <Toaster position="top-center" toastOptions={{ duration: 3000, style: { background: '#FFF8F0', color: '#2C1810', border: '1px solid rgba(212,165,116,0.2)' } }} />
+      <Toaster position="top-center" toastOptions={{ duration: 3000, style: { background: 'var(--color-surface)', color: 'var(--color-text)', border: '1px solid var(--color-border)' } }} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/admin/login" element={<LoginPage />} />

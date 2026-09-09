@@ -21,7 +21,7 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
   }, [data.music]);
 
   return (
-    <div className="min-h-screen bg-[#111] text-white">
+    <div className="min-h-screen bg-[#111] text-surface">
       <Toaster position="top-center" toastOptions={{ style: { background: '#222', color: '#fff', border: '1px solid #333' } }} />
 
       {data.music && source === 'direct' && (
@@ -53,7 +53,7 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif text-white mb-6 leading-tight"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display text-surface mb-6 leading-tight"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
             {data.couple?.groom_name || 'Groom'}<span className="text-amber-400 italic"> & </span>{data.couple?.bride_name || 'Bride'}
@@ -77,7 +77,7 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="text-white/30 text-sm mt-4 tracking-wider uppercase"
+              className="text-surface/30 text-sm mt-4 tracking-wider uppercase"
             >
               {data.couple.venue_name}
             </motion.p>
@@ -88,7 +88,7 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
       {/* Countdown - Minimal dark */}
       <section className="py-20 px-6 border-t border-white/5">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-serif text-white mb-10">Counting Down</h2>
+          <h2 className="text-3xl md:text-4xl font-display text-surface mb-10">Counting Down</h2>
           <CountdownSection countdown={data.countdown ?? undefined} />
         </div>
       </section>
@@ -96,19 +96,19 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
       {/* Wedding Info */}
       <section className="py-20 px-6 bg-black/30">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-serif text-white mb-10">The Celebration</h2>
+          <h2 className="text-3xl md:text-4xl font-display text-surface mb-10">The Celebration</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-xl bg-white/5 border border-white/10">
+            <div className="p-6 rounded-xl bg-surface/5 border border-white/10">
               <p className="text-xs uppercase tracking-wider text-amber-400/70 mb-3">When</p>
-              <p className="text-xl font-serif text-white">
+              <p className="text-xl font-display text-surface">
                 {data.couple?.wedding_date ? new Date(data.couple.wedding_date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) : 'TBA'}
               </p>
-              {data.couple?.wedding_time && <p className="text-white/50 text-sm mt-1">at {data.couple.wedding_time}</p>}
+              {data.couple?.wedding_time && <p className="text-surface/50 text-sm mt-1">at {data.couple.wedding_time}</p>}
             </div>
-            <div className="p-6 rounded-xl bg-white/5 border border-white/10">
+            <div className="p-6 rounded-xl bg-surface/5 border border-white/10">
               <p className="text-xs uppercase tracking-wider text-amber-400/70 mb-3">Where</p>
-              <p className="text-xl font-serif text-white">{data.couple?.venue_name || 'TBA'}</p>
-              {data.couple?.venue_address && <p className="text-white/50 text-sm mt-1">{data.couple.venue_address}</p>}
+              <p className="text-xl font-display text-surface">{data.couple?.venue_name || 'TBA'}</p>
+              {data.couple?.venue_address && <p className="text-surface/50 text-sm mt-1">{data.couple.venue_address}</p>}
             </div>
           </div>
         </div>
@@ -118,7 +118,7 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
       {data.gallery.length > 0 && (
         <section className="py-20 px-6">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif text-white text-center mb-10">Gallery</h2>
+            <h2 className="text-3xl md:text-4xl font-display text-surface text-center mb-10">Gallery</h2>
             <GallerySection photos={data.gallery} />
           </div>
         </section>
@@ -127,8 +127,8 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
       {/* RSVP */}
       <section className="py-20 px-6 bg-black/30">
         <div className="max-w-xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">Join Us</h2>
-          <p className="text-white/40 mb-8">Your presence is the only gift we need</p>
+          <h2 className="text-3xl md:text-4xl font-display text-surface mb-4">Join Us</h2>
+          <p className="text-surface/40 mb-8">Your presence is the only gift we need</p>
           <RSVPSection />
         </div>
       </section>
@@ -136,19 +136,19 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
       {/* Wishes */}
       <section className="py-20 px-6">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-serif text-white text-center mb-10">Wishes</h2>
+          <h2 className="text-3xl md:text-4xl font-display text-surface text-center mb-10">Wishes</h2>
           <WishesSection wishes={data.wishes} />
         </div>
       </section>
 
       {/* Footer */}
       <footer className="py-10 px-6 border-t border-white/5 text-center">
-        <p className="text-white/40 text-sm">
-          <span className="text-amber-400/60 font-serif">{data.couple?.groom_name}</span>
+        <p className="text-surface/40 text-sm">
+          <span className="text-amber-400/60 font-display">{data.couple?.groom_name}</span>
           {' & '}
-          <span className="text-amber-400/60 font-serif">{data.couple?.bride_name}</span>
+          <span className="text-amber-400/60 font-display">{data.couple?.bride_name}</span>
         </p>
-        <p className="text-white/20 text-xs mt-2 tracking-widest uppercase">WeddingInv</p>
+        <p className="text-surface/20 text-xs mt-2 tracking-widest uppercase">WeddingInv</p>
       </footer>
     </div>
   );

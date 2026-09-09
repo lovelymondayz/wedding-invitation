@@ -58,18 +58,18 @@ export const LoginPage: FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cream px-4">
+    <div className="min-h-screen flex items-center justify-center bg-surface-alt px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="glass rounded-2xl p-8 max-w-md w-full"
+        className="bg-surface border border-border rounded-xl p-8 max-w-md w-full"
       >
         <div className="text-center mb-8">
-          <a href="/" className="font-display text-2xl text-dark">
-            Wedding<span className="text-gold">Inv</span>
+          <a href="/" className="font-display text-2xl text-text">
+            Wedding<span className="text-primary">Inv</span>
           </a>
         </div>
-        <h1 className="font-serif text-3xl text-dark text-center mb-6">Admin Login</h1>
+        <h1 className="font-display text-3xl text-text text-center mb-6">Admin Login</h1>
 
         <AnimatePresence>
           {error && (
@@ -87,21 +87,21 @@ export const LoginPage: FC = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-dark/70 text-sm mb-2">Username</label>
+            <label className="block text-text/70 text-sm mb-2">Username</label>
             <input type="text" required value={username} onChange={(e) => { setUsername(e.target.value); setError(null); }}
-              className={`w-full px-4 py-3 rounded-xl border bg-cream/50 focus:outline-none transition-colors ${error?.toLowerCase().includes('username') ? 'border-red-300 focus:border-red-400' : 'border-gold/20 focus:border-gold'}`} />
+              className={`w-full px-4 py-3 rounded-xl border bg-surface-alt/50 focus:outline-none transition-colors ${error?.toLowerCase().includes('username') ? 'border-red-300 focus:border-red-400' : 'border-border-strong focus:border-primary'}`} />
           </div>
           <div className="mb-6">
-            <label className="block text-dark/70 text-sm mb-2">Password</label>
+            <label className="block text-text/70 text-sm mb-2">Password</label>
             <input type="password" required value={password} onChange={(e) => { setPassword(e.target.value); setError(null); }}
-              className={`w-full px-4 py-3 rounded-xl border bg-cream/50 focus:outline-none transition-colors ${error?.toLowerCase().includes('password') ? 'border-red-300 focus:border-red-400' : 'border-gold/20 focus:border-gold'}`} />
+              className={`w-full px-4 py-3 rounded-xl border bg-surface-alt/50 focus:outline-none transition-colors ${error?.toLowerCase().includes('password') ? 'border-red-300 focus:border-red-400' : 'border-border-strong focus:border-primary'}`} />
           </div>
-          <button type="submit" disabled={loading} className="btn-gold w-full">
+          <button type="submit" disabled={loading} className="btn-primary w-full">
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-        <p className="text-dark/30 text-xs text-center mt-4">
-          <a href="/" className="hover:text-gold">← Back to home</a>
+        <p className="text-text/30 text-xs text-center mt-4">
+          <a href="/" className="hover:text-primary">← Back to home</a>
         </p>
       </motion.div>
     </div>

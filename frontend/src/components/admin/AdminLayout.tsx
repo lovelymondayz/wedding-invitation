@@ -52,21 +52,21 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
   }));
 
   return (
-    <div className="min-h-screen bg-cream flex flex-col md:flex-row">
+    <div className="min-h-screen bg-surface-alt flex flex-col md:flex-row">
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex w-64 bg-dark text-cream/80 flex-col shrink-0 min-h-screen sticky top-0">
+      <aside className="hidden md:flex w-64 bg-dark text-surface/80 flex-col shrink-0 min-h-screen sticky top-0">
         <div className="p-6 border-b border-cream/10">
-          <a href="/" className="font-display text-lg text-cream hover:text-gold transition-colors">
-            Wedding<span className="text-gold">Inv</span>
+          <a href="/" className="font-display text-lg text-surface hover:text-primary transition-colors">
+            Wedding<span className="text-primary">Inv</span>
           </a>
-          {isSuper && <span className="text-gold text-xs ml-1">⚡</span>}
-          <p className="text-cream/50 text-xs mt-1 truncate">{names}</p>
+          {isSuper && <span className="text-primary text-xs ml-1">⚡</span>}
+          <p className="text-surface/50 text-xs mt-1 truncate">{names}</p>
         </div>
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           {isSuper && (
             <a
               href="/admin/dashboard"
-              className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gold/70 hover:bg-gold/10 hover:text-gold transition-colors"
+              className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-primary/70 hover:bg-primary/10 hover:text-primary transition-colors"
             >
               <span>⚡</span>
               <span>All Couples</span>
@@ -78,8 +78,8 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
               href={item.href}
               className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-colors ${
                 item.active
-                  ? 'bg-gold/20 text-gold'
-                  : 'hover:bg-cream/5'
+                  ? 'bg-primary/20 text-primary'
+                  : 'hover:bg-surface-alt/5'
               }`}
             >
               <span>{item.icon}</span>
@@ -91,28 +91,28 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
           <a
             href={`/${coupleSlug}`}
             target="_blank"
-            className="flex items-center gap-3 px-4 py-2 text-sm text-cream/40 hover:text-cream/80"
+            className="flex items-center gap-3 px-4 py-2 text-sm text-text-subtle hover:text-surface/80"
           >
             👁 View Site
           </a>
-          <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-cream/40 hover:text-cream/80">
+          <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-text-subtle hover:text-surface/80">
             ← Logout
           </button>
         </div>
       </aside>
 
       {/* Mobile Header */}
-      <div className="md:hidden sticky top-0 z-50 bg-dark text-cream">
+      <div className="md:hidden sticky top-0 z-50 bg-dark text-surface">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2 min-w-0">
-            <a href="/" className="font-display text-base text-cream">
-              Wedding<span className="text-gold">Inv</span>
+            <a href="/" className="font-display text-base text-surface">
+              Wedding<span className="text-primary">Inv</span>
             </a>
-            {isSuper && <span className="text-gold text-xs">⚡</span>}
+            {isSuper && <span className="text-primary text-xs">⚡</span>}
           </div>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="text-cream/80 p-1"
+            className="text-surface/80 p-1"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? (
@@ -131,7 +131,7 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
                 <a
                   href="/admin/dashboard"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gold/70 hover:bg-gold/10"
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-primary/70 hover:bg-primary/10"
                 >
                   <span>⚡</span><span>All Couples</span>
                 </a>
@@ -142,7 +142,7 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm ${
-                    item.active ? 'bg-gold/20 text-gold' : 'text-cream/70 hover:bg-cream/5'
+                    item.active ? 'bg-primary/20 text-primary' : 'text-surface/70 hover:bg-surface-alt/5'
                   }`}
                 >
                   <span>{item.icon}</span><span>{item.label}</span>
@@ -153,11 +153,11 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
               <a
                 href={`/${coupleSlug}`}
                 target="_blank"
-                className="flex items-center gap-3 px-4 py-2 text-sm text-cream/40"
+                className="flex items-center gap-3 px-4 py-2 text-sm text-text-subtle"
               >
                 👁 View Site
               </a>
-              <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-cream/40">
+              <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-text-subtle">
                 ← Logout
               </button>
             </div>
@@ -180,7 +180,7 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
               key={item.id}
               href={item.href}
               className={`flex flex-col items-center gap-0.5 py-2 px-2 rounded-lg min-w-0 ${
-                item.active ? 'text-gold' : 'text-cream/50'
+                item.active ? 'text-primary' : 'text-surface/50'
               }`}
             >
               <span className="text-lg leading-none">{item.icon}</span>
@@ -190,7 +190,7 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
           {/* More button for remaining items */}
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="flex flex-col items-center gap-0.5 py-2 px-2 rounded-lg text-cream/50"
+            className="flex flex-col items-center gap-0.5 py-2 px-2 rounded-lg text-surface/50"
           >
             <span className="text-lg leading-none">⋯</span>
             <span className="text-[10px]">More</span>

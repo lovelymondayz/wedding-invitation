@@ -72,7 +72,7 @@ export const LandingPage: FC = () => {
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-          className="w-12 h-12 border-4 border-gold/20 border-t-gold rounded-full"
+          className="w-12 h-12 border-4 border-border-strong border-t-gold rounded-full"
         />
       </div>
     );
@@ -80,12 +80,12 @@ export const LandingPage: FC = () => {
 
   if (notFound) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-cream px-4">
+      <div className="min-h-screen flex items-center justify-center bg-surface-alt px-4">
         <div className="text-center max-w-md">
           <div className="text-6xl mb-6">🔍</div>
-          <h1 className="font-display text-3xl text-dark mb-4">Page Not Found</h1>
-          <p className="text-dark/50 mb-8">The wedding page you're looking for doesn't exist. The link may be incorrect or the invitation may have been removed.</p>
-          <a href="/" className="btn-gold">← Back to Home</a>
+          <h1 className="font-display text-3xl text-text mb-4">Page Not Found</h1>
+          <p className="text-text-muted mb-8">The wedding page you're looking for doesn't exist. The link may be incorrect or the invitation may have been removed.</p>
+          <a href="/" className="btn-primary">← Back to Home</a>
         </div>
       </div>
     );

@@ -12,7 +12,7 @@ import type { TemplateProps } from './types';
  * - White background, Inter sans-serif only
  * - Bold accent colors (indigo/orange)
  * - Instagram-story vibe, big photo hero
- * - No glassmorphism, clean spacing
+ * - No bg-surface border border-bordermorphism, clean spacing
  */
 export const TemplateB_GenZ: FC<TemplateProps> = ({ data }) => {
   const { isPlaying, volume, toggle, changeVolume, setMusicUrl, source } = useMusic();
@@ -22,7 +22,7 @@ export const TemplateB_GenZ: FC<TemplateProps> = ({ data }) => {
   }, [data.music]);
 
   return (
-    <div className="min-h-screen bg-white font-sans">
+    <div className="min-h-screen bg-surface font-sans">
       <Toaster position="top-center" />
 
       {data.music && source === 'direct' && (
@@ -88,13 +88,13 @@ export const TemplateB_GenZ: FC<TemplateProps> = ({ data }) => {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">When & Where</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl bg-gray-50">
+            <div className="p-6 rounded-xl bg-gray-50">
               <p className="text-xs uppercase tracking-wider text-indigo-500 mb-2">Date</p>
               <p className="text-lg font-medium text-gray-900">
                 {data.couple?.wedding_date ? new Date(data.couple.wedding_date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) : 'TBA'}
               </p>
             </div>
-            <div className="p-6 rounded-2xl bg-gray-50">
+            <div className="p-6 rounded-xl bg-gray-50">
               <p className="text-xs uppercase tracking-wider text-indigo-500 mb-2">Venue</p>
               <p className="text-lg font-medium text-gray-900">{data.couple?.venue_name || 'TBA'}</p>
               {data.couple?.venue_address && <p className="text-sm text-gray-500 mt-1">{data.couple.venue_address}</p>}
@@ -139,8 +139,8 @@ export const TemplateB_GenZ: FC<TemplateProps> = ({ data }) => {
       )}
 
       {/* Footer */}
-      <footer className="py-10 px-6 bg-gray-900 text-white/60 text-center text-sm">
-        <p className="font-medium text-white mb-2">{data.couple?.groom_name} & {data.couple?.bride_name}</p>
+      <footer className="py-10 px-6 bg-gray-900 text-text-muted text-center text-sm">
+        <p className="font-medium text-surface mb-2">{data.couple?.groom_name} & {data.couple?.bride_name}</p>
         <p>Made with ❤️ on WeddingInv</p>
       </footer>
     </div>

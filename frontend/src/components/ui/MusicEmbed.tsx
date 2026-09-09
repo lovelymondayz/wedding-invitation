@@ -42,7 +42,7 @@ export const MusicEmbed: FC<MusicEmbedProps> = ({ url, source, title }) => {
 
   if (!embedUrl) {
     return (
-      <div className="fixed top-4 right-4 z-40 glass rounded-xl p-3 text-dark/60 text-sm">
+      <div className="fixed top-4 right-4 z-40 bg-surface border border-border rounded-xl p-3 text-text-muted text-sm">
         Unsupported music source
       </div>
     );
@@ -69,17 +69,17 @@ export const MusicEmbed: FC<MusicEmbedProps> = ({ url, source, title }) => {
       initial={{ x: 100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ delay: 1 }}
-      className="fixed top-4 right-4 z-40 glass rounded-2xl p-3 flex flex-col items-end gap-2 max-w-[280px]"
+      className="fixed top-4 right-4 z-40 bg-surface border border-border rounded-xl p-3 flex flex-col items-end gap-2 max-w-[280px]"
     >
       <div className="flex items-center gap-2 w-full">
         <button
           onClick={togglePlay}
-          className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center text-gold hover:bg-gold/30 transition-colors shrink-0"
+          className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary hover:bg-primary/30 transition-colors shrink-0"
           title={isPlaying ? 'Pause' : 'Play'}
         >
           {isPlaying ? '⏸' : '▶'}
         </button>
-        <span className="text-dark/60 text-xs truncate flex-1">{title || 'Music'}</span>
+        <span className="text-text-muted text-xs truncate flex-1">{title || 'Music'}</span>
       </div>
       <iframe
         ref={iframeRef}

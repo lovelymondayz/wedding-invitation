@@ -12,7 +12,7 @@ export const HeroSection: FC<{ couple?: Couple }> = ({ couple }) => {
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background layers */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#F5E6E0] via-[#FFF8F0] to-[#F5E6E0]" />
+      <div className="absolute inset-0 bg-surface-alt" />
       <div className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232C1810'%3E%3Ccircle cx='40' cy='40' r='1.5'/%3E%3C/g%3E%3C/svg%3E")`,
@@ -21,9 +21,9 @@ export const HeroSection: FC<{ couple?: Couple }> = ({ couple }) => {
       />
 
       {/* Decorative florals */}
-      <div className="absolute top-1/4 left-[5%] text-gold/10 text-[12rem] font-display select-none animate-float" style={{ animationDelay: '0s' }}>❀</div>
-      <div className="absolute bottom-1/4 right-[5%] text-gold/10 text-[10rem] font-display select-none animate-float" style={{ animationDelay: '2s' }}>❀</div>
-      <div className="absolute top-[15%] right-[15%] text-gold/5 text-[8rem] font-display select-none animate-float" style={{ animationDelay: '4s' }}>✦</div>
+      <div className="absolute top-1/4 left-[5%] text-primary/10 text-[12rem] font-display select-none animate-float" style={{ animationDelay: '0s' }}>❀</div>
+      <div className="absolute bottom-1/4 right-[5%] text-primary/10 text-[10rem] font-display select-none animate-float" style={{ animationDelay: '2s' }}>❀</div>
+      <div className="absolute top-[15%] right-[15%] text-primary/5 text-[8rem] font-display select-none animate-float" style={{ animationDelay: '4s' }}>✦</div>
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl">
@@ -33,9 +33,9 @@ export const HeroSection: FC<{ couple?: Couple }> = ({ couple }) => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="ornament-divider mb-8">
-            <span className="text-gold/40 text-sm tracking-[0.4em] uppercase font-light">✦ ✦ ✦</span>
+            <span className="text-primary/40 text-sm tracking-[0.4em] uppercase font-light">✦ ✦ ✦</span>
           </div>
-          <p className="text-dark/40 uppercase tracking-[0.35em] text-xs md:text-sm mb-8 font-light">
+          <p className="text-text-muted uppercase tracking-[0.35em] text-xs md:text-sm mb-8 font-light">
             We're Getting Married
           </p>
         </motion.div>
@@ -44,7 +44,7 @@ export const HeroSection: FC<{ couple?: Couple }> = ({ couple }) => {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.1, 0.25, 1.0] }}
-          className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-dark mb-6 leading-tight"
+          className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-text mb-6 leading-tight"
         >
           {names}
         </motion.h1>
@@ -55,8 +55,8 @@ export const HeroSection: FC<{ couple?: Couple }> = ({ couple }) => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9, duration: 0.8 }}
           >
-            <div className="w-12 h-px bg-gold/40 mx-auto mb-6" />
-            <p className="text-gold font-light text-lg md:text-xl tracking-wider">
+            <div className="w-12 h-px bg-primary/40 mx-auto mb-6" />
+            <p className="text-primary font-light text-lg md:text-xl tracking-wider">
               {new Date(couple.wedding_date).toLocaleDateString('en-US', {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
               })}
@@ -69,7 +69,7 @@ export const HeroSection: FC<{ couple?: Couple }> = ({ couple }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.1 }}
-            className="font-script italic text-xl md:text-2xl text-dark/50 max-w-xl mx-auto mt-8 leading-relaxed"
+            className="font-script italic text-xl md:text-2xl text-text-muted max-w-xl mx-auto mt-8 leading-relaxed"
           >
             "{couple.quote}"
           </motion.p>
@@ -85,15 +85,15 @@ export const HeroSection: FC<{ couple?: Couple }> = ({ couple }) => {
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-8 h-12 border border-dark/10 rounded-full mx-auto flex justify-center pt-3"
+            className="w-8 h-12 border border-border rounded-full mx-auto flex justify-center pt-3"
           >
             <motion.div
               animate={{ opacity: [0.3, 1, 0.3] }}
               transition={{ duration: 2.5, repeat: Infinity }}
-              className="w-1.5 h-3 bg-gold/60 rounded-full"
+              className="w-1.5 h-3 bg-primary/60 rounded-full"
             />
           </motion.div>
-          <p className="text-dark/20 text-xs mt-3 font-light tracking-wider">SCROLL</p>
+          <p className="text-text-subtle text-xs mt-3 font-light tracking-wider">SCROLL</p>
         </motion.div>
       </div>
     </section>
@@ -127,8 +127,8 @@ export const CountdownSection: FC<{ countdown?: CountdownInfo }> = ({ countdown 
           className="text-center py-12"
         >
           <div className="text-6xl mb-4">💒</div>
-          <h3 className="font-serif text-3xl text-dark">Today's the Day!</h3>
-          <p className="text-dark/60 mt-2">We're getting married today!</p>
+          <h3 className="font-display text-3xl text-text">Today's the Day!</h3>
+          <p className="text-text-muted mt-2">We're getting married today!</p>
         </motion.div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-3xl mx-auto">
@@ -136,12 +136,12 @@ export const CountdownSection: FC<{ countdown?: CountdownInfo }> = ({ countdown 
             <motion.div
               key={label}
               whileHover={{ y: -3 }}
-              className="glass rounded-2xl text-center py-8 px-4 transition-shadow hover:shadow-lg"
+              className="bg-surface border border-border rounded-xl text-center py-8 px-4 transition-shadow hover:shadow-md"
             >
-              <div className="font-display text-5xl md:text-6xl lg:text-7xl text-gold mb-3 tabular-nums tracking-tight">
+              <div className="font-display text-5xl md:text-6xl lg:text-7xl text-primary mb-3 tabular-nums tracking-tight">
                 {String(value).padStart(2, '0')}
               </div>
-              <div className="text-dark/40 text-xs md:text-sm uppercase tracking-[0.2em] font-light">{label}</div>
+              <div className="text-text-muted text-xs md:text-sm uppercase tracking-[0.2em] font-light">{label}</div>
             </motion.div>
           ))}
         </div>
@@ -169,8 +169,8 @@ export const WeddingInfoSection: FC<{ couple?: Couple }> = ({ couple }) => {
         {info.map(({ icon, title, value }) => (
           <GlassCard key={title} hover>
             <div className="text-3xl mb-4">{icon}</div>
-            <h3 className="font-display text-xl text-dark mb-2">{title}</h3>
-            <p className="text-dark/50 text-sm leading-relaxed">{value}</p>
+            <h3 className="font-display text-xl text-text mb-2">{title}</h3>
+            <p className="text-text-muted text-sm leading-relaxed">{value}</p>
           </GlassCard>
         ))}
       </div>
@@ -186,7 +186,7 @@ export const LoveStorySection: FC<{ events?: Array<{ year: string; title: string
       <SectionTitle subtitle="Our journey together">Love Story</SectionTitle>
       <div className="max-w-3xl mx-auto relative">
         {/* Timeline line */}
-        <div className="absolute left-1/2 top-4 bottom-4 w-px bg-gradient-to-b from-gold/5 via-gold/20 to-gold/5 -translate-x-1/2 hidden md:block" />
+        <div className="absolute left-1/2 top-4 bottom-4 w-px bg-gradient-to-b from-primary/5 via-primary/20 to-primary/5 -translate-x-1/2 hidden md:block" />
         {events.map((event, i) => (
           <motion.div
             key={i}
@@ -199,14 +199,14 @@ export const LoveStorySection: FC<{ events?: Array<{ year: string; title: string
             {/* Content */}
             <div className={`w-full md:w-[42%] ${i % 2 === 0 ? 'md:text-right md:pr-10' : 'md:text-left md:pl-10'}`}>
               <GlassCard hover>
-                <span className="text-gold font-display text-3xl md:text-4xl block mb-1">{event.year}</span>
-                <h3 className="font-display text-xl md:text-2xl text-dark mb-2">{event.title}</h3>
-                <p className="text-dark/50 text-sm leading-relaxed">{event.description}</p>
+                <span className="text-primary font-display text-3xl md:text-4xl block mb-1">{event.year}</span>
+                <h3 className="font-display text-xl md:text-2xl text-text mb-2">{event.title}</h3>
+                <p className="text-text-muted text-sm leading-relaxed">{event.description}</p>
               </GlassCard>
             </div>
             {/* Center dot */}
             <div className="my-4 md:my-0 md:w-[16%] flex justify-center z-10">
-              <div className="w-12 h-12 rounded-full bg-white border-2 border-gold/20 flex items-center justify-center text-xl shadow-sm">
+              <div className="w-12 h-12 rounded-full bg-surface border-2 border-border-strong flex items-center justify-center text-xl shadow-sm">
                 {event.icon}
               </div>
             </div>
@@ -235,16 +235,16 @@ export const ScheduleSection: FC<{ events?: Array<{ event_time: string; title: s
             transition={{ delay: i * 0.1 }}
             className="flex items-start gap-5 mb-8 last:mb-0"
           >
-            <div className="text-gold font-display text-xl md:text-2xl w-16 text-right shrink-0 pt-1">
+            <div className="text-primary font-display text-xl md:text-2xl w-16 text-right shrink-0 pt-1">
               {event.event_time?.substring(0, 5)}
             </div>
             <div className="flex flex-col items-center shrink-0">
-              <div className="w-3 h-3 rounded-full bg-gold/30 border-2 border-gold" />
-              {i < events.length - 1 && <div className="w-px flex-1 bg-gold/15 my-1 min-h-[24px]" />}
+              <div className="w-3 h-3 rounded-full bg-primary/30 border-2 border-primary" />
+              {i < events.length - 1 && <div className="w-px flex-1 bg-primary/15 my-1 min-h-[24px]" />}
             </div>
             <GlassCard hover className="flex-1 !p-5">
-              <h3 className="font-display text-lg text-dark">{event.title}</h3>
-              {event.description && <p className="text-dark/45 text-sm mt-2 leading-relaxed">{event.description}</p>}
+              <h3 className="font-display text-lg text-text">{event.title}</h3>
+              {event.description && <p className="text-text-muted text-sm mt-2 leading-relaxed">{event.description}</p>}
             </GlassCard>
           </motion.div>
         ))}
@@ -275,7 +275,7 @@ export const MapSection: FC<{ couple?: Couple }> = ({ couple }) => {
       <SectionTitle subtitle="Find your way to our celebration">Location</SectionTitle>
       <div className="max-w-4xl mx-auto">
         {hasEmbed ? (
-          <div className="rounded-2xl overflow-hidden shadow-xl mb-8 ring-1 ring-gold/10">
+          <div className="rounded-xl overflow-hidden shadow-lg mb-8 ring-1 ring-border">
             <iframe src={couple.maps_embed_url} width="100%" height="400" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Wedding Venue Map" />
           </div>
         ) : (
@@ -283,7 +283,7 @@ export const MapSection: FC<{ couple?: Couple }> = ({ couple }) => {
             href={mapsUrl} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="block rounded-2xl overflow-hidden shadow-xl mb-8 ring-1 ring-gold/10 hover:ring-gold/30 transition-all bg-gradient-to-br from-blue-50 to-cream group"
+            className="block rounded-xl overflow-hidden shadow-lg mb-8 ring-1 ring-border hover:ring-border-strong transition-all bg-gradient-to-br from-info-subtle to-surface-alt group"
           >
             <div className="h-80 flex items-center justify-center relative">
               <img 
@@ -293,7 +293,7 @@ export const MapSection: FC<{ couple?: Couple }> = ({ couple }) => {
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end justify-center pb-6">
-                <span className="text-white font-medium text-lg flex items-center gap-2">
+                <span className="text-surface font-medium text-lg flex items-center gap-2">
                   📍 Open in Google Maps
                 </span>
               </div>
@@ -302,7 +302,7 @@ export const MapSection: FC<{ couple?: Couple }> = ({ couple }) => {
         )}
         <div className="flex flex-wrap justify-center gap-3">
           {mapsUrl && (
-            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="btn-gold text-sm">
+            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="btn-primary text-sm">
               Open in Google Maps
             </a>
           )}
@@ -337,26 +337,26 @@ export const GallerySection: FC<{ photos?: Array<{ url: string; caption: string 
             className="masonry-item cursor-pointer group"
             onClick={() => { setCurrentIndex(i); setLightboxOpen(true); }}
           >
-            <div className="rounded-xl overflow-hidden bg-gradient-to-br from-gold/10 to-soft-pink/50 aspect-[4/3] flex items-center justify-center ring-1 ring-gold/10 group-hover:ring-gold/30 transition-all">
+            <div className="rounded-xl overflow-hidden bg-gradient-to-br from-primary/10 to-surface-alt/50 aspect-[4/3] flex items-center justify-center ring-1 ring-border group-hover:ring-border-strong transition-all">
               {photo.url.startsWith('http') || photo.url.startsWith('/') ? (
                 <img src={photo.url} alt={photo.caption} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
               ) : (
                 <span className="text-5xl opacity-30">📷</span>
               )}
             </div>
-            {photo.caption && <p className="text-dark/40 text-xs mt-2 text-center font-light">{photo.caption}</p>}
+            {photo.caption && <p className="text-text-muted text-xs mt-2 text-center font-light">{photo.caption}</p>}
           </motion.div>
         ))}
       </div>
       {lightboxOpen && (
-        <div className="fixed inset-0 z-50 bg-dark/95 backdrop-blur-sm flex items-center justify-center" onClick={() => setLightboxOpen(false)}>
-          <button className="absolute top-6 right-6 text-white/60 hover:text-white text-4xl transition-colors z-10" onClick={() => setLightboxOpen(false)}>✕</button>
-          <button className="absolute left-4 md:left-8 text-white/60 hover:text-white text-4xl transition-colors" onClick={(e) => { e.stopPropagation(); setCurrentIndex((currentIndex - 1 + photos.length) % photos.length); }}>‹</button>
+        <div className="fixed inset-0 z-50 bg-neutral-900/95 backdrop-blur-sm flex items-center justify-center" onClick={() => setLightboxOpen(false)}>
+          <button className="absolute top-6 right-6 text-text-muted hover:text-surface text-4xl transition-colors z-10" onClick={() => setLightboxOpen(false)}>✕</button>
+          <button className="absolute left-4 md:left-8 text-text-muted hover:text-surface text-4xl transition-colors" onClick={(e) => { e.stopPropagation(); setCurrentIndex((currentIndex - 1 + photos.length) % photos.length); }}>‹</button>
           <div className="max-w-5xl max-h-[85vh] px-4" onClick={(e) => e.stopPropagation()}>
-            <img src={photos[currentIndex]?.url} alt="" className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" />
-            {photos[currentIndex]?.caption && <p className="text-white/60 text-center mt-4 text-sm font-light">{photos[currentIndex].caption}</p>}
+            <img src={photos[currentIndex]?.url} alt="" className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-lg" />
+            {photos[currentIndex]?.caption && <p className="text-text-muted text-center mt-4 text-sm font-light">{photos[currentIndex].caption}</p>}
           </div>
-          <button className="absolute right-4 md:right-8 text-white/60 hover:text-white text-4xl transition-colors" onClick={(e) => { e.stopPropagation(); setCurrentIndex((currentIndex + 1) % photos.length); }}>›</button>
+          <button className="absolute right-4 md:right-8 text-text-muted hover:text-surface text-4xl transition-colors" onClick={(e) => { e.stopPropagation(); setCurrentIndex((currentIndex + 1) % photos.length); }}>›</button>
         </div>
       )}
     </PageSection>
@@ -383,11 +383,11 @@ export const VideoSection: FC<{ videoUrl?: string; videoType?: string }> = ({ vi
       <SectionTitle subtitle="Our pre-wedding film">Video</SectionTitle>
       <div className="max-w-4xl mx-auto">
         {embedUrl ? (
-          <div className="rounded-2xl overflow-hidden shadow-2xl aspect-video ring-1 ring-gold/10">
+          <div className="rounded-xl overflow-hidden shadow-lg aspect-video ring-1 ring-border">
             <iframe src={embedUrl} width="100%" height="100%" style={{ border: 0 }} allowFullScreen title="Wedding Video" />
           </div>
         ) : (
-          <a href={videoUrl} target="_blank" rel="noopener noreferrer" className="btn-gold mx-auto w-fit">
+          <a href={videoUrl} target="_blank" rel="noopener noreferrer" className="btn-primary mx-auto w-fit">
             Watch Our Video
           </a>
         )}
@@ -416,8 +416,8 @@ export const RSVPSection: FC<{ coupleSlug?: string }> = ({ coupleSlug = '' }) =>
       <PageSection id="rsvp">
         <div className="text-center py-12">
           <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring' }} className="text-7xl mb-6">💌</motion.div>
-          <h2 className="font-display text-4xl text-dark mb-4">Thank You!</h2>
-          <p className="text-dark/50 font-light max-w-md mx-auto">Your RSVP has been received. We can't wait to celebrate with you!</p>
+          <h2 className="font-display text-4xl text-text mb-4">Thank You!</h2>
+          <p className="text-text-muted font-light max-w-md mx-auto">Your RSVP has been received. We can't wait to celebrate with you!</p>
         </div>
       </PageSection>
     );
@@ -429,36 +429,36 @@ export const RSVPSection: FC<{ coupleSlug?: string }> = ({ coupleSlug = '' }) =>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
         <GlassCard>
           <div className="mb-5">
-            <label className="block text-dark/60 text-sm mb-2 font-medium">Your Name *</label>
+            <label className="block text-text-muted text-sm mb-2 font-medium">Your Name *</label>
             <input type="text" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full px-4 py-3.5 rounded-xl border border-gold/15 bg-cream/30 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/10 transition-all text-dark placeholder:text-dark/25" placeholder="Enter your name" />
+              className="w-full px-4 py-3.5 rounded-xl border border-border bg-surface-alt focus:outline-none focus:border-primary focus:ring-2 focus:ring-border transition-all text-text placeholder:text-text-subtle" placeholder="Enter your name" />
           </div>
           <div className="mb-5">
-            <label className="block text-dark/60 text-sm mb-3 font-medium">Will you attend? *</label>
+            <label className="block text-text-muted text-sm mb-3 font-medium">Will you attend? *</label>
             <div className="flex gap-4">
               {['attending', 'not_attending'].map((s) => (
-                <label key={s} className={`flex items-center gap-3 cursor-pointer px-5 py-3 rounded-xl border transition-all ${form.status === s ? 'border-gold bg-gold/5' : 'border-gold/10 hover:border-gold/30'}`}>
+                <label key={s} className={`flex items-center gap-3 cursor-pointer px-5 py-3 rounded-xl border transition-all ${form.status === s ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/30'}`}>
                   <input type="radio" name="status" value={s} checked={form.status === s}
-                    onChange={(e) => setForm({ ...form, status: e.target.value as 'attending' | 'not_attending' })} className="accent-gold w-4 h-4" />
-                  <span className="text-dark/70 text-sm">{s === 'attending' ? '✨ Will Attend' : 'Cannot Attend'}</span>
+                    onChange={(e) => setForm({ ...form, status: e.target.value as 'attending' | 'not_attending' })} className="accent-primary w-4 h-4" />
+                  <span className="text-text/70 text-sm">{s === 'attending' ? '✨ Will Attend' : 'Cannot Attend'}</span>
                 </label>
               ))}
             </div>
           </div>
           {form.status === 'attending' && (
             <div className="mb-5">
-              <label className="block text-dark/60 text-sm mb-2 font-medium">Number of Guests</label>
+              <label className="block text-text-muted text-sm mb-2 font-medium">Number of Guests</label>
               <input type="number" min="1" max="10" value={form.attendee_count}
                 onChange={(e) => setForm({ ...form, attendee_count: parseInt(e.target.value) })}
-                className="w-full px-4 py-3.5 rounded-xl border border-gold/15 bg-cream/30 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/10 transition-all" />
+                className="w-full px-4 py-3.5 rounded-xl border border-border bg-surface-alt focus:outline-none focus:border-primary focus:ring-2 focus:ring-border transition-all" />
             </div>
           )}
           <div className="mb-6">
-            <label className="block text-dark/60 text-sm mb-2 font-medium">Message (optional)</label>
+            <label className="block text-text-muted text-sm mb-2 font-medium">Message (optional)</label>
             <textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} rows={3}
-              className="w-full px-4 py-3.5 rounded-xl border border-gold/15 bg-cream/30 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/10 transition-all resize-none text-dark placeholder:text-dark/25" placeholder="Leave a message for the couple..." />
+              className="w-full px-4 py-3.5 rounded-xl border border-border bg-surface-alt focus:outline-none focus:border-primary focus:ring-2 focus:ring-border transition-all resize-none text-text placeholder:text-text-subtle" placeholder="Leave a message for the couple..." />
           </div>
-          <button type="submit" disabled={loading} className="btn-gold w-full text-base">
+          <button type="submit" disabled={loading} className="btn-primary w-full text-base">
             {loading ? '⌛ Submitting...' : '💌 Submit RSVP'}
           </button>
         </GlassCard>
@@ -488,25 +488,25 @@ export const WishesSection: FC<{ wishes?: Array<{ guest_name: string; message: s
         {wishes.slice(0, 10).map((wish, i) => (
           <GlassCard key={i} hover className="!p-5">
             <div className="flex items-baseline justify-between mb-2">
-              <span className="font-display text-dark text-lg">{wish.guest_name}</span>
-              <span className="text-dark/25 text-xs">{new Date(wish.created_at).toLocaleDateString()}</span>
+              <span className="font-display text-text text-lg">{wish.guest_name}</span>
+              <span className="text-text-subtle text-xs">{new Date(wish.created_at).toLocaleDateString()}</span>
             </div>
-            <p className="text-dark/55 text-sm leading-relaxed">{wish.message}</p>
+            <p className="text-text/55 text-sm leading-relaxed">{wish.message}</p>
           </GlassCard>
         ))}
       </div>
-      {submitted && <p className="text-center text-gold mb-6 font-light">Thank you for your beautiful wishes! 💕</p>}
+      {submitted && <p className="text-center text-primary mb-6 font-light">Thank you for your beautiful wishes! 💕</p>}
       <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
         <GlassCard>
           <div className="mb-4">
             <input type="text" placeholder="Your Name" required value={name} onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-3.5 rounded-xl border border-gold/15 bg-cream/30 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/10 transition-all placeholder:text-dark/25" />
+              className="w-full px-4 py-3.5 rounded-xl border border-border bg-surface-alt focus:outline-none focus:border-primary focus:ring-2 focus:ring-border transition-all placeholder:text-text-subtle" />
           </div>
           <div className="mb-5">
             <textarea placeholder="Your wishes & prayers..." required value={message} onChange={(e) => setMessage(e.target.value)} rows={3}
-              className="w-full px-4 py-3.5 rounded-xl border border-gold/15 bg-cream/30 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/10 transition-all resize-none placeholder:text-dark/25" />
+              className="w-full px-4 py-3.5 rounded-xl border border-border bg-surface-alt focus:outline-none focus:border-primary focus:ring-2 focus:ring-border transition-all resize-none placeholder:text-text-subtle" />
           </div>
-          <button type="submit" className="btn-gold w-full">Send Wishes 💕</button>
+          <button type="submit" className="btn-primary w-full">Send Wishes 💕</button>
         </GlassCard>
       </form>
     </PageSection>
@@ -528,9 +528,9 @@ export const GiftSection: FC<{ gifts?: Array<{ bank_name: string; account_number
           <GlassCard key={i} hover>
             <div className="flex items-center justify-between gap-4">
               <div>
-                <h3 className="font-display text-lg text-dark">{gift.bank_name}</h3>
-                <p className="text-gold font-mono text-lg tracking-wider mt-1">{gift.account_number}</p>
-                <p className="text-dark/40 text-sm mt-1">a.n. {gift.account_name}</p>
+                <h3 className="font-display text-lg text-text">{gift.bank_name}</h3>
+                <p className="text-primary font-mono text-lg tracking-wider mt-1">{gift.account_number}</p>
+                <p className="text-text-muted text-sm mt-1">a.n. {gift.account_name}</p>
               </div>
               <button onClick={() => copyToClipboard(gift.account_number, gift.bank_name)}
                 className="btn-outline text-xs shrink-0">
@@ -541,12 +541,12 @@ export const GiftSection: FC<{ gifts?: Array<{ bank_name: string; account_number
         ))}
         {gifts.some((g) => g.qris_image_url) && (
           <GlassCard className="text-center">
-            <p className="text-dark/50 text-sm mb-4 font-light">Scan QRIS to send gift</p>
-            <div className="bg-white rounded-2xl p-4 inline-block shadow-sm">
+            <p className="text-text-muted text-sm mb-4 font-light">Scan QRIS to send gift</p>
+            <div className="bg-surface rounded-xl p-4 inline-block shadow-sm">
               {gifts.find(g => g.qris_image_url)?.qris_image_url?.startsWith('http') ? (
                 <img src={gifts.find(g => g.qris_image_url)!.qris_image_url} alt="QRIS" className="w-48 h-48 object-contain rounded-lg" />
               ) : (
-                <div className="w-48 h-48 bg-gradient-to-br from-gold/5 to-soft-pink rounded-lg flex items-center justify-center">
+                <div className="w-48 h-48 bg-gradient-to-br from-primary/5 to-surface-alt rounded-lg flex items-center justify-center">
                   <span className="text-5xl opacity-30">📱</span>
                 </div>
               )}
@@ -560,15 +560,15 @@ export const GiftSection: FC<{ gifts?: Array<{ bank_name: string; account_number
 
 // ── Footer ──
 export const Footer: FC<{ couple?: Couple }> = ({ couple }) => (
-  <footer className="text-center py-16 px-4 bg-[#2C1810] text-cream/60">
+  <footer className="text-center py-16 px-4 bg-neutral-800 text-text-muted">
     <div className="ornament-divider mb-8">
-      <span className="text-gold/30 text-xs tracking-[0.3em] uppercase">✦ ✦ ✦</span>
+      <span className="text-primary/30 text-xs tracking-[0.3em] uppercase">✦ ✦ ✦</span>
     </div>
-    <p className="font-display text-3xl md:text-4xl text-cream mb-3">
+    <p className="font-display text-3xl md:text-4xl text-surface mb-3">
       {couple?.groom_name || 'John'} & {couple?.bride_name || 'Jane'}
     </p>
-    <div className="w-12 h-px bg-gold/30 mx-auto my-4" />
-    <p className="text-cream/40 text-sm font-light">Thank you for being part of our love story</p>
-    <p className="mt-6 text-cream/25 text-xs">Made with ❤️</p>
+    <div className="w-12 h-px bg-primary/30 mx-auto my-4" />
+    <p className="text-text-subtle text-sm font-light">Thank you for being part of our love story</p>
+    <p className="mt-6 text-text-subtle text-xs">Made with ❤️</p>
   </footer>
 );

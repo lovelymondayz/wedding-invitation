@@ -92,8 +92,8 @@ export const BatchUpload: FC<BatchUploadProps> = ({ coupleSlug, onUploaded }) =>
         onDragLeave={() => setDragOver(false)}
         onDrop={handleDrop}
         onClick={() => inputRef.current?.click()}
-        className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all ${
-          dragOver ? 'border-gold bg-gold/5' : 'border-gold/30 hover:border-gold/60'
+        className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
+          dragOver ? 'border-primary bg-primary/5' : 'border-primary/30 hover:border-primary/60'
         }`}
       >
         <input
@@ -105,10 +105,10 @@ export const BatchUpload: FC<BatchUploadProps> = ({ coupleSlug, onUploaded }) =>
           onChange={(e) => handleFiles(e.target.files)}
         />
         <div className="text-4xl mb-2">📷</div>
-        <p className="text-dark/60 text-sm">
-          Drag & drop images here, or <span className="text-gold font-medium">browse</span>
+        <p className="text-text-muted text-sm">
+          Drag & drop images here, or <span className="text-primary font-medium">browse</span>
         </p>
-        <p className="text-dark/40 text-xs mt-1">Up to 10 images, 5MB each (auto-compressed)</p>
+        <p className="text-text-muted text-xs mt-1">Up to 10 images, 5MB each (auto-compressed)</p>
       </div>
 
       {/* Previews */}
@@ -125,12 +125,12 @@ export const BatchUpload: FC<BatchUploadProps> = ({ coupleSlug, onUploaded }) =>
                   key={i}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="relative group aspect-square rounded-xl overflow-hidden bg-cream"
+                  className="relative group aspect-square rounded-xl overflow-hidden bg-surface-alt"
                 >
                   <img src={src} alt="" className="w-full h-full object-cover" />
                   <button
                     onClick={(e) => { e.stopPropagation(); removeFile(i); }}
-                    className="absolute top-1 right-1 w-6 h-6 bg-red-500/80 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs"
+                    className="absolute top-1 right-1 w-6 h-6 bg-red-500/80 text-surface rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs"
                   >
                     ×
                   </button>
@@ -143,7 +143,7 @@ export const BatchUpload: FC<BatchUploadProps> = ({ coupleSlug, onUploaded }) =>
               <button
                 onClick={handleUpload}
                 disabled={uploading}
-                className="btn-gold"
+                className="btn-primary"
               >
                 {uploading ? `Compressing ${progress.current}/${progress.total}...` : `Upload ${files.length} Image${files.length > 1 ? 's' : ''}`}
               </button>

@@ -22,7 +22,7 @@ export const TemplateA_Classic: FC<TemplateProps> = ({ data }) => {
   }, [data.music]);
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div className="min-h-screen bg-surface-alt">
       <Toaster position="top-center" toastOptions={{ style: { background: '#FFF8F0', color: '#2C1810' } }} />
 
       {data.music && source === 'direct' && (
