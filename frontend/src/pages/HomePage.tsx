@@ -81,8 +81,8 @@ export const HomePage: FC = () => {
             backgroundSize: '60px 60px',
           }}
         />
-        <div className="absolute top-1/4 left-[8%] text-primary/10 text-[15rem] font-display select-none animate-float">❀</div>
-        <div className="absolute bottom-1/3 right-[8%] text-primary/10 text-[12rem] font-display select-none animate-float" style={{ animationDelay: '3s' }}>❀</div>
+        <div className="absolute top-1/4 left-[8%] text-primary/10 text-8xl sm:text-9xl md:text-[10rem] font-display select-none animate-float">❀</div>
+        <div className="absolute bottom-1/3 right-[8%] text-primary/10 text-7xl sm:text-8xl md:text-9xl font-display select-none animate-float" style={{ animationDelay: '3s' }}>❀</div>
 
         <div className="relative z-10 text-center px-6 max-w-4xl">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
@@ -150,7 +150,7 @@ export const HomePage: FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15 }}
-                className="bg-surface border border-border rounded-xl p-8 hover:border-border-strong"
+                className="bg-surface border border-border rounded-md p-8 hover:border-border-strong"
               >
                 <div className="font-display text-5xl text-primary/30 mb-4">{item.step}</div>
                 <h3 className="font-display text-xl text-text mb-3">{item.title}</h3>
@@ -178,7 +178,7 @@ export const HomePage: FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="bg-surface border border-border rounded-xl p-6 hover:border-border-strong text-center"
+                className="bg-surface border border-border rounded-md p-6 hover:border-border-strong text-center"
               >
                 <h3 className="font-display text-text text-lg mb-2">{f.title}</h3>
                 <p className="text-text-muted text-sm leading-relaxed">{f.desc}</p>
@@ -217,7 +217,7 @@ export const HomePage: FC = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="bg-surface border border-border rounded-xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+            className="bg-surface border border-border rounded-md p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-6">
@@ -237,7 +237,7 @@ export const HomePage: FC = () => {
                       setSelectedTemplate(t.id);
                       setForm({ ...form, template_id: t.id });
                     }}
-                    className={`relative rounded-xl border-2 p-3 text-left transition-all ${
+                    className={`relative rounded-md border-2 p-3 text-left transition-colors ${
                       selectedTemplate === t.id
                         ? 'border-primary bg-primary/5'
                         : 'border-border hover:border-primary/30'
@@ -259,7 +259,7 @@ export const HomePage: FC = () => {
             {/* Live Preview */}
             <div className="mb-6">
               <label className="block text-text/70 text-sm mb-3 font-medium">Live Preview</label>
-              <div className="rounded-xl border border-border-strong overflow-hidden bg-surface" style={{ height: '320px' }}>
+              <div className="rounded-md border border-border-strong overflow-hidden bg-surface" style={{ height: '320px' }}>
                 <div className="transform scale-[0.35] origin-top-left" style={{ width: '285%', height: '285%' }}>
                   <SelectedTemplateComponent data={SAMPLE_DATA} />
                 </div>
@@ -272,13 +272,13 @@ export const HomePage: FC = () => {
                   <label className="block text-text-muted text-sm mb-1">Groom Name *</label>
                   <input type="text" required value={form.groom_name}
                     onChange={(e) => setForm({ ...form, groom_name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm" />
+                    className="w-full px-4 py-3 rounded-md border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm" />
                 </div>
                 <div>
                   <label className="block text-text-muted text-sm mb-1">Bride Name *</label>
                   <input type="text" required value={form.bride_name}
                     onChange={(e) => setForm({ ...form, bride_name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm" />
+                    className="w-full px-4 py-3 rounded-md border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm" />
                 </div>
               </div>
 
@@ -287,13 +287,13 @@ export const HomePage: FC = () => {
                   <label className="block text-text-muted text-sm mb-1">Wedding Date *</label>
                   <input type="date" required value={form.wedding_date}
                     onChange={(e) => setForm({ ...form, wedding_date: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm" />
+                    className="w-full px-4 py-3 rounded-md border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm" />
                 </div>
                 <div>
                   <label className="block text-text-muted text-sm mb-1">Wedding Time</label>
                   <input type="time" value={form.wedding_time}
                     onChange={(e) => setForm({ ...form, wedding_time: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm" />
+                    className="w-full px-4 py-3 rounded-md border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm" />
                 </div>
               </div>
 
@@ -302,7 +302,7 @@ export const HomePage: FC = () => {
                 <input type="text" value={form.venue_name}
                   onChange={(e) => setForm({ ...form, venue_name: e.target.value })}
                   placeholder="e.g. Grand Ballroom Hotel"
-                  className="w-full px-4 py-3 rounded-xl border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm" />
+                  className="w-full px-4 py-3 rounded-md border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm" />
               </div>
 
               <div>
@@ -310,7 +310,7 @@ export const HomePage: FC = () => {
                 <textarea value={form.venue_address}
                   onChange={(e) => setForm({ ...form, venue_address: e.target.value })}
                   placeholder="Full address of the venue"
-                  className="w-full px-4 py-3 rounded-xl border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm resize-none" rows={2} />
+                  className="w-full px-4 py-3 rounded-md border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm resize-none" rows={2} />
               </div>
 
               <div className="border-t border-border pt-4 mt-4">
@@ -320,13 +320,13 @@ export const HomePage: FC = () => {
                     <label className="block text-text-muted text-sm mb-1">Admin Username *</label>
                     <input type="text" required value={form.username}
                       onChange={(e) => setForm({ ...form, username: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm" />
+                      className="w-full px-4 py-3 rounded-md border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm" />
                   </div>
                   <div>
                     <label className="block text-text-muted text-sm mb-1">Admin Password *</label>
                     <input type="password" required value={form.password} minLength={6}
                       onChange={(e) => setForm({ ...form, password: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm" />
+                      className="w-full px-4 py-3 rounded-md border border-border-strong bg-surface-alt/50 focus:outline-none focus:border-primary text-sm" />
                   </div>
                 </div>
               </div>
@@ -345,13 +345,13 @@ export const HomePage: FC = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="bg-surface border border-border rounded-xl p-8 max-w-md w-full text-center"
+            className="bg-surface border border-border rounded-md p-8 max-w-md w-full text-center"
           >
             <div className="text-6xl mb-4">🎉</div>
             <h2 className="font-display text-2xl text-text mb-2">You're All Set!</h2>
             <p className="text-text-muted text-sm mb-6">Your wedding invitation is live. Save these credentials — you'll need them to login.</p>
             
-            <div className="bg-surface-alt/80 rounded-xl p-4 mb-4 text-left">
+            <div className="bg-surface-alt/80 rounded-md p-4 mb-4 text-left">
               <div className="mb-3">
                 <p className="text-text-muted text-xs mb-1">Your Page</p>
                 <p className="text-text font-medium text-sm">wedding.arjism.com/{createdSlug}</p>

@@ -92,7 +92,7 @@ export const BatchUpload: FC<BatchUploadProps> = ({ coupleSlug, onUploaded }) =>
         onDragLeave={() => setDragOver(false)}
         onDrop={handleDrop}
         onClick={() => inputRef.current?.click()}
-        className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
+        className={`border-2 border-dashed rounded-md p-8 text-center cursor-pointer transition-colors ${
           dragOver ? 'border-primary bg-primary/5' : 'border-primary/30 hover:border-primary/60'
         }`}
       >
@@ -125,7 +125,7 @@ export const BatchUpload: FC<BatchUploadProps> = ({ coupleSlug, onUploaded }) =>
                   key={i}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="relative group aspect-square rounded-xl overflow-hidden bg-surface-alt"
+                  className="relative group aspect-square rounded-md overflow-hidden bg-surface-alt"
                 >
                   <img src={src} alt="" className="w-full h-full object-cover" />
                   <button

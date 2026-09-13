@@ -88,13 +88,13 @@ export const TemplateB_GenZ: FC<TemplateProps> = ({ data }) => {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">When & Where</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-xl bg-gray-50">
+            <div className="p-6 rounded-md bg-gray-50">
               <p className="text-xs uppercase tracking-wider text-indigo-500 mb-2">Date</p>
               <p className="text-lg font-medium text-gray-900">
                 {data.couple?.wedding_date ? new Date(data.couple.wedding_date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) : 'TBA'}
               </p>
             </div>
-            <div className="p-6 rounded-xl bg-gray-50">
+            <div className="p-6 rounded-md bg-gray-50">
               <p className="text-xs uppercase tracking-wider text-indigo-500 mb-2">Venue</p>
               <p className="text-lg font-medium text-gray-900">{data.couple?.venue_name || 'TBA'}</p>
               {data.couple?.venue_address && <p className="text-sm text-gray-500 mt-1">{data.couple.venue_address}</p>}

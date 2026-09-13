@@ -31,7 +31,7 @@
 
   /* Buttons */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover active:bg-primary-active text-white font-medium tracking-wide px-8 py-3.5 rounded-full shadow-sm transition-colors duration-fast;
+    @apply inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover active:bg-primary-active text-text font-medium tracking-wide px-8 py-3.5 rounded-full shadow-sm transition-colors duration-fast;
   }
   .btn-outline {
     @apply inline-flex items-center justify-center gap-2 bg-transparent text-primary font-medium tracking-wide px-8 py-3.5 rounded-full border border-primary/50 hover:bg-primary-subtle transition-colors duration-fast;

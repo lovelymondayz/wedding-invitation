@@ -12,21 +12,21 @@ export const InvitePopup: FC<{
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-dark/80 backdrop-blur-sm"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-dark/80 "
       >
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.8, opacity: 0 }}
           transition={{ type: 'spring', damping: 25 }}
-          className="bg-surface border border-border rounded-3xl p-8 md:p-12 max-w-lg mx-4 text-center relative overflow-hidden"
+          className="bg-surface border border-border rounded-lg p-8 md:p-12 max-w-lg mx-4 text-center relative overflow-hidden"
         >
           {/* Decorative corners */}
           <div className="absolute top-0 left-0 w-20 h-20 opacity-10">
-            <svg viewBox="0 0 100 100" fill="#D4A574"><path d="M0,0 Q50,20 0,50 Q20,50 50,100 Q30,50 0,0 Z" /></svg>
+            <svg viewBox="0 0 100 100" fill="primary"><path d="M0,0 Q50,20 0,50 Q20,50 50,100 Q30,50 0,0 Z" /></svg>
           </div>
           <div className="absolute bottom-0 right-0 w-20 h-20 opacity-10 rotate-180">
-            <svg viewBox="0 0 100 100" fill="#D4A574"><path d="M0,0 Q50,20 0,50 Q20,50 50,100 Q30,50 0,0 Z" /></svg>
+            <svg viewBox="0 0 100 100" fill="primary"><path d="M0,0 Q50,20 0,50 Q20,50 50,100 Q30,50 0,0 Z" /></svg>
           </div>
 
           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}>

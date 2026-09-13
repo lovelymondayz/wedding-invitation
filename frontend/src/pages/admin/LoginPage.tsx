@@ -62,7 +62,7 @@ export const LoginPage: FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-surface border border-border rounded-xl p-8 max-w-md w-full"
+        className="bg-surface border border-border rounded-md p-8 max-w-md w-full"
       >
         <div className="text-center mb-8">
           <a href="/" className="font-display text-2xl text-text">
@@ -75,7 +75,7 @@ export const LoginPage: FC = () => {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-4 p-3 rounded-xl bg-danger-subtle border border-danger flex items-start gap-2"
+            className="mb-4 p-3 rounded-md bg-danger-subtle border border-danger flex items-start gap-2"
           >
             <span className="text-danger text-sm mt-0.5">⚠️</span>
             <p className="text-danger text-sm">{error}</p>
@@ -86,12 +86,12 @@ export const LoginPage: FC = () => {
           <div className="mb-4">
             <label className="block text-text-muted text-sm mb-2">Username</label>
             <input type="text" required value={username} onChange={(e) => { setUsername(e.target.value); setError(null); }}
-              className={`w-full px-4 py-3 rounded-xl border bg-surface-alt/50 focus:outline-none transition-colors ${error?.toLowerCase().includes('username') ? 'border-danger focus:border-danger' : 'border-border-strong focus:border-primary'}`} />
+              className={`w-full px-4 py-3 rounded-md border bg-surface-alt/50 focus:outline-none transition-colors ${error?.toLowerCase().includes('username') ? 'border-danger focus:border-danger' : 'border-border-strong focus:border-primary'}`} />
           </div>
           <div className="mb-6">
             <label className="block text-text/70 text-sm mb-2">Password</label>
             <input type="password" required value={password} onChange={(e) => { setPassword(e.target.value); setError(null); }}
-              className={`w-full px-4 py-3 rounded-xl border bg-surface-alt/50 focus:outline-none transition-colors ${error?.toLowerCase().includes('password') ? 'border-danger focus:border-danger' : 'border-border-strong focus:border-primary'}`} />
+              className={`w-full px-4 py-3 rounded-md border bg-surface-alt/50 focus:outline-none transition-colors ${error?.toLowerCase().includes('password') ? 'border-danger focus:border-danger' : 'border-border-strong focus:border-primary'}`} />
           </div>
           <button type="submit" disabled={loading} className="btn-primary w-full">
             {loading ? 'Logging in...' : 'Login'}

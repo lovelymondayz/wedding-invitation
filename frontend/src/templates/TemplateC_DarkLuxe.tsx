@@ -21,8 +21,8 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
   }, [data.music]);
 
   return (
-    <div className="min-h-screen bg-[#111] text-surface">
-      <Toaster position="top-center" toastOptions={{ style: { background: '#222', color: '#fff', border: '1px solid #333' } }} />
+    <div className="min-h-screen bg-neutral-900 text-surface">
+      <Toaster position="top-center" toastOptions={{ style: { background: var(--color-neutral-800), color: var(--color-text), border: '1px solid var(--color-border)' } }} />
 
       {data.music && source === 'direct' && (
         <MusicPlayer isPlaying={isPlaying} volume={volume} onToggle={toggle} onVolumeChange={changeVolume} />
@@ -37,7 +37,7 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
         {data.couple?.couple_photo_url && (
           <div className="absolute inset-0">
             <img src={data.couple.couple_photo_url} alt="" className="w-full h-full object-cover opacity-40" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-transparent to-[#111]/60" />
+            <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-neutral-900/60" />
           </div>
         )}
 
@@ -94,18 +94,18 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
       </section>
 
       {/* Wedding Info */}
-      <section className="py-20 px-6 bg-black/30">
+      <section className="py-20 px-6 bg-surface-alt">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-display text-surface mb-10">The Celebration</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-xl bg-surface/5 border border-white/10">
+            <div className="p-6 rounded-md bg-surface/5 border border-border">
               <p className="text-xs uppercase tracking-wider text-amber-400/70 mb-3">When</p>
               <p className="text-xl font-display text-surface">
                 {data.couple?.wedding_date ? new Date(data.couple.wedding_date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) : 'TBA'}
               </p>
               {data.couple?.wedding_time && <p className="text-surface/50 text-sm mt-1">at {data.couple.wedding_time}</p>}
             </div>
-            <div className="p-6 rounded-xl bg-surface/5 border border-white/10">
+            <div className="p-6 rounded-md bg-surface/5 border border-border">
               <p className="text-xs uppercase tracking-wider text-amber-400/70 mb-3">Where</p>
               <p className="text-xl font-display text-surface">{data.couple?.venue_name || 'TBA'}</p>
               {data.couple?.venue_address && <p className="text-surface/50 text-sm mt-1">{data.couple.venue_address}</p>}
@@ -125,7 +125,7 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
       )}
 
       {/* RSVP */}
-      <section className="py-20 px-6 bg-black/30">
+      <section className="py-20 px-6 bg-surface-alt">
         <div className="max-w-xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-display text-surface mb-4">Join Us</h2>
           <p className="text-surface/40 mb-8">Your presence is the only gift we need</p>

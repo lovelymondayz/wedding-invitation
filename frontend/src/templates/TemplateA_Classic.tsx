@@ -23,7 +23,7 @@ export const TemplateA_Classic: FC<TemplateProps> = ({ data }) => {
 
   return (
     <div className="min-h-screen bg-surface-alt">
-      <Toaster position="top-center" toastOptions={{ style: { background: '#FFF8F0', color: '#2C1810' } }} />
+      <Toaster position="top-center" toastOptions={{ style: { background: 'surface-alt', color: 'text' } }} />
 
       {data.music && source === 'direct' && (
         <MusicPlayer isPlaying={isPlaying} volume={volume} onToggle={toggle} onVolumeChange={changeVolume} />

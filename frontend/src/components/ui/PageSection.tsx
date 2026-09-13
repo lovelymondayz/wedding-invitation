@@ -52,7 +52,7 @@ export function GlassCard({ children, className = '', hover = false }: {
     <motion.div
       whileHover={hover ? { y: -2 } : undefined}
       transition={{ duration: 0.3 }}
-      className={`bg-surface border border-border rounded-xl p-6 md:p-8 ${hover ? 'hover:border-border-strong' : ''} ${className}`}
+      className={`bg-surface border border-border rounded-md p-6 md:p-8 ${hover ? 'hover:border-border-strong' : ''} ${className}`}
     >
       {children}
     </motion.div>

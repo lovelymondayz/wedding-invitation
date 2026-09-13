@@ -42,7 +42,7 @@ export const MusicEmbed: FC<MusicEmbedProps> = ({ url, source, title }) => {
 
   if (!embedUrl) {
     return (
-      <div className="fixed top-4 right-4 z-40 bg-surface border border-border rounded-xl p-3 text-text-muted text-sm">
+      <div className="fixed top-4 right-4 z-40 bg-surface border border-border rounded-md p-3 text-text-muted text-sm">
         Unsupported music source
       </div>
     );
@@ -69,7 +69,7 @@ export const MusicEmbed: FC<MusicEmbedProps> = ({ url, source, title }) => {
       initial={{ x: 100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ delay: 1 }}
-      className="fixed top-4 right-4 z-40 bg-surface border border-border rounded-xl p-3 flex flex-col items-end gap-2 max-w-[280px]"
+      className="fixed top-4 right-4 z-40 bg-surface border border-border rounded-md p-3 flex flex-col items-end gap-2 max-w-sm"
     >
       <div className="flex items-center gap-2 w-full">
         <button

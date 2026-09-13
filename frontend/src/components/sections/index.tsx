@@ -21,9 +21,9 @@ export const HeroSection: FC<{ couple?: Couple }> = ({ couple }) => {
       />
 
       {/* Decorative florals */}
-      <div className="absolute top-1/4 left-[5%] text-primary/10 text-[12rem] font-display select-none animate-float" style={{ animationDelay: '0s' }}>❀</div>
-      <div className="absolute bottom-1/4 right-[5%] text-primary/10 text-[10rem] font-display select-none animate-float" style={{ animationDelay: '2s' }}>❀</div>
-      <div className="absolute top-[15%] right-[15%] text-primary/5 text-[8rem] font-display select-none animate-float" style={{ animationDelay: '4s' }}>✦</div>
+      <div className="absolute top-1/4 left-[5%] text-primary/10 text-7xl sm:text-8xl md:text-9xl font-display select-none animate-float" style={{ animationDelay: '0s' }}>❀</div>
+      <div className="absolute bottom-1/4 right-[5%] text-primary/10 text-6xl sm:text-7xl md:text-8xl font-display select-none animate-float" style={{ animationDelay: '2s' }}>❀</div>
+      <div className="absolute top-[15%] right-[15%] text-primary/5 text-5xl sm:text-6xl md:text-7xl font-display select-none animate-float" style={{ animationDelay: '4s' }}>✦</div>
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl">
@@ -136,7 +136,7 @@ export const CountdownSection: FC<{ countdown?: CountdownInfo }> = ({ countdown 
             <motion.div
               key={label}
               whileHover={{ y: -3 }}
-              className="bg-surface border border-border rounded-xl text-center py-8 px-4 transition-shadow hover:shadow-md"
+              className="bg-surface border border-border rounded-md text-center py-8 px-4 transition-shadow hover:shadow-md"
             >
               <div className="font-display text-5xl md:text-6xl lg:text-7xl text-primary mb-3 tabular-nums tracking-tight">
                 {String(value).padStart(2, '0')}
@@ -240,7 +240,7 @@ export const ScheduleSection: FC<{ events?: Array<{ event_time: string; title: s
             </div>
             <div className="flex flex-col items-center shrink-0">
               <div className="w-3 h-3 rounded-full bg-primary/30 border-2 border-primary" />
-              {i < events.length - 1 && <div className="w-px flex-1 bg-primary/15 my-1 min-h-[24px]" />}
+              {i < events.length - 1 && <div className="w-px flex-1 bg-primary/15 my-1 min-h-6" />}
             </div>
             <GlassCard hover className="flex-1 !p-5">
               <h3 className="font-display text-lg text-text">{event.title}</h3>
@@ -275,7 +275,7 @@ export const MapSection: FC<{ couple?: Couple }> = ({ couple }) => {
       <SectionTitle subtitle="Find your way to our celebration">Location</SectionTitle>
       <div className="max-w-4xl mx-auto">
         {hasEmbed ? (
-          <div className="rounded-xl overflow-hidden shadow-lg mb-8 ring-1 ring-border">
+          <div className="rounded-md overflow-hidden shadow-lg mb-8 ring-1 ring-border">
             <iframe src={couple.maps_embed_url} width="100%" height="400" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Wedding Venue Map" />
           </div>
         ) : (
@@ -283,7 +283,7 @@ export const MapSection: FC<{ couple?: Couple }> = ({ couple }) => {
             href={mapsUrl} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="block rounded-xl overflow-hidden shadow-lg mb-8 ring-1 ring-border hover:ring-border-strong transition-all bg-gradient-to-br from-info-subtle to-surface-alt group"
+            className="block rounded-md overflow-hidden shadow-lg mb-8 ring-1 ring-border hover:ring-border-strong transition-colors bg-gradient-to-br from-info-subtle to-surface-alt group"
           >
             <div className="h-80 flex items-center justify-center relative">
               <img 
@@ -337,9 +337,9 @@ export const GallerySection: FC<{ photos?: Array<{ url: string; caption: string 
             className="masonry-item cursor-pointer group"
             onClick={() => { setCurrentIndex(i); setLightboxOpen(true); }}
           >
-            <div className="rounded-xl overflow-hidden bg-gradient-to-br from-primary/10 to-surface-alt/50 aspect-[4/3] flex items-center justify-center ring-1 ring-border group-hover:ring-border-strong transition-all">
+            <div className="rounded-md overflow-hidden bg-gradient-to-br from-primary/10 to-surface-alt/50 aspect-[4/3] flex items-center justify-center ring-1 ring-border group-hover:ring-border-strong transition-colors">
               {photo.url.startsWith('http') || photo.url.startsWith('/') ? (
-                <img src={photo.url} alt={photo.caption} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <img src={photo.url} alt={photo.caption} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-slow" loading="lazy" />
               ) : (
                 <span className="text-5xl opacity-30">📷</span>
               )}
@@ -349,7 +349,7 @@ export const GallerySection: FC<{ photos?: Array<{ url: string; caption: string 
         ))}
       </div>
       {lightboxOpen && (
-        <div className="fixed inset-0 z-50 bg-neutral-900/95 backdrop-blur-sm flex items-center justify-center" onClick={() => setLightboxOpen(false)}>
+        <div className="fixed inset-0 z-50 bg-neutral-900/95  flex items-center justify-center" onClick={() => setLightboxOpen(false)}>
           <button className="absolute top-6 right-6 text-text-muted hover:text-surface text-4xl transition-colors z-10" onClick={() => setLightboxOpen(false)}>✕</button>
           <button className="absolute left-4 md:left-8 text-text-muted hover:text-surface text-4xl transition-colors" onClick={(e) => { e.stopPropagation(); setCurrentIndex((currentIndex - 1 + photos.length) % photos.length); }}>‹</button>
           <div className="max-w-5xl max-h-[85vh] px-4" onClick={(e) => e.stopPropagation()}>
@@ -383,7 +383,7 @@ export const VideoSection: FC<{ videoUrl?: string; videoType?: string }> = ({ vi
       <SectionTitle subtitle="Our pre-wedding film">Video</SectionTitle>
       <div className="max-w-4xl mx-auto">
         {embedUrl ? (
-          <div className="rounded-xl overflow-hidden shadow-lg aspect-video ring-1 ring-border">
+          <div className="rounded-md overflow-hidden shadow-lg aspect-video ring-1 ring-border">
             <iframe src={embedUrl} width="100%" height="100%" style={{ border: 0 }} allowFullScreen title="Wedding Video" />
           </div>
         ) : (
@@ -431,13 +431,13 @@ export const RSVPSection: FC<{ coupleSlug?: string }> = ({ coupleSlug = '' }) =>
           <div className="mb-5">
             <label className="block text-text-muted text-sm mb-2 font-medium">Your Name *</label>
             <input type="text" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full px-4 py-3.5 rounded-xl border border-border bg-surface-alt focus:outline-none focus:border-primary focus:ring-2 focus:ring-border transition-all text-text placeholder:text-text-subtle" placeholder="Enter your name" />
+              className="w-full px-4 py-3.5 rounded-md border border-border bg-surface-alt focus:outline-none focus:border-primary focus:ring-2 focus:ring-border transition-colors text-text placeholder:text-text-subtle" placeholder="Enter your name" />
           </div>
           <div className="mb-5">
             <label className="block text-text-muted text-sm mb-3 font-medium">Will you attend? *</label>
             <div className="flex gap-4">
               {['attending', 'not_attending'].map((s) => (
-                <label key={s} className={`flex items-center gap-3 cursor-pointer px-5 py-3 rounded-xl border transition-all ${form.status === s ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/30'}`}>
+                <label key={s} className={`flex items-center gap-3 cursor-pointer px-5 py-3 rounded-md border transition-colors ${form.status === s ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/30'}`}>
                   <input type="radio" name="status" value={s} checked={form.status === s}
                     onChange={(e) => setForm({ ...form, status: e.target.value as 'attending' | 'not_attending' })} className="accent-primary w-4 h-4" />
                   <span className="text-text/70 text-sm">{s === 'attending' ? '✨ Will Attend' : 'Cannot Attend'}</span>
@@ -450,13 +450,13 @@ export const RSVPSection: FC<{ coupleSlug?: string }> = ({ coupleSlug = '' }) =>
               <label className="block text-text-muted text-sm mb-2 font-medium">Number of Guests</label>
               <input type="number" min="1" max="10" value={form.attendee_count}
                 onChange={(e) => setForm({ ...form, attendee_count: parseInt(e.target.value) })}
-                className="w-full px-4 py-3.5 rounded-xl border border-border bg-surface-alt focus:outline-none focus:border-primary focus:ring-2 focus:ring-border transition-all" />
+                className="w-full px-4 py-3.5 rounded-md border border-border bg-surface-alt focus:outline-none focus:border-primary focus:ring-2 focus:ring-border transition-colors" />
             </div>
           )}
           <div className="mb-6">
             <label className="block text-text-muted text-sm mb-2 font-medium">Message (optional)</label>
             <textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} rows={3}
-              className="w-full px-4 py-3.5 rounded-xl border border-border bg-surface-alt focus:outline-none focus:border-primary focus:ring-2 focus:ring-border transition-all resize-none text-text placeholder:text-text-subtle" placeholder="Leave a message for the couple..." />
+              className="w-full px-4 py-3.5 rounded-md border border-border bg-surface-alt focus:outline-none focus:border-primary focus:ring-2 focus:ring-border transition-colors resize-none text-text placeholder:text-text-subtle" placeholder="Leave a message for the couple..." />
           </div>
           <button type="submit" disabled={loading} className="btn-primary w-full text-base">
             {loading ? '⌛ Submitting...' : '💌 Submit RSVP'}
@@ -500,11 +500,11 @@ export const WishesSection: FC<{ wishes?: Array<{ guest_name: string; message: s
         <GlassCard>
           <div className="mb-4">
             <input type="text" placeholder="Your Name" required value={name} onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-3.5 rounded-xl border border-border bg-surface-alt focus:outline-none focus:border-primary focus:ring-2 focus:ring-border transition-all placeholder:text-text-subtle" />
+              className="w-full px-4 py-3.5 rounded-md border border-border bg-surface-alt focus:outline-none focus:border-primary focus:ring-2 focus:ring-border transition-colors placeholder:text-text-subtle" />
           </div>
           <div className="mb-5">
             <textarea placeholder="Your wishes & prayers..." required value={message} onChange={(e) => setMessage(e.target.value)} rows={3}
-              className="w-full px-4 py-3.5 rounded-xl border border-border bg-surface-alt focus:outline-none focus:border-primary focus:ring-2 focus:ring-border transition-all resize-none placeholder:text-text-subtle" />
+              className="w-full px-4 py-3.5 rounded-md border border-border bg-surface-alt focus:outline-none focus:border-primary focus:ring-2 focus:ring-border transition-colors resize-none placeholder:text-text-subtle" />
           </div>
           <button type="submit" className="btn-primary w-full">Send Wishes 💕</button>
         </GlassCard>
@@ -542,7 +542,7 @@ export const GiftSection: FC<{ gifts?: Array<{ bank_name: string; account_number
         {gifts.some((g) => g.qris_image_url) && (
           <GlassCard className="text-center">
             <p className="text-text-muted text-sm mb-4 font-light">Scan QRIS to send gift</p>
-            <div className="bg-surface rounded-xl p-4 inline-block shadow-sm">
+            <div className="bg-surface rounded-md p-4 inline-block shadow-sm">
               {gifts.find(g => g.qris_image_url)?.qris_image_url?.startsWith('http') ? (
                 <img src={gifts.find(g => g.qris_image_url)!.qris_image_url} alt="QRIS" className="w-48 h-48 object-contain rounded-lg" />
               ) : (

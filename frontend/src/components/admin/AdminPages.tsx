@@ -40,7 +40,7 @@ export const Overview: FC = () => {
       {couple && <p className="text-text-muted mb-6 md:mb-8 text-sm md:text-base">{couple.groom_name} & {couple.bride_name}</p>}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
         {cards.map((card) => (
-          <div key={card.label} className="bg-surface border border-border rounded-xl p-3 md:p-4">
+          <div key={card.label} className="bg-surface border border-border rounded-md p-3 md:p-4">
             <div className="text-xl md:text-2xl mb-1 md:mb-2">{card.icon}</div>
             <div className="text-2xl md:text-3xl font-display text-text">{card.value}</div>
             <div className="text-text-muted text-xs md:text-sm">{card.label}</div>
@@ -48,7 +48,7 @@ export const Overview: FC = () => {
         ))}
       </div>
       {stats?.recent_opened && stats.recent_opened.length > 0 && (
-        <div className="bg-surface border border-border rounded-xl p-6">
+        <div className="bg-surface border border-border rounded-md p-6">
           <h2 className="font-display text-xl text-text mb-4">Recent Invitation Opens</h2>
           {stats.recent_opened.map((r: any, i: number) => (
             <div key={i} className="flex justify-between py-2 border-b border-border last:border-0">
@@ -113,10 +113,10 @@ export const GuestManagement: FC = () => {
       </div>
 
       <input type="text" placeholder="Search guests..." value={search} onChange={(e) => setSearch(e.target.value)}
-        className="w-full md:w-64 px-4 py-2 rounded-xl border border-border-strong bg-surface-alt/50 mb-4 focus:outline-none focus:border-primary text-sm md:text-base" />
+        className="w-full md:w-64 px-4 py-2 rounded-md border border-border-strong bg-surface-alt/50 mb-4 focus:outline-none focus:border-primary text-sm md:text-base" />
 
-      <div className="bg-surface border border-border rounded-xl overflow-x-auto">
-        <table className="w-full min-w-[500px]">
+      <div className="bg-surface border border-border rounded-md overflow-x-auto">
+        <table className="w-full min-w-full sm:min-w-0">
           <thead><tr className="border-b border-border">
             <th className="text-left p-3 md:p-4 text-text-muted text-xs md:text-sm">Name</th>
             <th className="text-left p-3 md:p-4 text-text-muted text-xs md:text-sm hidden md:table-cell">Phone</th>
@@ -152,20 +152,20 @@ export const GuestManagement: FC = () => {
 
       {showAdd && (
         <div className="fixed inset-0 bg-dark/50 flex items-end sm:items-center justify-center z-50" onClick={() => setShowAdd(false)}>
-          <div className="bg-surface border border-border rounded-t-2xl sm:rounded-xl p-6 max-w-md w-full mx-0 sm:mx-4" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-surface border border-border rounded-t-2xl sm:rounded-md p-6 max-w-md w-full mx-0 sm:mx-4" onClick={(e) => e.stopPropagation()}>
             <h2 className="font-display text-xl text-text mb-4">Add Guest</h2>
             <form onSubmit={handleAdd}>
               <input type="text" placeholder="Full Name *" required value={newGuest.full_name}
                 onChange={(e) => setNewGuest({ ...newGuest, full_name: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-border-strong mb-3 focus:outline-none focus:border-primary" />
+                className="w-full px-4 py-3 rounded-md border border-border-strong mb-3 focus:outline-none focus:border-primary" />
               <input type="text" placeholder="Phone" value={newGuest.phone}
                 onChange={(e) => setNewGuest({ ...newGuest, phone: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-border-strong mb-3 focus:outline-none focus:border-primary" />
+                className="w-full px-4 py-3 rounded-md border border-border-strong mb-3 focus:outline-none focus:border-primary" />
               <textarea placeholder="Notes" value={newGuest.notes}
                 onChange={(e) => setNewGuest({ ...newGuest, notes: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-border-strong mb-4 focus:outline-none focus:border-primary resize-none" rows={2} />
+                className="w-full px-4 py-3 rounded-md border border-border-strong mb-4 focus:outline-none focus:border-primary resize-none" rows={2} />
               <div className="flex gap-3">
-                <button type="button" onClick={() => setShowAdd(false)} className="flex-1 py-3 rounded-xl border border-border-strong text-text-muted">Cancel</button>
+                <button type="button" onClick={() => setShowAdd(false)} className="flex-1 py-3 rounded-md border border-border-strong text-text-muted">Cancel</button>
                 <button type="submit" className="btn-primary flex-1">Add</button>
               </div>
             </form>
@@ -193,7 +193,7 @@ export const WishesManagement: FC = () => {
     <div>
       <h1 className="font-display text-2xl md:text-3xl text-text mb-6">Wishes Management</h1>
       {wishes.map((w) => (
-        <div key={w.id} className="bg-surface border border-border rounded-xl p-4 mb-3 flex justify-between items-start">
+        <div key={w.id} className="bg-surface border border-border rounded-md p-4 mb-3 flex justify-between items-start">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="font-medium text-text">{w.guest_name}</span>
@@ -235,7 +235,7 @@ export const GalleryManagement: FC = () => {
       {/* Existing photos grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {photos.map((p) => (
-          <div key={p.id} className="relative rounded-xl overflow-hidden group">
+          <div key={p.id} className="relative rounded-md overflow-hidden group">
             <div className="aspect-square bg-gradient-to-br from-gold/20 to-surface-alt flex items-center justify-center">
               {p.url.startsWith('http') || p.url.startsWith('/') ? <img src={p.url} alt={p.caption} className="w-full h-full object-cover" /> : <span className="text-3xl">📷</span>}
             </div>
@@ -302,13 +302,13 @@ export const MusicManagement: FC = () => {
   return (
     <div>
       <h1 className="font-display text-2xl md:text-3xl text-text mb-6">Music Management</h1>
-      <form onSubmit={handleAdd} className="bg-surface border border-border rounded-xl p-4 mb-6 flex gap-3 flex-wrap">
+      <form onSubmit={handleAdd} className="bg-surface border border-border rounded-md p-4 mb-6 flex gap-3 flex-wrap">
         <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}
-          className="flex-1 min-w-[150px] px-4 py-2 rounded-xl border border-border-strong focus:outline-none focus:border-primary" />
+          className="flex-1 min-w-0 px-4 py-2 rounded-md border border-border-strong focus:outline-none focus:border-primary" />
         <input type="url" placeholder="Spotify/YouTube/MP3 URL *" required value={url} onChange={(e) => setUrl(e.target.value)}
-          className="flex-1 min-w-[200px] px-4 py-2 rounded-xl border border-border-strong focus:outline-none focus:border-primary" />
+          className="flex-1 min-w-0 px-4 py-2 rounded-md border border-border-strong focus:outline-none focus:border-primary" />
         <select value={source} onChange={(e) => setSource(e.target.value)}
-          className="px-4 py-2 rounded-xl border border-border-strong focus:outline-none focus:border-primary bg-surface-alt/50">
+          className="px-4 py-2 rounded-md border border-border-strong focus:outline-none focus:border-primary bg-surface-alt/50">
           <option value="">Auto-detect</option>
           <option value="spotify">Spotify</option>
           <option value="youtube">YouTube</option>
@@ -318,7 +318,7 @@ export const MusicManagement: FC = () => {
         <button type="submit" className="btn-primary text-sm !py-2">Add Track</button>
       </form>
       {tracks.map((t) => (
-        <div key={t.id} className="bg-surface border border-border rounded-xl p-4 mb-3 flex justify-between items-center">
+        <div key={t.id} className="bg-surface border border-border rounded-md p-4 mb-3 flex justify-between items-center">
           <div>
             <span className="text-text font-medium">{t.title || 'Untitled'}</span>
             <span className="ml-2 text-text-muted text-xs">{getSourceLabel(t.source)}</span>
@@ -368,23 +368,23 @@ export function SimpleCrud({ title, fields, loadFn, createFn, deleteFn }: {
         <button onClick={() => setShowAdd(true)} className="btn-primary text-sm">+ Add</button>
       </div>
       {items.map((item, i) => (
-        <div key={item.id || i} className="bg-surface border border-border rounded-xl p-4 mb-3 flex justify-between items-center">
+        <div key={item.id || i} className="bg-surface border border-border rounded-md p-4 mb-3 flex justify-between items-center">
           <div>{fields.map((f) => <span key={f.key} className="text-text/70 mr-4">{item[f.key]}</span>)}</div>
           <button onClick={() => handleDelete(item.id)} className="text-red-400 text-sm">Delete</button>
         </div>
       ))}
       {showAdd && (
         <div className="fixed inset-0 bg-dark/50 flex items-end sm:items-center justify-center z-50" onClick={() => setShowAdd(false)}>
-          <div className="bg-surface border border-border rounded-t-2xl sm:rounded-xl p-6 max-w-md w-full mx-0 sm:mx-4" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-surface border border-border rounded-t-2xl sm:rounded-md p-6 max-w-md w-full mx-0 sm:mx-4" onClick={(e) => e.stopPropagation()}>
             <h2 className="font-display text-xl text-text mb-4">Add {title}</h2>
             <form onSubmit={handleSubmit}>
               {fields.map((f) => (
                 <input key={f.key} type={f.type || 'text'} placeholder={f.label} required
                   value={form[f.key] || ''} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-border-strong mb-3 focus:outline-none focus:border-primary" />
+                  className="w-full px-4 py-3 rounded-md border border-border-strong mb-3 focus:outline-none focus:border-primary" />
               ))}
               <div className="flex gap-3">
-                <button type="button" onClick={() => setShowAdd(false)} className="flex-1 py-3 rounded-xl border border-border-strong">Cancel</button>
+                <button type="button" onClick={() => setShowAdd(false)} className="flex-1 py-3 rounded-md border border-border-strong">Cancel</button>
                 <button type="submit" className="btn-primary flex-1">Add</button>
               </div>
             </form>
@@ -443,13 +443,13 @@ export const RSVPPage: FC = () => {
     <div>
       <h1 className="font-display text-2xl md:text-3xl text-text mb-6">RSVP Dashboard</h1>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
-        <div className="bg-surface border border-border rounded-xl p-4 text-center"><div className="text-3xl font-display text-text">{data.total}</div><div className="text-text-muted text-sm">Total</div></div>
-        <div className="bg-surface border border-border rounded-xl p-4 text-center"><div className="text-3xl font-display text-green-600">{data.attending}</div><div className="text-text-muted text-sm">Attending</div></div>
-        <div className="bg-surface border border-border rounded-xl p-4 text-center"><div className="text-3xl font-display text-red-500">{data.not_attending}</div><div className="text-text-muted text-sm">Not Attending</div></div>
-        <div className="bg-surface border border-border rounded-xl p-4 text-center"><div className="text-3xl font-display text-yellow-600">{data.pending}</div><div className="text-text-muted text-sm">Pending</div></div>
+        <div className="bg-surface border border-border rounded-md p-4 text-center"><div className="text-3xl font-display text-text">{data.total}</div><div className="text-text-muted text-sm">Total</div></div>
+        <div className="bg-surface border border-border rounded-md p-4 text-center"><div className="text-3xl font-display text-green-600">{data.attending}</div><div className="text-text-muted text-sm">Attending</div></div>
+        <div className="bg-surface border border-border rounded-md p-4 text-center"><div className="text-3xl font-display text-red-500">{data.not_attending}</div><div className="text-text-muted text-sm">Not Attending</div></div>
+        <div className="bg-surface border border-border rounded-md p-4 text-center"><div className="text-3xl font-display text-yellow-600">{data.pending}</div><div className="text-text-muted text-sm">Pending</div></div>
       </div>
       {data.data?.map((r: any) => (
-        <div key={r.id} className="bg-surface border border-border rounded-xl p-4 mb-3">
+        <div key={r.id} className="bg-surface border border-border rounded-md p-4 mb-3">
           <div className="flex justify-between">
             <span className="font-medium text-text">{r.name}</span>
             <span className={`px-2 py-1 rounded-full text-xs ${r.status === 'attending' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{r.status}</span>
@@ -513,14 +513,14 @@ export const SettingsPage: FC = () => {
       <h1 className="font-display text-2xl md:text-3xl text-text mb-6">Wedding Settings</h1>
       
       {/* Template changer */}
-      <div className="bg-surface border border-border rounded-xl p-4 md:p-6 max-w-2xl mb-6">
+      <div className="bg-surface border border-border rounded-md p-4 md:p-6 max-w-2xl mb-6">
         <h2 className="font-display text-xl text-text mb-4">Template</h2>
         <div className="grid grid-cols-3 gap-3 mb-4">
           {templates.map((t) => (
             <button
               key={t.id}
               onClick={() => handleTemplateChange(t.id)}
-              className={`relative rounded-xl border-2 p-3 text-left transition-all ${
+              className={`relative rounded-md border-2 p-3 text-left transition-colors ${
                 currentTemplate === t.id
                   ? 'border-primary bg-primary/5'
                   : 'border-border hover:border-primary/30'
@@ -539,7 +539,7 @@ export const SettingsPage: FC = () => {
         </div>
         
         {/* Live Preview */}
-        <div className="rounded-xl border border-border-strong overflow-hidden bg-surface" style={{ height: '320px' }}>
+        <div className="rounded-md border border-border-strong overflow-hidden bg-surface" style={{ height: '320px' }}>
           <div className="transform scale-[0.35] origin-top-left" style={{ width: '285%', height: '285%' }}>
             <CurrentTemplateComponent data={SAMPLE_DATA} />
           </div>
@@ -547,13 +547,13 @@ export const SettingsPage: FC = () => {
       </div>
 
       {/* Regular settings */}
-      <div className="bg-surface border border-border rounded-xl p-4 md:p-6 max-w-2xl">
+      <div className="bg-surface border border-border rounded-md p-4 md:p-6 max-w-2xl">
         {fields.map((f) => (
           <div key={f.key} className="mb-4">
             <label className="block text-text/70 text-sm mb-1">{f.label}</label>
             <input type={f.type || 'text'} value={(settings as any)[f.key] || ''}
               onChange={(e) => setSettings({ ...settings, [f.key]: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl border border-border-strong focus:outline-none focus:border-primary" />
+              className="w-full px-4 py-3 rounded-md border border-border-strong focus:outline-none focus:border-primary" />
           </div>
         ))}
         <button onClick={handleSave} className="btn-primary w-full mt-4">Save Settings</button>

@@ -73,19 +73,19 @@ export const SuperAdminDashboard: FC = () => {
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-10">
-            <div className="bg-surface border border-border rounded-xl p-4 md:p-5">
+            <div className="bg-surface border border-border rounded-md p-4 md:p-5">
               <div className="text-2xl md:text-3xl font-display text-text">{couples.length}</div>
               <div className="text-text-muted text-xs md:text-sm">Total Couples</div>
             </div>
-            <div className="bg-surface border border-border rounded-xl p-4 md:p-5">
+            <div className="bg-surface border border-border rounded-md p-4 md:p-5">
               <div className="text-2xl md:text-3xl font-display text-text">{couples.reduce((s, c) => s + c.guest_count, 0)}</div>
               <div className="text-text-muted text-xs md:text-sm">Total Guests</div>
             </div>
-            <div className="bg-surface border border-border rounded-xl p-4 md:p-5">
+            <div className="bg-surface border border-border rounded-md p-4 md:p-5">
               <div className="text-2xl md:text-3xl font-display text-green-600">{couples.reduce((s, c) => s + c.attending_count, 0)}</div>
               <div className="text-text-muted text-xs md:text-sm">Attending</div>
             </div>
-            <div className="bg-surface border border-border rounded-xl p-4 md:p-5">
+            <div className="bg-surface border border-border rounded-md p-4 md:p-5">
               <div className="text-2xl md:text-3xl font-display text-text">{couples.filter(c => c.is_published).length}</div>
               <div className="text-text-muted text-xs md:text-sm">Published</div>
             </div>
@@ -93,7 +93,7 @@ export const SuperAdminDashboard: FC = () => {
 
           {/* Couples list */}
           {couples.length === 0 ? (
-            <div className="bg-surface border border-border rounded-xl p-8 md:p-12 text-center">
+            <div className="bg-surface border border-border rounded-md p-8 md:p-12 text-center">
               <div className="text-4xl md:text-5xl mb-4">💍</div>
               <p className="text-text-muted text-sm md:text-base">No couples yet. Create the first invitation from the homepage.</p>
               <a href="/" className="btn-primary inline-block mt-6">Go to Homepage</a>
@@ -106,7 +106,7 @@ export const SuperAdminDashboard: FC = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.03 }}
-                  className="bg-surface border border-border rounded-xl p-4 md:p-5 hover:border-primary/30 transition-colors"
+                  className="bg-surface border border-border rounded-md p-4 md:p-5 hover:border-primary/30 transition-colors"
                 >
                   {/* Top row: avatar + names */}
                   <div className="flex items-center gap-3 mb-3">

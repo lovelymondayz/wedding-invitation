@@ -184,7 +184,7 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
               }`}
             >
               <span className="text-lg leading-none">{item.icon}</span>
-              <span className="text-[10px] truncate max-w-[60px]">{item.label}</span>
+              <span className="text-xs truncate max-w-12">{item.label}</span>
             </a>
           ))}
           {/* More button for remaining items */}
@@ -193,7 +193,7 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
             className="flex flex-col items-center gap-0.5 py-2 px-2 rounded-lg text-surface/50"
           >
             <span className="text-lg leading-none">⋯</span>
-            <span className="text-[10px]">More</span>
+            <span className="text-xs">More</span>
           </button>
         </div>
       </nav>

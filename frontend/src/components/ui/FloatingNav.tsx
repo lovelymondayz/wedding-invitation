@@ -33,19 +33,19 @@ export const FloatingNav: FC = () => {
       initial={{ y: 100 }}
       animate={{ y: 0 }}
       transition={{ delay: 0.5 }}
-      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 bg-surface/80 backdrop-blur-sm border border-border rounded-full px-2 py-2 flex items-center gap-1 shadow-md"
+      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 bg-surface/80  border border-border rounded-full px-2 py-2 flex items-center gap-1 shadow-md"
     >
       {navItems.map(({ id, icon: Icon, label }) => (
         <button
           key={id}
           onClick={() => scrollTo(id)}
-          className={`flex flex-col items-center px-3 py-1.5 rounded-full transition-all ${
+          className={`flex flex-col items-center px-3 py-1.5 rounded-full transition-colors ${
             active === id ? 'bg-primary/20 text-primary' : 'text-text-muted hover:text-text'
           }`}
           title={label}
         >
           <Icon size={16} />
-          <span className="text-[10px] mt-0.5 hidden md:block">{label}</span>
+          <span className="text-xs mt-0.5 hidden md:block">{label}</span>
         </button>
       ))}
     </motion.div>
