@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import { HeroSection, CountdownSection, WeddingInfoSection, LoveStorySection, ScheduleSection, GallerySection, RSVPSection, WishesSection, GiftSection, Footer } from '../components/sections';
 import { MusicPlayer } from '../components/ui/MusicPlayer';
 import { MusicEmbed } from '../components/ui/MusicEmbed';
@@ -10,9 +10,9 @@ import type { TemplateProps } from './types';
 /**
  * Template B: Gen-Z Minimal
  * - White background, Inter sans-serif only
- * - Bold accent colors (indigo/orange)
+ * - Bold accent colors (primary)
  * - Instagram-story vibe, big photo hero
- * - No bg-surface border border-bordermorphism, clean spacing
+ * - Clean spacing
  */
 export const TemplateB_GenZ: FC<TemplateProps> = ({ data }) => {
   const { isPlaying, volume, toggle, changeVolume, setMusicUrl, source } = useMusic();
@@ -34,7 +34,7 @@ export const TemplateB_GenZ: FC<TemplateProps> = ({ data }) => {
       )}
 
       {/* Hero - Full screen with big photo */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-50 via-white to-orange-50">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-surface-alt">
         <div className="absolute inset-0 opacity-10" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000'%3E%3Ccircle cx='20' cy='20' r='1'/%3E%3C/g%3E%3C/svg%3E")`,
           backgroundSize: '40px 40px',
@@ -50,7 +50,7 @@ export const TemplateB_GenZ: FC<TemplateProps> = ({ data }) => {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="uppercase tracking-[0.3em] text-xs md:text-sm mb-6 text-indigo-500 font-medium"
+            className="uppercase tracking-[0.3em] text-xs md:text-sm mb-6 text-primary font-medium"
           >
             We're Getting Married
           </motion.p>
@@ -58,7 +58,7 @@ export const TemplateB_GenZ: FC<TemplateProps> = ({ data }) => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-4 tracking-tight"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-text mb-4 tracking-tight"
           >
             {data.couple?.groom_name || 'Alex'} & {data.couple?.bride_name || 'Sam'}
           </motion.h1>
@@ -67,7 +67,7 @@ export const TemplateB_GenZ: FC<TemplateProps> = ({ data }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-xl text-gray-500 font-light"
+              className="text-xl text-text-muted font-light"
             >
               {new Date(data.couple.wedding_date).toLocaleDateString('en-US', {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
@@ -75,7 +75,7 @@ export const TemplateB_GenZ: FC<TemplateProps> = ({ data }) => {
             </motion.p>
           )}
           {data.couple?.venue_name && (
-            <p className="mt-2 text-gray-400 text-sm">{data.couple.venue_name}</p>
+            <p className="mt-2 text-text-subtle text-sm">{data.couple.venue_name}</p>
           )}
         </div>
       </section>
@@ -86,27 +86,27 @@ export const TemplateB_GenZ: FC<TemplateProps> = ({ data }) => {
       {/* Wedding Info */}
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">When & Where</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-text mb-8">When & Where</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-md bg-gray-50">
-              <p className="text-xs uppercase tracking-wider text-indigo-500 mb-2">Date</p>
-              <p className="text-lg font-medium text-gray-900">
+            <div className="p-6 rounded-md bg-surface-alt">
+              <p className="text-xs uppercase tracking-wider text-primary mb-2">Date</p>
+              <p className="text-lg font-medium text-text">
                 {data.couple?.wedding_date ? new Date(data.couple.wedding_date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) : 'TBA'}
               </p>
             </div>
-            <div className="p-6 rounded-md bg-gray-50">
-              <p className="text-xs uppercase tracking-wider text-indigo-500 mb-2">Venue</p>
-              <p className="text-lg font-medium text-gray-900">{data.couple?.venue_name || 'TBA'}</p>
-              {data.couple?.venue_address && <p className="text-sm text-gray-500 mt-1">{data.couple.venue_address}</p>}
+            <div className="p-6 rounded-md bg-surface-alt">
+              <p className="text-xs uppercase tracking-wider text-primary mb-2">Venue</p>
+              <p className="text-lg font-medium text-text">{data.couple?.venue_name || 'TBA'}</p>
+              {data.couple?.venue_address && <p className="text-sm text-text-muted mt-1">{data.couple.venue_address}</p>}
             </div>
           </div>
         </div>
       </section>
 
       {/* Gallery */}
-      <section className="py-20 px-6 bg-gray-50">
+      <section className="py-20 px-6 bg-surface-alt">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-10">Our Moments</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-text text-center mb-10">Our Moments</h2>
           <GallerySection photos={data.gallery} />
         </div>
       </section>
@@ -114,16 +114,16 @@ export const TemplateB_GenZ: FC<TemplateProps> = ({ data }) => {
       {/* RSVP */}
       <section className="py-20 px-6">
         <div className="max-w-xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Are You Coming?</h2>
-          <p className="text-gray-500 mb-8">Let us know by {data.couple?.wedding_date ? new Date(data.couple.wedding_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) : 'the wedding day'}</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">Are You Coming?</h2>
+          <p className="text-text-muted mb-8">Let us know by {data.couple?.wedding_date ? new Date(data.couple.wedding_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) : 'the wedding day'}</p>
           <RSVPSection />
         </div>
       </section>
 
       {/* Wishes */}
-      <section className="py-20 px-6 bg-gray-50">
+      <section className="py-20 px-6 bg-surface-alt">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-10">Wishes</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-text text-center mb-10">Wishes</h2>
           <WishesSection wishes={data.wishes} />
         </div>
       </section>
@@ -132,14 +132,14 @@ export const TemplateB_GenZ: FC<TemplateProps> = ({ data }) => {
       {data.gifts.length > 0 && (
         <section className="py-20 px-6">
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10">Gift</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-text mb-10">Gift</h2>
             <GiftSection gifts={data.gifts} />
           </div>
         </section>
       )}
 
       {/* Footer */}
-      <footer className="py-10 px-6 bg-gray-900 text-text-muted text-center text-sm">
+      <footer className="py-10 px-6 bg-neutral-800 text-text-muted text-center text-sm">
         <p className="font-medium text-surface mb-2">{data.couple?.groom_name} & {data.couple?.bride_name}</p>
         <p>Made with ❤️ on WeddingInv</p>
       </footer>

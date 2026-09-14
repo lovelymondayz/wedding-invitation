@@ -45,7 +45,7 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="uppercase tracking-[0.5em] text-xs md:text-sm mb-6 text-amber-400/70 font-light"
+            className="uppercase tracking-[0.5em] text-xs md:text-sm mb-6 text-gold-400/70 font-light"
           >
             Save the Date
           </motion.p>
@@ -56,7 +56,7 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display text-surface mb-6 leading-tight"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
-            {data.couple?.groom_name || 'Groom'}<span className="text-amber-400 italic"> & </span>{data.couple?.bride_name || 'Bride'}
+            {data.couple?.groom_name || 'Groom'}<span className="text-gold-400 italic"> & </span>{data.couple?.bride_name || 'Bride'}
           </motion.h1>
           {data.couple?.wedding_date && (
             <motion.div
@@ -64,8 +64,8 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <div className="w-16 h-px bg-amber-400/40 mx-auto mb-6" />
-              <p className="text-amber-400/80 font-light tracking-widest text-sm md:text-base">
+              <div className="w-16 h-px bg-gold-400/40 mx-auto mb-6" />
+              <p className="text-gold-400/80 font-light tracking-widest text-sm md:text-base">
                 {new Date(data.couple.wedding_date).toLocaleDateString('en-US', {
                   weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
                 })}
@@ -99,14 +99,14 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
           <h2 className="text-3xl md:text-4xl font-display text-surface mb-10">The Celebration</h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="p-6 rounded-md bg-surface/5 border border-border">
-              <p className="text-xs uppercase tracking-wider text-amber-400/70 mb-3">When</p>
+              <p className="text-xs uppercase tracking-wider text-gold-400/70 mb-3">When</p>
               <p className="text-xl font-display text-surface">
                 {data.couple?.wedding_date ? new Date(data.couple.wedding_date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) : 'TBA'}
               </p>
               {data.couple?.wedding_time && <p className="text-surface/50 text-sm mt-1">at {data.couple.wedding_time}</p>}
             </div>
             <div className="p-6 rounded-md bg-surface/5 border border-border">
-              <p className="text-xs uppercase tracking-wider text-amber-400/70 mb-3">Where</p>
+              <p className="text-xs uppercase tracking-wider text-gold-400/70 mb-3">Where</p>
               <p className="text-xl font-display text-surface">{data.couple?.venue_name || 'TBA'}</p>
               {data.couple?.venue_address && <p className="text-surface/50 text-sm mt-1">{data.couple.venue_address}</p>}
             </div>
@@ -144,9 +144,9 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
       {/* Footer */}
       <footer className="py-10 px-6 border-t border-white/5 text-center">
         <p className="text-surface/40 text-sm">
-          <span className="text-amber-400/60 font-display">{data.couple?.groom_name}</span>
+          <span className="text-gold-400/60 font-display">{data.couple?.groom_name}</span>
           {' & '}
-          <span className="text-amber-400/60 font-display">{data.couple?.bride_name}</span>
+          <span className="text-gold-400/60 font-display">{data.couple?.bride_name}</span>
         </p>
         <p className="text-surface/20 text-xs mt-2 tracking-widest uppercase">WeddingInv</p>
       </footer>
