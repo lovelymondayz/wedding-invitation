@@ -45,9 +45,10 @@ services:
       - .env
       - ./backend/.env
     environment:
-      DATABASE_URL: postgres://${DB_USER:-wedding}:${DB_PASSWORD:-wedding123}@db:5432/${DB_NAME:-wedding}?sslmode=disable
-      JWT_SECRET: ${JWT_SECRET:-change-this-to-a-random-64-char-secret-key-in-production}
+      DATABASE_URL: postgres://${DB_USER:-wedding}:${DB_PASSWORD}@db:5432/${DB_NAME:-wedding}?sslmode=disable
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET must be set in .env}
       PORT: 8080
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
     ports:
       - "8080:8080"
     volumes:

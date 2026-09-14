@@ -27,9 +27,6 @@ RUN apk add --no-cache ca-certificates
 # Copy binary from builder
 COPY --from=builder /app/wedding-api .
 
-# Copy migrations
-COPY --from=builder /app/migrations ./migrations
-
 # Create uploads directory
 RUN mkdir -p ./uploads
 
