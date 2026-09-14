@@ -41,7 +41,19 @@ func main() {
 
 	// Health check
 	r.GET("/api/v1/health", func(c *gin.Context) {
-		c.JSON(200, gin.H{"status": "ok"})
+		status := "ok"
+		httpStatus := 200
+
+		if database.GetDB() != nil {
+			ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+			defer cancel()
+			if err := database.GetDB().Ping(ctx); err != nil {
+				status = "degraded"
+				httpStatus = 503
+			}
+		}
+
+		c.JSON(httpStatus, gin.H{"status": status})
 	})
 
 	// ═══════════════════════════════════════════

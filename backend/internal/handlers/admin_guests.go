@@ -72,7 +72,7 @@ func UpdateCoupleHandler(c *gin.Context) {
 		"venue_address": true, "maps_url": true, "maps_embed_url": true,
 		"dress_code": true, "music_url": true, "primary_color": true,
 		"secondary_color": true, "bg_image_url": true, "video_url": true,
-		"video_type": true, "is_published": true,
+		"video_type": true, "is_published": true, "template_id": true,
 	}
 
 	setParts := []string{}

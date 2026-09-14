@@ -96,7 +96,7 @@ func processUpload(file *multipart.FileHeader, uploadDir string, coupleSlug stri
 		Size:     file.Size,
 	}
 
-	// Validate file type
+	// Validate file extension
 	ext := strings.ToLower(filepath.Ext(file.Filename))
 	validExts := map[string]bool{".jpg": true, ".jpeg": true, ".png": true, ".webp": true, ".gif": true}
 	if !validExts[ext] {
@@ -110,11 +110,14 @@ func processUpload(file *multipart.FileHeader, uploadDir string, coupleSlug stri
 		return result
 	}
 
-	// Generate UUID filename
-	newFilename := fmt.Sprintf("%d_%s%s", time.Now().UnixNano(), uuid.New().String()[:8], ext)
-	filepath := fmt.Sprintf("%s/%s", uploadDir, newFilename)
+	// Sanitize upload dir to prevent path traversal
+	uploadDir = filepath.Clean(uploadDir)
+	if strings.Contains(uploadDir, "..") {
+		result.Error = "Invalid upload path"
+		return result
+	}
 
-	// Save file
+	// Open file to validate magic bytes
 	f, err := file.Open()
 	if err != nil {
 		result.Error = "Failed to read file"
@@ -122,6 +125,38 @@ func processUpload(file *multipart.FileHeader, uploadDir string, coupleSlug stri
 	}
 	defer f.Close()
 
+	// Check magic bytes for valid image formats
+	header := make([]byte, 8)
+	if _, err := f.Read(header); err != nil {
+		result.Error = "Failed to read file header"
+		return result
+	}
+
+	validMagic := map[string]bool{
+		"\xFF\xD8\xFF":       true, // JPEG
+		"\x89PNG\r\n\x1a\n":  true, // PNG
+		"RIFF":               true, // WEBP (starts with RIFF)
+		"GIF87a":             true, // GIF
+		"GIF89a":             true, // GIF
+	}
+	hasValidMagic := false
+	for magic := range validMagic {
+		if strings.HasPrefix(string(header), magic) {
+			hasValidMagic = true
+			break
+		}
+	}
+
+	if !hasValidMagic {
+		result.Error = "Invalid file content (not a valid image)"
+		return result
+	}
+
+	// Generate UUID filename
+	newFilename := fmt.Sprintf("%d_%s%s", time.Now().UnixNano(), uuid.New().String()[:8], ext)
+	filepath := filepath.Join(uploadDir, newFilename)
+
+	// Save file
 	out, err := os.Create(filepath)
 	if err != nil {
 		result.Error = "Failed to create file on disk"
@@ -129,7 +164,9 @@ func processUpload(file *multipart.FileHeader, uploadDir string, coupleSlug stri
 	}
 	defer out.Close()
 
+	// Write header + rest of file
 	buf := make([]byte, 1024)
+	out.Write(header)
 	for {
 		n, err := f.Read(buf)
 		if n > 0 {

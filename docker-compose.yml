@@ -17,7 +17,7 @@ services:
         max-file: "3"
     environment:
       POSTGRES_USER: ${DB_USER:-wedding}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-wedding123}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD must be set in .env}
       POSTGRES_DB: ${DB_NAME:-wedding}
     ports:
       - "5432:5432"

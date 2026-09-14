@@ -22,7 +22,7 @@ export const TemplateC_DarkLuxe: FC<TemplateProps> = ({ data }) => {
 
   return (
     <div className="min-h-screen bg-neutral-900 text-surface">
-      <Toaster position="top-center" toastOptions={{ style: { background: var(--color-neutral-800), color: var(--color-text), border: '1px solid var(--color-border)' } }} />
+      <Toaster position="top-center" toastOptions={{ style: { background: 'var(--color-neutral-800)', color: 'var(--color-text)', border: '1px solid var(--color-border)' } }} />
 
       {data.music && source === 'direct' && (
         <MusicPlayer isPlaying={isPlaying} volume={volume} onToggle={toggle} onVolumeChange={changeVolume} />

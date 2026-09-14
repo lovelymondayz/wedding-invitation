@@ -18,9 +18,14 @@ func Load() *Config {
 		log.Println("No .env file found, using environment variables")
 	}
 
+	jwtSecret := os.Getenv("JWT_SECRET")
+	if jwtSecret == "" {
+		log.Fatal("FATAL: JWT_SECRET environment variable is required. Set it in .env or the environment.")
+	}
+
 	return &Config{
-		DatabaseURL: getEnv("DATABASE_URL", "postgres://postgres:postgres@localhost:5432/wedding?sslmode=disable"),
-		JWTSecret:   getEnv("JWT_SECRET", "your-super-secret-jwt-key-change-in-production"),
+		DatabaseURL: getEnv("DATABASE_URL", "postgres://postgres:changeme@localhost:5432/wedding?sslmode=disable"),
+		JWTSecret:   jwtSecret,
 		Port:        getEnv("PORT", "8080"),
 	}
 }

@@ -170,7 +170,6 @@ func CreateCoupleHandler(c *gin.Context) {
 		"slug":       slug,
 		"token":      token,
 		"role":       "couple",
-		"password":   req.Password,
 		"created_at": time.Now().UTC(),
 	})
 }

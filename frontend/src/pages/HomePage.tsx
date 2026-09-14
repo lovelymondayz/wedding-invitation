@@ -354,21 +354,15 @@ export const HomePage: FC = () => {
             <div className="bg-surface-alt/80 rounded-md p-4 mb-4 text-left">
               <div className="mb-3">
                 <p className="text-text-muted text-xs mb-1">Your Page</p>
-                <p className="text-text font-medium text-sm">wedding.arjism.com/{createdSlug}</p>
+                <p className="text-text font-medium text-sm">/{createdSlug}</p>
               </div>
               <div className="mb-3">
                 <p className="text-text-muted text-xs mb-1">Login URL</p>
-                <p className="text-text font-medium text-sm">wedding.arjism.com/admin/login</p>
+                <p className="text-text font-medium text-sm">/admin/login</p>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <p className="text-text-muted text-xs mb-1">Username</p>
-                  <p className="text-text font-bold text-sm">{form.username}</p>
-                </div>
-                <div>
-                  <p className="text-text-muted text-xs mb-1">Password</p>
-                  <p className="text-text font-bold text-sm">{createdPassword}</p>
-                </div>
+              <div>
+                <p className="text-text-muted text-xs mb-1">Username</p>
+                <p className="text-text font-bold text-sm">{form.username}</p>
               </div>
             </div>
             
