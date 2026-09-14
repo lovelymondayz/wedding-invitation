@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"wedding-api/internal/database"
+	"wedding-api/internal/middleware"
 	"wedding-api/internal/models"
 	"wedding-api/internal/utils"
 
@@ -18,10 +19,11 @@ type LoginRequest struct {
 }
 
 type LoginResponse struct {
-	Token      string `json:"token"`
-	Role       string `json:"role"`
-	CoupleID   string `json:"couple_id"`
-	CoupleSlug string `json:"couple_slug"`
+	AccessToken  string `json:"access_token"`
+	RefreshToken string `json:"refresh_token"`
+	Role         string `json:"role"`
+	CoupleID     string `json:"couple_id"`
+	CoupleSlug   string `json:"couple_slug"`
 }
 
 func LoginHandler(c *gin.Context) {
@@ -40,12 +42,12 @@ func LoginHandler(c *gin.Context) {
 		&admin.ID, &admin.Username, &admin.PasswordHash, &coupleID,
 	)
 	if err != nil {
-		utils.JSON(c, 401, gin.H{"error": "invalid_credentials", "message": "Invalid username or password"})
+		utils.ErrorWithCode(c, 401, "INVALID_CREDENTIALS", "Invalid username or password")
 		return
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(admin.PasswordHash), []byte(req.Password)); err != nil {
-		utils.JSON(c, 401, gin.H{"error": "wrong_password", "message": "Incorrect password. Please try again."})
+		utils.ErrorWithCode(c, 401, "WRONG_PASSWORD", "Incorrect password. Please try again.")
 		return
 	}
 
@@ -64,6 +66,12 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 
+	refreshToken, err := utils.GenerateRefreshToken(admin.ID, jwtSecret)
+	if err != nil {
+		utils.Error(c, 500, "Failed to generate refresh token")
+		return
+	}
+
 	// Get couple slug if couple ID exists
 	var coupleSlug string
 	if coupleIDStr != "" {
@@ -71,10 +79,11 @@ func LoginHandler(c *gin.Context) {
 	}
 
 	utils.JSON(c, 200, LoginResponse{
-		Token:      token,
-		Role:       role,
-		CoupleID:   coupleIDStr,
-		CoupleSlug: coupleSlug,
+		AccessToken:  token,
+		RefreshToken: refreshToken,
+		Role:         role,
+		CoupleID:     coupleIDStr,
+		CoupleSlug:   coupleSlug,
 	})
 }
 
@@ -165,12 +174,19 @@ func CreateCoupleHandler(c *gin.Context) {
 		return
 	}
 
+	refreshToken, err := utils.GenerateRefreshToken(adminID, jwtSecret)
+	if err != nil {
+		utils.Error(c, 500, "Failed to generate refresh token")
+		return
+	}
+
 	utils.JSON(c, 201, gin.H{
-		"couple_id":  coupleID,
-		"slug":       slug,
-		"token":      token,
-		"role":       "couple",
-		"created_at": time.Now().UTC(),
+		"couple_id":     coupleID,
+		"slug":          slug,
+		"access_token":  token,
+		"refresh_token": refreshToken,
+		"role":          "couple",
+		"created_at":    time.Now().UTC(),
 	})
 }
 
@@ -206,6 +222,74 @@ func ResetPasswordHandler(c *gin.Context) {
 	}
 
 	utils.JSON(c, 200, gin.H{"message": "Password reset successfully"})
+}
+
+// RefreshHandler — POST /api/auth/refresh (rotate refresh token)
+func RefreshHandler(c *gin.Context) {
+	var req struct {
+		RefreshToken string `json:"refresh_token" binding:"required"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		utils.Error(c, 400, "Invalid request body")
+		return
+	}
+
+	jwtSecret := c.GetString("jwtSecret")
+	adminID, err := utils.ValidateRefreshToken(req.RefreshToken, jwtSecret)
+	if err != nil {
+		utils.ErrorWithCode(c, 401, "INVALID_REFRESH_TOKEN", "Invalid or expired refresh token")
+		return
+	}
+
+	ctx := context.Background()
+	db := database.GetDB()
+
+	var admin models.Admin
+	var coupleID *string
+	err = db.QueryRow(ctx, "SELECT id, username, couple_id FROM admins WHERE id = $1", adminID).Scan(
+		&admin.ID, &admin.Username, &coupleID,
+	)
+	if err != nil {
+		utils.ErrorWithCode(c, 401, "INVALID_REFRESH_TOKEN", "Admin not found")
+		return
+	}
+
+	role := "couple"
+	coupleIDStr := ""
+	if coupleID == nil {
+		role = "super"
+	} else {
+		coupleIDStr = *coupleID
+	}
+
+	// Generate new access token
+	accessToken, err := utils.GenerateToken(admin.ID, coupleIDStr, role, jwtSecret)
+	if err != nil {
+		utils.Error(c, 500, "Failed to generate access token")
+		return
+	}
+
+	// Generate new refresh token (rotation)
+	newRefreshToken, err := utils.GenerateRefreshToken(admin.ID, jwtSecret)
+	if err != nil {
+		utils.Error(c, 500, "Failed to generate refresh token")
+		return
+	}
+
+	utils.JSON(c, 200, gin.H{
+		"access_token":  accessToken,
+		"refresh_token": newRefreshToken,
+	})
+}
+
+// LogoutHandler — POST /api/auth/logout (client discards tokens)
+func LogoutHandler(c *gin.Context) {
+	utils.JSON(c, 200, gin.H{"message": "Logged out successfully"})
+}
+
+// CSRFTokenHandler — GET /api/auth/csrf-token (returns CSRF token for frontend)
+func CSRFTokenHandler(c *gin.Context) {
+	utils.JSON(c, 200, gin.H{"csrf_token": middleware.GenerateCSRFToken()})
 }
 
 func uuidShort() string {

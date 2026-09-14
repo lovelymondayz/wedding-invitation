@@ -9,7 +9,7 @@ export const SuperAdminDashboard: FC = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const token = localStorage.getItem('admin_token');
+  const token = localStorage.getItem('access_token');
   const role = localStorage.getItem('admin_role');
 
   useEffect(() => {

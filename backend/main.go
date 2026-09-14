@@ -26,6 +26,7 @@ func main() {
 
 	r := gin.Default()
 	r.Use(middleware.CORSMiddleware())
+	r.Use(middleware.CSRFMiddleware())
 
 	// Store jwtSecret in context for handlers
 	r.Use(func(c *gin.Context) {
@@ -82,7 +83,10 @@ func main() {
 		}
 
 		// Auth
-		public.POST("/auth/login", handlers.LoginHandler)
+		public.POST("/auth/login", middleware.RateLimitLogin(), handlers.LoginHandler)
+		public.POST("/auth/refresh", handlers.RefreshHandler)
+		public.POST("/auth/logout", handlers.LogoutHandler)
+		public.GET("/auth/csrf-token", handlers.CSRFTokenHandler)
 	}
 
 	// ═══════════════════════════════════════════

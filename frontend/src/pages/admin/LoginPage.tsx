@@ -29,7 +29,8 @@ export const LoginPage: FC = () => {
 
     try {
       const res = await api.loginAdmin(username, password);
-      localStorage.setItem('admin_token', res.token);
+      localStorage.setItem('access_token', res.access_token);
+      localStorage.setItem('refresh_token', res.refresh_token);
       localStorage.setItem('admin_role', res.role);
       if (res.couple_id) localStorage.setItem('couple_id', res.couple_id);
       toast.success('Logged in successfully');

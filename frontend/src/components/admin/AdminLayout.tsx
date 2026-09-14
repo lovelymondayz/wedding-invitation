@@ -18,7 +18,7 @@ const sidebarItems = [
 ];
 
 export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
-  const token = localStorage.getItem('admin_token');
+  const token = localStorage.getItem('access_token');
   const { coupleSlug } = useParams<{ coupleSlug: string }>();
   const location = useLocation();
   const currentSection = location.pathname.split('/').pop() || '';
@@ -34,9 +34,11 @@ export const AdminLayout: FC<{ children: React.ReactNode }> = ({ children }) => 
   if (!token) return <Navigate to="/admin/login" replace />;
 
   const handleLogout = () => {
-    localStorage.removeItem('admin_token');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     localStorage.removeItem('admin_role');
     localStorage.removeItem('couple_slug');
+    localStorage.removeItem('csrf_token');
     window.location.href = '/admin/login';
   };
 

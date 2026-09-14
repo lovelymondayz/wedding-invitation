@@ -34,7 +34,6 @@ export const HomePage: FC = () => {
     try {
       const res: CreateCoupleResponse = await api.createCouple(form);
       setCreatedSlug(res.slug);
-      setCreatedPassword(res.password);
       setShowSuccess(true);
     } catch (err: any) {
       toast.error(err.response?.data?.error || 'Failed to create invitation');

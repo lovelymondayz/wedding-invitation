@@ -131,7 +131,8 @@ export interface AdminUser {
 }
 
 export interface LoginResponse {
-  token: string;
+  access_token: string;
+  refresh_token: string;
   role: string;
   couple_id: string;
   couple_slug: string;
@@ -140,9 +141,9 @@ export interface LoginResponse {
 export interface CreateCoupleResponse {
   couple_id: string;
   slug: string;
-  token: string;
+  access_token: string;
+  refresh_token: string;
   role: string;
-  password: string;
   created_at: string;
 }
 

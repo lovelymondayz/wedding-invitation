@@ -15,6 +15,10 @@ func Error(c *gin.Context, status int, message string) {
 	c.JSON(status, gin.H{"error": gin.H{"code": "ERROR", "message": message}})
 }
 
+func ErrorWithCode(c *gin.Context, status int, code string, message string) {
+	c.JSON(status, gin.H{"error": gin.H{"code": code, "message": message}})
+}
+
 func Slugify(name string) string {
 	// Convert to lowercase
 	slug := strings.ToLower(name)
