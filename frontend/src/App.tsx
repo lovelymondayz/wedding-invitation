@@ -6,6 +6,7 @@ import { LandingPage, InvitePage } from './pages/LandingPage';
 import { LoginPage } from './pages/admin/LoginPage';
 import { SuperAdminDashboard } from './pages/admin/SuperAdminDashboard';
 import { AdminLayout } from './components/admin/AdminLayout';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { Overview, GuestManagement, RSVPPage, WishesManagement, GalleryManagement, MusicManagement, SchedulePage, LoveStoryPage, GiftPage, SettingsPage } from './components/admin/AdminPages';
 
 const AdminRoutes: FC = () => {

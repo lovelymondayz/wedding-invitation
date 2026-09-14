@@ -33,8 +33,10 @@ export const SuperAdminDashboard: FC = () => {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('admin_token');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     localStorage.removeItem('admin_role');
+    localStorage.removeItem('csrf_token');
     navigate('/admin/login');
   };
 

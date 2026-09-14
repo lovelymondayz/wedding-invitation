@@ -56,7 +56,7 @@ export const BatchUpload: FC<BatchUploadProps> = ({ coupleSlug, onUploaded }) =>
       const res = await fetch(`/api/v1/admin/couples/${coupleSlug}/upload`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('admin_token') || ''}`,
+          'Authorization': `Bearer ${localStorage.getItem('access_token') || ''}`,
         },
         body: formData,
       });
