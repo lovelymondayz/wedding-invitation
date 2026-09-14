@@ -132,7 +132,7 @@ export const SuperAdminDashboard: FC = () => {
                   {/* Bottom row: stats + actions */}
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-4 text-xs md:text-sm">
-                      <span className="text-text-muted">{couple.guests_count} guests</span>
+                      <span className="text-text-muted text-xs md:text-sm">{couple.guest_count} guests</span>
                       <span className="text-green-600">{couple.attending_count} attending</span>
                     </div>
                     <div className="flex gap-1.5 md:gap-2">

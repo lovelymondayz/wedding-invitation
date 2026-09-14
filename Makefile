@@ -2,14 +2,14 @@
 
 # Start development environment
 dev:
-	cd backend && go run ./cmd/server &
+	cd backend && go run . &
 	cd frontend && npm run dev
 	@echo "Backend: http://localhost:8080 | Frontend: http://localhost:3000"
 
 # Production build
 build:
 	cd frontend && npm ci && npm run build
-	cd backend && go build -o wedding-api ./cmd/server
+	cd backend && go build -o wedding-api .
 	@echo "Build complete"
 
 # Docker operations

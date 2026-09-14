@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"wedding-api/internal/database"
@@ -11,6 +10,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 )
+
+
 
 // resolveCoupleSlug looks up couple by slug and returns (id, ok)
 func resolveCoupleSlug(ctx context.Context, slug string) (string, bool) {
@@ -437,5 +438,3 @@ func ListGiftHandler(c *gin.Context) {
 	utils.JSON(c, 200, gifts)
 }
 
-// ensure unused import
-var _ = fmt.Sprintf
